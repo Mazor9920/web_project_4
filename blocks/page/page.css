@@ -1,0 +1,13 @@
+.page {
+  max-width: 100%;
+  min-width: 320px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: black;
+  font-family: 'Inter', 'Calibri', sans-serif;
+}
+
+* {
+  border: 1px solid red;
+}
