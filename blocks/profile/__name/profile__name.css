@@ -1,0 +1,25 @@
+.profile__name {
+  margin: 0;
+  color: white;
+  font-family: 'Inter', 'Calibri', sans-serif;
+  font-size: 42px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 48px;
+  letter-spacing: 0em;
+  text-align: left;
+}
+
+@media screen and (max-width: 820px) {
+  .profile__name {
+    font-size: 32px;
+    line-height: 38px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .profile__name {
+    font-size: 22px;
+    line-height: 27px;
+  }
+}

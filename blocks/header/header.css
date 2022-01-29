@@ -1,19 +1,13 @@
-.header{
+.header {
   max-width: 880px;
   min-width: 320px;
+  width: 100%;
+  margin: 0 auto 40px;
+  display: -webkit-box;
+  display: -ms-flexbox;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  /* align-self: flex-start; */
+  align-self: flex-start;
   background-color: black;
   border-bottom: 1px solid rgba(84, 84, 84, .7);
-  -webkit-background-clip: padding-box; /* for Safari */
-  background-clip: padding-box; /* for IE9+, Firefox 4+, Opera, Chrome */
 }
-
-
-/* @media screen and (max-width: 768px) {
-  .header{
-    width: 100%;
-  }
-} */

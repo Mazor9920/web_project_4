@@ -1,0 +1,10 @@
+.profile__picture {
+  border-radius: 100%;
+  max-width: 120px;
+}
+
+@media screen and (max-width: 768px) {
+  .profile__picture {
+    justify-self: center;
+  }
+}

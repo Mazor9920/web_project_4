@@ -1,17 +1,24 @@
 .logo {
   max-width: 173px;
   min-width: 126px;
+  width: 40%;
   margin-bottom: 41px;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 1200px) {
   .logo {
-    margin-bottom: 32px;
+    margin: 0 0 32px 0;
   }
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 980px) {
   .logo {
-    margin-left: 27px;
+    margin: 0 0 32px 50px;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .logo {
+    margin: 0 0 32px 27px;
   }
 }

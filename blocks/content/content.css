@@ -1,5 +1,24 @@
-.content{
-  /* max-width: 1280px; */
+.content {
   max-width: 880px;
-  /* min-width: 282px; */
+  min-width: 282px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: black;
+  background-color: grey;
+}
+
+@media screen and (max-width: 980px) {
+  .content {
+    margin: 0 50px;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .content {
+    width: calc(100% -2 * 19px);
+    margin: 0 19px;
+  }
 }

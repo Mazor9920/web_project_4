@@ -15,6 +15,32 @@
 /* header Blocks */
 @import url("../blocks/logo/logo.css");
 
+/* content Blocks */
+@import url("../blocks/profile/profile.css");
+@import url("../blocks/gallery/gallery.css");
+
+/* profile Elements */
+@import url("../blocks/profile/__picture/profile__picture.css");
+@import url("../blocks/profile/__info/profile__info.css");
+@import url("../blocks/profile/__name/profile__name.css");
+@import url("../blocks/profile/__details/profile__details.css");
+@import url("../blocks/profile/__edit-button/profile__edit-button.css");
+@import url("../blocks/profile/__edit-sign-img/profile__edit-sign-img.css");
+@import url("../blocks/profile/__add-button/profile__add-button.css");
+@import url("../blocks/profile/__add-sign-img/profile__add-sign-img.css");
+
+
+
+/* place Block */
+@import url("../blocks/place/place.css");
+/* place Elements */
+@import url("../blocks/place/__picture/place__picture.css");
+@import url("../blocks/place/__address/place__address.css");
+@import url("../blocks/place/__like-button/place__like-button.css");
+
+
+/* footer Blocks */
+
 
 
 /* Global Styles */

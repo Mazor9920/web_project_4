@@ -1,0 +1,26 @@
+.profile__info {
+  min-width: calc(282px - 2 * 29px);
+  max-width: 550px;
+  background-color: red;
+  display: grid;
+  grid-template-areas:
+    "profile__name profile__edit-button"
+    "profile__details  profile__details";
+  grid-template-columns: max-content 1fr;
+  grid-gap: 16px 18px;
+  align-items: baseline;
+  justify-content: flex-start;
+}
+
+@media screen and (max-width: 768px) {
+  .profile__info {
+    max-width: 100%;
+    grid-gap: 14px 10px;
+    grid-template-columns: 1fr max-content;
+    grid-template-rows: 22px 14px;
+    /* grid-template-rows: 1.57fr 1fr; */
+    margin: 0 29px;
+    justify-items: center;
+    align-items: center;
+  }
+}
