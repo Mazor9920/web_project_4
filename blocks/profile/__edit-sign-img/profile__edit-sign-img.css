@@ -1,7 +1,14 @@
 .profile__edit-sign-img {
   max-width: 10px;
   max-height: 10px;
-  min-width: 7.5px;
-  min-height: 7.5px;
   color: white;
+  margin: 7px;
+}
+
+@media screen and (max-width: 768px) {
+  .profile__edit-sign-img {
+    max-width: 7.5px;
+    max-height: 7.5px;
+    margin: 5.25px;
+  }
 }

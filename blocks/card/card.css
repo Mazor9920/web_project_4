@@ -1,0 +1,17 @@
+.card {
+  max-width: 100%;
+  max-height: 100%;
+  display: grid;
+  grid-template-areas:
+    "card__picture card__picture"
+    "card__title card__like-button";
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  border-radius: 10px;
+  grid-template-rows: 282px auto;
+  grid-template-columns: calc(246px - 21px) 21px;
+  grid-row-gap: 25px;
+  background: #FFFFFF;
+  align-items: center;
+}

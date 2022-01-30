@@ -1,0 +1,9 @@
+.card__like-button {
+  grid-area: card__like-button;
+  max-width: 21px;
+  max-height: 19px;
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 0 30px 31px 0;
+}

@@ -1,25 +1,27 @@
 .profile {
-  max-width: 880px;
   min-width: 282px;
-  display: grid;
-  grid-template-areas:
-    "profile__picture profile__info profile__add-button";
-  grid-template-columns: 1fr 4.583fr 1.25fr;
+  max-width: 880px;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
   align-items: center;
-  justify-content: stretch;
-  grid-column-gap: 30px;
-  background-color: purple;
+}
+
+@media screen and (max-width: 980px) {
+  .profile {
+    /* justify-content: space-around; */
+  }
 }
 
 @media screen and (max-width: 768px) {
   .profile {
-    grid-template-areas:
-      "profile__picture"
-      "profile__info"
-      "profile__add-button";
-    grid-template-columns: auto;
-    grid-template-rows: repeat(3, auto);
-    /* grid-template-rows: 2.4fr 1fr 1fr; */
-    grid-gap: 30px 0;
+    flex-direction: column;
+    align-items: center;
+    /* align-items: stretch; */
+    justify-content: center;
+
   }
 }

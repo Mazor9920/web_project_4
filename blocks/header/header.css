@@ -1,13 +1,11 @@
 .header {
-  max-width: 880px;
+  grid-area: header;
+  max-width: 100%;
   min-width: 320px;
-  width: 100%;
-  margin: 0 auto 40px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   flex-direction: column;
   align-self: flex-start;
-  background-color: black;
   border-bottom: 1px solid rgba(84, 84, 84, .7);
 }
