@@ -6,14 +6,17 @@
   display: -ms-flexbox;
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   align-items: center;
   background-color: black;
+  /* justify-content: center; */
+  justify-content: space-around;
+
 }
 
 @media screen and (max-width: 918px) {
   .profile {
-    justify-content: space-around;
+    /* justify-content: space-around; */
   }
 }
 
@@ -23,6 +26,5 @@
     align-items: center;
     /* align-items: stretch; */
     justify-content: center;
-
   }
 }

@@ -11,6 +11,8 @@
   grid-template-columns: 120px max-content auto;
   grid-gap: 16px 18px;
   align-items: center;
+  /* align-content: space-between; */
+
 }
 
 @media screen and (max-width: 768px) {

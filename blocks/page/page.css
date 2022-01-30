@@ -36,5 +36,13 @@
 
 /* debugging  */
 * {
-  /* border: 1px solid red; */
+  border: 1px solid red;
+}
+
+.popup{
+  background-color: red;
+}
+
+.profile{
+  background-color: blue;
 }

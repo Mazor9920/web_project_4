@@ -1,11 +1,11 @@
-.profile__add-sign-img {
+.profile__add-icon {
   max-width: 22px;
   max-height: 22px;
   color: white;
 }
 
 @media screen and (max-width: 768px) {
-  .profile__add-sign-img {
+  .profile__add-icon {
     max-width: 16px;
     max-height: 16px;
   }

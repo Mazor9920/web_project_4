@@ -1,0 +1,13 @@
+.popup {
+  /* display: none; */
+  max-width: 430px;
+  min-width: 282px;
+  width: 100%;
+  position: fixed;
+
+}
+
+@media screen and (max-width: 918px) {
+  .popup {
+  }
+}
