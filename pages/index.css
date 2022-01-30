@@ -26,7 +26,8 @@
 @import url("../blocks/profile/__add-button/profile__add-button.css");
 @import url("../blocks/profile/__add-sign-img/profile__add-sign-img.css");
 
-/* card Block (Reused block of gallery) */
+/* gallery Blocks */
+/* card Block (Reused block) */
 @import url("../blocks/card/card.css");
 /* card Elements */
 @import url("../blocks/card/__picture/card__picture.css");
@@ -34,10 +35,8 @@
 @import url("../blocks/card/__like-button/card__like-button.css");
 @import url("../blocks/card/__like-sign-img/card__like-sign-img.css");
 
-
-
 /* footer Blocks */
-
+@import url("../blocks/footer/__copyright/footer__copyright.css");
 
 
 /* Global Styles */

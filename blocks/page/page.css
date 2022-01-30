@@ -38,28 +38,3 @@
 * {
   /* border: 1px solid red; */
 }
-
-.header {
-  background-color: gray;
-}
-
-.content {
-  background-color: yellow;
-}
-
-.footer {
-  background-color: green;
-}
-
-.profile {
-  background-color: purple;
-}
-
-.profile__info {
-  background-color: red;
-}
-
-.gallery {
-  background-color: yellow;
-  /* background-color: blue; */
-}

@@ -2,7 +2,7 @@
   /* max-width: 880px; */
   min-width: 282px;
   max-width: 100%;
-  margin: 10px 0 calc(67px - 40px);
+  margin: 50px 0 calc(67px - 40px);
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(282px, 1fr));
   /* grid-template-rows: repeat(auto-fill, minmax(361px, 1fr)); */
@@ -15,6 +15,6 @@
 
 @media screen and (max-width: 768px) {
   .gallery {
-    /* width: 100%; */
+    margin: 36px 0 calc(50px - 40px);
   }
 }

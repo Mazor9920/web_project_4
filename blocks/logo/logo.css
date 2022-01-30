@@ -2,26 +2,17 @@
   max-width: 173px;
   min-width: 126px;
   width: 40%;
-  /* margin-bottom: 41px; */
+  margin: 0 0 41px 0;
 }
 
-@media screen and (max-width: 1200px) {
+@media screen and (max-width: 918px) {
   .logo {
-    /* margin: 0 0 32px 0; */
-  }
-}
-
-@media screen and (max-width: 980px) {
-  .logo {
-    /* margin: 0 0 32px 50px; */
-    margin-left: 50px;
+    margin: 0 0 37px 50px;
   }
 }
 
 @media screen and (max-width: 420px) {
   .logo {
-    margin-left: 27px;
-
-    /* margin: 0 0 32px 27px; */
+    margin: 0 0 32px 27px;
   }
 }
