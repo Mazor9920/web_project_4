@@ -12,6 +12,6 @@
   grid-template-rows: 282px auto;
   grid-template-columns: calc(246px - 21px) 21px;
   grid-row-gap: 25px;
-  background: #FFFFFF;
+  background-color: white;
   align-items: center;
 }

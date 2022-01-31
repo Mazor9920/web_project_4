@@ -1,4 +1,13 @@
-.popup__input-field{
+.popup__input-field {
   display: block;
-
+  font-family: 'Inter', 'Calibri', sans-serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 17px;
+  letter-spacing: 0em;
+  text-align: left;
+  border: none;
+  border-bottom: 1px solid rgba(0, 0, 0, .2);
+  padding: 13px 0;
 }
