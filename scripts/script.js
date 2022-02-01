@@ -31,7 +31,7 @@ let job_input = inputs[1];
 profile__edit_button.addEventListener("click", changePopupStatus);
 popup__close_button.addEventListener("click", changePopupStatus);
 
-profile__edit_button.addEventListener("click", showProfile);
+profile__edit_button.addEventListener("click", loadProfile);
 
 // watch the submit form event, it won't submit anywhere just yet
 popup__edit_form.addEventListener('submit', handleProfileFormSubmit);
@@ -53,7 +53,7 @@ function changePopupStatus() {
 /////////////////////////////////////////////////////////////////////////////
 
 // this function show the existing profile values on input fileds, if any
-function showProfile() {
+function loadProfile() {
   getValues(name_input, profile__name.textContent);
   getValues(job_input, profile__details.textContent);
 }
