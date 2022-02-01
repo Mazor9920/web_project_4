@@ -1,0 +1,40 @@
+.page {
+  max-width: 100%;
+  min-width: 320px;
+  display: grid;
+  grid-template-areas:
+    ". header ."
+    ". content ."
+    ". footer .";
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  grid-gap: 40px 0;
+  grid-template-columns: auto minmax(max-content, 880px) auto;
+  justify-content: center;
+  padding: 45px 0 60px;
+  font-family: 'Inter', 'Calibri', sans-serif;
+  background-color: black;
+}
+
+@media screen and (max-width: 920px) {
+  .page {
+    grid-template-areas:
+      "header header header"
+      ". content ."
+      ". footer .";
+    padding: 35px 0 50px;
+    grid-template-columns: 19px 1fr 19px;
+  }
+}
+
+@media screen and (max-width: 420px) {
+  .page {
+    padding: 28px 0 36px;
+  }
+}
+
+/* debugging  */
+* {
+  /* border: 1px solid red; */
+}

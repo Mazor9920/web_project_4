@@ -1,0 +1,20 @@
+.gallery {
+  /* max-width: 880px; */
+  min-width: 282px;
+  max-width: 100%;
+  margin: 50px 0 calc(67px - 40px);
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(282px, 1fr));
+  /* grid-template-rows: repeat(auto-fill, minmax(361px, 1fr)); */
+  grid-gap: 20px 17px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  background-color: black;
+}
+
+@media screen and (max-width: 768px) {
+  .gallery {
+    margin: 36px 0 calc(50px - 40px);
+  }
+}

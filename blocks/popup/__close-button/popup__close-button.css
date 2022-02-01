@@ -1,0 +1,20 @@
+.popup__close-button {
+  position: absolute;
+  bottom: 100%;
+  left: 100%;
+  padding: 0;
+  border: 0;
+  max-width: 40px;
+  max-height: 40px;
+  min-width: 26px;
+  min-height: 26px;
+  background: rgba(0, 0, 0, 1);
+  display: flex;
+}
+
+@media screen and (max-width: 619px) {
+  .popup__close-button {
+    left: 90%;
+    bottom: 105%;
+  }
+}
