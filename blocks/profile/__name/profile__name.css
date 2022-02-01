@@ -9,14 +9,18 @@
   line-height: 48px;
   letter-spacing: 0em;
   text-align: left;
+  max-width: 373px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
-
 
 @media screen and (max-width: 768px) {
   .profile__name {
     text-align: center;
   }
 }
+
 @media screen and (max-width: 628px) {
   .profile__name {
     font-size: 32px;

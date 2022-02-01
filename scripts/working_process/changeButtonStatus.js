@@ -1,9 +1,3 @@
-
-
-
-https://codepen.io/hila_tzuberi/pen/ZEaQKBj
-
-
 let card__like_button = document.querySelector(".card__like-button");
 card__like_button.addEventListener("click", changeButtonStatus);
 
@@ -13,10 +7,12 @@ function changeButtonStatus() {
 
 
 // html
+
 // <button class="card__like-button card__like-button_disabled">card__like-button</button>
-//
+
+
 // css
-//
+
 // .card__like-button {
 // cursor: pointer;
 // background-color:red;
