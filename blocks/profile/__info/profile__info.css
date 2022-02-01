@@ -1,0 +1,27 @@
+.profile__info {
+  grid-area: profile__info;
+  min-width: 282px;
+  max-width: 100%;
+  display: grid;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  grid-template-areas:
+    "profile__picture profile__name profile__edit-button"
+    "profile__picture profile__details  profile__details";
+  grid-template-columns: 120px max-content max-content;
+  grid-gap: 16px 18px;
+  align-items: center;
+}
+
+@media screen and (max-width: 768px) {
+  .profile__info {
+    grid-template-areas:
+      "profile__picture  profile__picture"
+      "profile__name profile__edit-button"
+      "profile__details  profile__details";
+    grid-gap: 14px 10px;
+    grid-template-columns: max-content auto;
+    justify-content: center;
+  }
+}

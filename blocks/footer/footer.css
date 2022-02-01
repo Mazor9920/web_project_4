@@ -1,0 +1,6 @@
+.footer{
+  grid-area: footer;
+  max-width: 880px;
+  min-width: 282px;
+  background-color: black;
+}

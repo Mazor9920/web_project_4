@@ -1,0 +1,36 @@
+.profile__name {
+  grid-area: profile__name;
+  margin: 0;
+  color: white;
+  font-family: 'Inter', 'Calibri', sans-serif;
+  font-size: 42px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 48px;
+  letter-spacing: 0em;
+  text-align: left;
+  max-width: 373px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+@media screen and (max-width: 768px) {
+  .profile__name {
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 628px) {
+  .profile__name {
+    font-size: 32px;
+    line-height: 38px;
+  }
+}
+
+@media screen and (max-width: 400px) {
+  .profile__name {
+    font-size: 22px;
+    line-height: 27px;
+  }
+}

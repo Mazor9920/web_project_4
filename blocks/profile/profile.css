@@ -1,0 +1,29 @@
+.profile {
+  min-width: 282px;
+  max-width: 880px;
+  width: 100%;
+  display: grid;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  grid-template-areas:
+    "profile__info profile__add-button";
+  background-color: black;
+  grid-template-columns: auto 150px;
+  align-items: center;
+}
+
+@media screen and (max-width: 918px) {
+  .profile {}
+}
+
+@media screen and (max-width: 768px) {
+  .profile {
+    grid-template-areas:
+      "profile__info"
+      "profile__add-button";
+    grid-template-columns: auto;
+    grid-template-rows: auto 50px;
+    grid-row-gap: 36px;
+  }
+}
