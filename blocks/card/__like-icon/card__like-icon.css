@@ -1,8 +1,15 @@
 .card__like-icon {
+  /* all: unset; */
+background-color: yellow;
   max-width: 21px;
   max-height: 19px;
+
+  fill: red;
+  stroke: red;
+
+
 }
 
 .card__like-icon_active {
-  /* fill: black; */
+  fill: black;
 }

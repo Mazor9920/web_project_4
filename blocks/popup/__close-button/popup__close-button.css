@@ -2,19 +2,19 @@
   position: absolute;
   bottom: 100%;
   left: 100%;
-  fill: white;
-
+  padding: 0;
+  border: 0;
   max-width: 40px;
   max-height: 40px;
   min-width: 26px;
   min-height: 26px;
-  background: #FFFFFF;
-  transform: rotate(-45deg);
-
+  background: rgba(0, 0, 0, 1);
+  display: flex;
 }
 
-.popup__close-button:hover {
-  background: rgba(255, 255, 255, 0.8);
-  /* transform: rotate(45deg); */
-
+@media screen and (max-width: 619px) {
+  .popup__close-button {
+    left: 90%;
+    bottom: 105%;
+  }
 }

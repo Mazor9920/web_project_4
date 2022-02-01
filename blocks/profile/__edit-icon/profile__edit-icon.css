@@ -1,8 +1,8 @@
 .profile__edit-icon {
   max-width: 10px;
   max-height: 10px;
-  color: white;
   margin: 7px;
+  background: rgba(0, 0, 0, 0);
 }
 
 @media screen and (max-width: 768px) {

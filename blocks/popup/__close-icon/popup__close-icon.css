@@ -1,0 +1,11 @@
+.popup__close-icon {
+  background: rgba(0, 0, 0, 0);
+  padding: 4px;
+}
+
+@media screen and (max-width: 619px) {
+  .popup__close-icon {
+    padding: 0;
+    max-width: 26px;
+  }
+}
