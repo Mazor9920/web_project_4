@@ -47,6 +47,7 @@
 @import url("../blocks/card/__title/card__title.css");
 @import url("../blocks/card/__like-button/card__like-button.css");
 @import url("../blocks/card/__like-icon/card__like-icon.css");
+@import url("../blocks/card/__icon-box/card__icon-box.css");
 
 /* footer Blocks */
 @import url("../blocks/footer/__copyright/footer__copyright.css");

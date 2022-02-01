@@ -21,10 +21,28 @@ let profile__name = profile__info.querySelector(".profile__name");
 let profile__details = profile__info.querySelector(".profile__details");
 // temp input fields
 let inputs = popup__edit_form.querySelectorAll(".popup__input-field");
+let name_input = inputs[0];
+let job_input = inputs[1];
+
+/////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////      Event Listeners      /////////////////////////
+
+profile__edit_button.addEventListener("click", changePopupStatus);
+popup__close_button.addEventListener("click", changePopupStatus);
+
+profile__edit_button.addEventListener("click", showProfile);
+
+// watch the submit form event, it won't submit anywhere just yet
+popup__edit_form.addEventListener('submit', handleProfileFormSubmit);
+
 
 /////////////////////////////////////////////////////////////////////////////
 
 /////////////////////////         functions         /////////////////////////
+
+
+/////////////////////////////////////////////////////////////////////////////
 
 // this function changes the popup status - open or close
 // close by defult, and changes status by click the buttons:
@@ -32,25 +50,28 @@ let inputs = popup__edit_form.querySelectorAll(".popup__input-field");
 function changePopupStatus() {
   popup.classList.toggle("popup_opened");
 }
-
-/////////////////////////      Event Listeners      /////////////////////////
-
-profile__edit_button.addEventListener("click", changePopupStatus);
-popup__close_button.addEventListener("click", changePopupStatus);
-
-
 /////////////////////////////////////////////////////////////////////////////
 
+// this function show the existing profile values on input fileds, if any
+function showProfile() {
+  getValues(name_input, profile__name.textContent);
+  getValues(job_input, profile__details.textContent);
+}
 
-
-
+function getValues(input_object, text_input) {
+  if (text_input !== null) {
+    input_object.value = text_input;
+  }
+}
 /////////////////////////////////////////////////////////////////////////////
 
+// this function edit the profile details by the user input
+function handleProfileFormSubmit(evt) {
+  // stops the browser from submitting the form in the default way.
+  evt.preventDefault();
 
-
-
-/////////////////////////////////////////////////////////////////////////////
-
-
-
+  // Insert new values
+  profile__name.textContent = name_input.value;
+  profile__details.textContent = job_input.value;
+}
 /////////////////////////////////////////////////////////////////////////////
