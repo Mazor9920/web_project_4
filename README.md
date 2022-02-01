@@ -18,7 +18,7 @@ For Optimizing responsiveness I used Media Queries, The Fr Unit, Meta Tags, the 
 * Optimizing exported images and svg files using [tinypng](https://tinypng.com/) and [svgomg](https://jakearchibald.github.io/svgomg/) To Maximize the fast of the loading.
 * I organized all the files according to BEM structure using the @import Rule, and Connected the Necessary Blocks to the Web Page, to achieve maximum Code mobility.
 * I was used the command-line to work with git by creating and merging branches and writing some perfect commits.
-Resourcefulness - I thought I had lost forever all the code I wrote, but I was able to recover it through another branch. After a mini heart attack I felt like a git expert :)
+Resourcefulness - I thought all the code I wrote is gone forever, but after dealing with some conflicts I was able to restore it through another branch. After a mini heart-attack I felt like a git expert :)
 * I used the chrome dev-tools for Debugging.
 
 * I used Figma for guidelines:
