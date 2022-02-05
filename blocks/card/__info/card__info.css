@@ -1,0 +1,11 @@
+.card__info {
+  grid-area: card__info;
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  border-radius: 0px 0px 10px 10px;
+}

@@ -18,38 +18,13 @@
     <main class="content" id="content">
 
       <section class="profile">
-
         <div class="profile__info">
           <img src="./images/profile-picture.png" alt="profile-picture" class="profile__picture">
           <h1 class="profile__name">Jacques Cousteau</h1>
-          <button class="profile__edit-button">
-            <div class="profile__btn-box">
-              <img src="./images/icons/edit-icon.svg" alt="edit-icon-button" class="profile__edit-icon">
-            </div>
-          </button>
+          <button class="profile__edit-button" aria-label="edit-button" type="button"></button>
           <p class="profile__details">Explorer</p>
         </div>
-        <button class="profile__add-button">
-          <div class="profile__btn-box">
-            <img src="./images/icons/add-icon.svg" alt="add-icon-button" class="profile__add-icon">
-          </div>
-        </button>
-
-        <div class="popup">
-          <button class="popup__close-button">
-            <div class="popup__icon-box">
-              <img src="./images/icons/close-icon.svg" alt="close-icon-button" class="popup__close-icon">
-            </div>
-          </button>
-          <div class="popup__form-container">
-            <form action="" class="popup__edit-form">
-              <h3 class="popup__title">Edit profile</h3>
-              <input type="text" class="popup__input-field" name="profile-name" value="Name">
-              <input type="text" class="popup__input-field" name="profile-about" value="About me">
-              <input type="submit" class="popup__save-button" value="Save">
-            </form>
-          </div>
-
+        <button class="profile__add-button" aria-label="add-button" type="button"></button>
       </section>
 
 
@@ -57,63 +32,52 @@
 
         <article class="card">
           <img src="./images/cards/Yosemite-Valley-img.png" alt="landscape-image" class="card__picture">
-          <h2 class="card__title">Yosemite Valley</h2>
-          <button class="card__like-button">
-            <div class="card__icon-box">
-              <img src="./images/icons/like-icon.svg" alt="like-icon-button" class="card__like-icon">
-            </div>
-          </button>
+          <div class="card__info">
+            <h2 class="card__title">Yosemite Valley</h2>
+            <button class="card__like-button" aria-label="like-button" type="button"></button>
+          </div>
         </article>
 
         <article class="card">
           <img src="./images/cards/Lake-Louise-img.png" alt="landscape-image" class="card__picture">
-          <h2 class="card__title">Lake Louise</h2>
-          <button class="card__like-button">
-            <div class="card__icon-box">
-              <img src="./images/icons/like-icon.svg" alt="like-icon-button" class="card__like-icon">
-            </div>
-          </button>
+          <div class="card__info">
+            <h2 class="card__title">Lake Louise</h2>
+            <button class="card__like-button" aria-label="like-button" type="button"></button>
+          </div>
         </article>
 
         <article class="card">
           <img src="./images/cards/Bald-Mountains-img.png" alt="landscape-image" class="card__picture">
-          <h2 class="card__title">Bald Mountains</h2>
-          <button class="card__like-button">
-            <div class="card__icon-box">
-              <img src="./images/icons/like-icon.svg" alt="like-icon-button" class="card__like-icon">
-            </div>
-          </button>
+          <div class="card__info">
+            <h2 class="card__title">Bald Mountains</h2>
+            <button class="card__like-button" aria-label="like-button" type="button"></button>
+          </div>
         </article>
 
         <article class="card">
           <img src="./images/cards/Latemar-img.png" alt="landscape-image" class="card__picture">
-          <h2 class="card__title">Latemar</h2>
-          <button class="card__like-button">
-            <div class="card__icon-box">
-              <img src="./images/icons/like-icon.svg" alt="like-icon-button" class="card__like-icon">
-            </div>
-          </button>
+          <div class="card__info">
+            <h2 class="card__title">Latemar</h2>
+            <button class="card__like-button" aria-label="like-button" type="button"></button>
+          </div>
         </article>
 
         <article class="card">
           <img src="./images/cards/Vanoise-National-Park-img.png" alt="landscape-image" class="card__picture">
-          <h2 class="card__title">Vanoise National Park</h2>
-          <button class="card__like-button">
-            <div class="card__icon-box">
-              <img src="./images/icons/like-icon.svg" alt="like-icon-button" class="card__like-icon">
-            </div>
-          </button>
+          <div class="card__info">
+            <h2 class="card__title">Vanoise National Park</h2>
+            <button class="card__like-button" aria-label="like-button" type="button"></button>
+          </div>
         </article>
 
         <article class="card">
           <img src="./images/cards/Lago-di-Braies-img.png" alt="landscape-image" class="card__picture">
-          <h2 class="card__title">Lago di Braies</h2>
-          <button class="card__like-button">
-            <div class="card__icon-box">
-              <img src="./images/icons/like-icon.svg" alt="like-icon-button" class="card__like-icon">
-            </div>
-          </button>
+          <div class="card__info">
+            <h2 class="card__title">Lago di Braies</h2>
+            <button class="card__like-button" aria-label="like-button" type="button"></button>
+          </div>
         </article>
+
       </section>
 
     </main>
@@ -122,9 +86,22 @@
       <p class="footer__copyright">© 2021 Around The U.S.</p>
     </footer>
 
-  </div>
-</body>
+    <section class="popup">
+      <div class="popup__container">
+        <button class="popup__close-button" aria-label="close-button"></button>
+        <form action="/action_page.php" name="edit-profile-form" class="popup__edit-form">
+          <h3 class="popup__title">Edit profile</h3>
+          <input type="text" class="popup__input-field popup__input-field_value_name" name="profile-name" value="Name" required>
+          <input type="text" class="popup__input-field popup__input-field_value_job" name="profile-job" value="About me" required>
+          <input type="submit" class="popup__save-button" value="Save">
+        </form>
+      </div>
+    </section>
 
-<script src="./scripts/script.js"></script>
+  </div>
+
+  <script src="./scripts/script.js"></script>
+
+</body>
 
 </html>

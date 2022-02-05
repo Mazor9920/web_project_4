@@ -1,6 +1,8 @@
 .page {
   max-width: 100%;
   min-width: 320px;
+  min-height: 100vh;
+  display: -ms-grid;
   display: grid;
   grid-template-areas:
     ". header ."
@@ -11,6 +13,7 @@
   box-sizing: border-box;
   grid-gap: 40px 0;
   grid-template-columns: auto minmax(max-content, 880px) auto;
+  grid-template-rows: auto 1fr auto;
   justify-content: center;
   padding: 45px 0 60px;
   font-family: 'Inter', 'Calibri', sans-serif;
@@ -34,7 +37,7 @@
   }
 }
 
-/* debugging  */
-* {
-  /* border: 1px solid red; */
-}
+/* DEBUG:  */
+/* *{
+  border: 1px solid red;
+} */

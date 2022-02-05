@@ -3,11 +3,21 @@
   max-width: 24px;
   max-height: 24px;
   border: 1px solid white;
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  padding: 0;
-  background: rgba(0, 0, 0, 1);
+  background-color: transparent;
+  background-image: url('../../../images/icons/edit-icon.svg');
+  background-size: 33%;
+  background-repeat: no-repeat;
+  background-position: center;
+  padding: 11px;
+}
+
+@media screen and (max-width: 768px) {
+  .profile__edit-button {
+    max-width: 18px;
+    max-height: 18px;
+    padding: 8px;
+    background-size: 41%;
+  }
 }
 
 .profile__edit-button:hover {

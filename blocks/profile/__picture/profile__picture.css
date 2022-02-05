@@ -2,12 +2,12 @@
   grid-area: profile__picture;
   border-radius: 100%;
   max-width: 120px;
-  margin-right: cala(30px-18px);
+  margin-right: calc(30px - 18px);
 }
 
 @media screen and (max-width: 768px) {
   .profile__picture {
     justify-self: center;
-    margin-bottom: calc(30px-14px);
+    margin: 0 0 calc(30px - 14px) 0;
   }
 }
