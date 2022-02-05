@@ -2,7 +2,6 @@
   grid-area: content;
   max-width: 880px;
   min-width: 282px;
-  /* width: 100%; */
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;

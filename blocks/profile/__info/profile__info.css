@@ -9,7 +9,7 @@
   grid-template-areas:
     "profile__picture profile__name profile__edit-button"
     "profile__picture profile__details  profile__details";
-  grid-template-columns: 120px max-content max-content;
+  grid-template-columns: min-content max-content max-content;
   grid-gap: 16px 18px;
   align-items: center;
 }

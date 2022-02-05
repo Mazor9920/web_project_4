@@ -2,6 +2,7 @@
   min-width: 282px;
   max-width: 880px;
   width: 100%;
+  display: -ms-grid;
   display: grid;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -11,10 +12,6 @@
   background-color: black;
   grid-template-columns: auto 150px;
   align-items: center;
-}
-
-@media screen and (max-width: 918px) {
-  .profile {}
 }
 
 @media screen and (max-width: 768px) {
