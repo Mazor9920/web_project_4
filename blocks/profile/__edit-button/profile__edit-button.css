@@ -9,10 +9,12 @@
   background-repeat: no-repeat;
   background-position: center;
   padding: 11px;
+  align-self: flex-end;
 }
 
 @media screen and (max-width: 768px) {
   .profile__edit-button {
+    align-self: center;
     max-width: 18px;
     max-height: 18px;
     padding: 8px;
