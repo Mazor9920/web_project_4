@@ -21,6 +21,6 @@
       "profile__add-button";
     grid-template-columns: auto;
     grid-template-rows: auto 50px;
-    grid-row-gap: 32px;
+    grid-row-gap: 36px;
   }
 }
