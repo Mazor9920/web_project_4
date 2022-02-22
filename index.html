@@ -9,7 +9,7 @@
 </head>
 
 <body>
-  <div class="page">
+  <div class="page" id="page">
 
     <header class="header">
       <img class="logo" src="./images/logo.svg" alt="logo-placed-header">
@@ -27,57 +27,7 @@
         <button class="profile__add-button" aria-label="add-button" type="button"></button>
       </section>
 
-
       <section class="gallery">
-
-        <article class="card">
-          <img src="./images/cards/Yosemite-Valley-img.png" alt="landscape-image" class="card__picture">
-          <div class="card__info">
-            <h2 class="card__title">Yosemite Valley</h2>
-            <button class="card__like-button" aria-label="like-button" type="button"></button>
-          </div>
-        </article>
-
-        <article class="card">
-          <img src="./images/cards/Lake-Louise-img.png" alt="landscape-image" class="card__picture">
-          <div class="card__info">
-            <h2 class="card__title">Lake Louise</h2>
-            <button class="card__like-button" aria-label="like-button" type="button"></button>
-          </div>
-        </article>
-
-        <article class="card">
-          <img src="./images/cards/Bald-Mountains-img.png" alt="landscape-image" class="card__picture">
-          <div class="card__info">
-            <h2 class="card__title">Bald Mountains</h2>
-            <button class="card__like-button" aria-label="like-button" type="button"></button>
-          </div>
-        </article>
-
-        <article class="card">
-          <img src="./images/cards/Latemar-img.png" alt="landscape-image" class="card__picture">
-          <div class="card__info">
-            <h2 class="card__title">Latemar</h2>
-            <button class="card__like-button" aria-label="like-button" type="button"></button>
-          </div>
-        </article>
-
-        <article class="card">
-          <img src="./images/cards/Vanoise-National-Park-img.png" alt="landscape-image" class="card__picture">
-          <div class="card__info">
-            <h2 class="card__title">Vanoise National Park</h2>
-            <button class="card__like-button" aria-label="like-button" type="button"></button>
-          </div>
-        </article>
-
-        <article class="card">
-          <img src="./images/cards/Lago-di-Braies-img.png" alt="landscape-image" class="card__picture">
-          <div class="card__info">
-            <h2 class="card__title">Lago di Braies</h2>
-            <button class="card__like-button" aria-label="like-button" type="button"></button>
-          </div>
-        </article>
-
       </section>
 
     </main>
@@ -86,19 +36,61 @@
       <p class="footer__copyright">© 2021 Around The U.S.</p>
     </footer>
 
-    <section class="popup">
-      <div class="popup__container">
-        <button class="popup__close-button" aria-label="close-button"></button>
-        <form action="/action_page.php" name="edit-profile-form" class="popup__edit-form">
-          <h3 class="popup__title">Edit profile</h3>
-          <input type="text" class="popup__input-field popup__input-field_value_name" name="profile-name" value="Name" required>
-          <input type="text" class="popup__input-field popup__input-field_value_job" name="profile-job" value="About me" required>
-          <input type="submit" class="popup__save-button" value="Save">
+    <section id="edit-profile-popup" class="popup popup_type_edit-profile">
+      <div class="popup__container popup__container_value_edit-profile-form">
+        <button class="popup__close-button popup__close-button_placed_edit-profile-form" aria-label="close-button"></button>
+        <form action="/action_page.php" name="edit-profile-form" class="popup__form popup__form_type_edit-profile">
+          <h3 class="popup__title popup__title_value_edit-profile-form">Edit profile</h3>
+          <input type="text" class="popup__input-field popup__input-field_value_profile-name" name="profile-name" value="Name" required>
+          <input type="text" class="popup__input-field popup__input-field_value_profile-job" name="profile-job" value="About me" required>
+          <input type="submit" class="popup__submit-button popup__submit-button_value_profile-save" value="Save">
         </form>
       </div>
     </section>
 
+    <section id="add-card-popup" class="popup popup_type_add-card">
+      <div class="popup__container popup__container_value_add-card-form">
+        <button class="popup__close-button popup__close-button_placed_add-card-form" aria-label="close-button"></button>
+        <form action="/action_page.php" name="add-card-form" class="popup__form popup__form_type_add-card">
+          <h3 class="popup__title popup__title_value_add-card-form">New place</h3>
+          <input type="text" class="popup__input-field popup__input-field_value_card-name" name="card-name" value="Title" required>
+          <input type="text" class="popup__input-field popup__input-field_value_card-link" name="card-link" value="Image link" required>
+          <input type="submit" class="popup__submit-button popup__submit-button_value_create-card" value="Create">
+        </form>
+      </div>
+    </section>
+
+    <!-- <article class="card-popup card-popup_opened">
+      <div class="card-popup__container">
+        <button class="card-popup__close-button" aria-label="close-button">&times;</button>
+        <img src="https://code.s3.yandex.net/web-code/lago.jpg" alt="landscape-image" class="card-popup__picture">
+        <h2 class="card-popup__title">Bald Mountains</h2>
+      </div>
+    </article> -->
+
   </div>
+
+
+  <template id="card-template" class="template template_card">
+    <article class="card">
+      <button class="card__delete-button" aria-label="delete-button"></button>
+      <img alt="landscape-image" class="card__picture">
+      <div class="card__info">
+        <h2 class="card__title"></h2>
+        <button class="card__like-button" aria-label="like-button" type="button"></button>
+      </div>
+    </article>
+  </template>
+
+  <template id="card-popup-template" class="template template_card-popup">
+    <article class="card-popup">
+      <div class="card-popup__container">
+        <button class="card-popup__close-button" aria-label="close-button">&times;</button>
+        <img alt="landscape-image" class="card-popup__picture">
+        <h2 class="card-popup__title"></h2>
+      </div>
+    </article>
+  </template>
 
   <script src="./scripts/script.js"></script>
 

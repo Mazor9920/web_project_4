@@ -1,3 +1,21 @@
 .card__like-button_active {
-  background-image: url('../../../images/icons/active-like-icon.svg');
+  background-image: url('../../../../images/icons/active-like-icon.svg');
+}
+
+
+
+
+/*   have some fun :)   */
+
+.card__like-button_active:hover {
+  opacity: 0.5;
+  cursor: pointer;
+  animation: dontBreakMyHeart 2s forwards;
+  animation-delay: 0.2s;
+}
+
+@keyframes dontBreakMyHeart {
+  to {
+    background-image: url('../../../../images/icons/broken-heart-icon.svg');
+  }
 }

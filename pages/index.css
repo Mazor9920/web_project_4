@@ -25,17 +25,28 @@
 @import url("../blocks/profile/__edit-button/profile__edit-button.css");
 @import url("../blocks/profile/__add-button/profile__add-button.css");
 
-/* gallery Blocks */
-/* card Block (Reused block) */
+/* gallery template Blocks (Reused block) */
+
+/* card Block */
 @import url("../blocks/card/card.css");
 /* card Elements */
 @import url("../blocks/card/__picture/card__picture.css");
 @import url("../blocks/card/__info/card__info.css");
 @import url("../blocks/card/__title/card__title.css");
+@import url("../blocks/card/__delete-button/card__delete-button.css");
 @import url("../blocks/card/__like-button/card__like-button.css");
 /* card__like-button modifier */
 @import url("../blocks/card/__like-button/_active/card__like-button_active.css");
 
+/* card-popup Block */
+@import url("../blocks/card-popup/card-popup.css");
+/* card-popup Elements */
+@import url("../blocks/card-popup/__container/card-popup__container.css");
+@import url("../blocks/card-popup/__close-button/card-popup__close-button.css");
+@import url("../blocks/card-popup/__picture/card-popup__picture.css");
+@import url("../blocks/card-popup/__title/card-popup__title.css");
+/* card-popup modifier */
+@import url("../blocks/card-popup/_opened/card-popup_opened.css");
 
 /* footer Blocks */
 @import url("../blocks/footer/__copyright/footer__copyright.css");
@@ -44,9 +55,9 @@
 @import url("../blocks/popup/__container/popup__container.css");
 @import url("../blocks/popup/__close-button/popup__close-button.css");
 @import url("../blocks/popup/__title/popup__title.css");
-@import url("../blocks/popup/__edit-form/popup__edit-form.css");
+@import url("../blocks/popup/__form/popup__form.css");
 @import url("../blocks/popup/__input-field/popup__input-field.css");
-@import url("../blocks/popup/__save-button/popup__save-button.css");
+@import url("../blocks/popup/__submit-button/popup__submit-button.css");
 /* popup modifier */
 @import url("../blocks/popup/_opened/popup_opened.css");
 

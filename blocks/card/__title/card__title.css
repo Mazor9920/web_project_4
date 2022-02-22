@@ -1,6 +1,6 @@
 .card__title {
   grid-area: card__title;
-  width: 77%;
+  max-width: 75%;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
@@ -14,5 +14,5 @@
   letter-spacing: 0em;
   text-align: left;
   padding: 0;
-  margin: 25px 0 31px 0;
+  margin: 25px 0 31px 21px;
 }

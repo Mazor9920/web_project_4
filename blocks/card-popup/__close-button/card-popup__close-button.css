@@ -1,0 +1,21 @@
+.card-popup__close-button {
+  border: 0;
+  padding: 0;
+  position: absolute;
+  bottom: 100%;
+  left: 100%;
+  color: white;
+  font-size: 40px;
+  background: none;
+}
+
+.card-popup__close-button:hover {
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+@media screen and (max-width: 768px) {
+  .card-popup__close-button {
+    font-size: 30px;
+  }
+}
