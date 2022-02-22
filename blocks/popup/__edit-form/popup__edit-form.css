@@ -1,9 +1,0 @@
-.popup__edit-form {
-  max-width: 358px;
-  min-width: 238px;
-  width: 84%;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  flex-direction: column;
-}
