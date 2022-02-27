@@ -2,110 +2,50 @@
 
 /////////////////////////       DOM selecting       /////////////////////////
 
-let content = document.querySelector("#content");
+const content = document.querySelector("#content");
 
-///// profile section /////
-let profile = content.querySelector(".profile");
-let profileInfo = profile.querySelector(".profile__info");
-let profileEditButton = profileInfo.querySelector(".profile__edit-button");
-let addCardButton = profile.querySelector(".profile__add-button");
+// profile Elements
+const profile = content.querySelector(".profile");
+const profileInfo = profile.querySelector(".profile__info");
+const profileEditButton = profileInfo.querySelector(".profile__edit-button");
+const addCardButton = profile.querySelector(".profile__add-button");
+const profileName = profileInfo.querySelector(".profile__name");
+const profileDetails = profileInfo.querySelector(".profile__details");
 
-// profile initial values
-let profileName = profileInfo.querySelector(".profile__name");
-let profileDetails = profileInfo.querySelector(".profile__details");
-
-///// edit-profile popup /////
-let editProfilePopup = document.querySelector("#edit-profile-popup");
-let editProfilePopupContainer = editProfilePopup.querySelector(".popup__container");
-let editProfileCloseButton = editProfilePopupContainer.querySelector(".popup__close-button");
-
-let editProfileForm = editProfilePopupContainer.querySelector(".popup__form");
-let editProfileFormTitle = editProfileForm.querySelector(".popup__title");
-let editProfileSaveButton = editProfileForm.querySelector(".popup__submit-button");
-
-// temp input fields
-let profileNameInput = editProfileForm.querySelector(".popup__input-field_value_profile-name");
-let profileJobInput = editProfileForm.querySelector(".popup__input-field_value_profile-job");
-
-
-///// gallery section /////
-let gallery = content.querySelector(".gallery");
-
-///// add-card popup /////
-let addCardPopup = document.querySelector("#add-card-popup");
-let addCardPopupContainer = addCardPopup.querySelector(".popup__container");
-let addCardCloseButton = addCardPopupContainer.querySelector(".popup__close-button");
-
-let addCardForm = addCardPopupContainer.querySelector(".popup__form");
-let addCardFormTitle = addCardForm.querySelector(".popup__title");
-let addCardCreateButton = addCardForm.querySelector(".popup__submit-button");
-
+// edit-profile popup Elements
+const editProfilePopup = document.querySelector("#edit-profile-popup");
+const editProfilePopupContainer = editProfilePopup.querySelector(".popup__container");
+const editProfileCloseButton = editProfilePopupContainer.querySelector(".popup__close-button");
+const editProfileForm = editProfilePopupContainer.querySelector(".popup__form");
+const editProfileFormTitle = editProfileForm.querySelector(".popup__title");
+const editProfileSaveButton = editProfileForm.querySelector(".popup__submit-button");
 // user input fields
-let cardNameInput = addCardForm.querySelector(".popup__input-field_value_card-name");
-let cardLinkInput = addCardForm.querySelector(".popup__input-field_value_card-link");
+const profileNameInput = editProfileForm.querySelector(".popup__input-field_value_profile-name");
+const profileJobInput = editProfileForm.querySelector(".popup__input-field_value_profile-job");
 
-// initial cards value as defult
-const initialCards = [
-  {
-    name: "Yosemite Valley",
-    link: "https://code.s3.yandex.net/web-code/yosemite.jpg"
-  },
-  {
-    name: "Lake Louise",
-    link: "https://code.s3.yandex.net/web-code/lake-louise.jpg"
-  },
-  {
-    name: "Bald Mountains",
-    link: "https://code.s3.yandex.net/web-code/bald-mountains.jpg"
-  },
-  {
-    name: "Latemar",
-    link: "https://code.s3.yandex.net/web-code/latemar.jpg"
-  },
-  {
-    name: "Vanoise National Park",
-    link: "https://code.s3.yandex.net/web-code/vanoise.jpg"
-  },
-  {
-    name: "Lago di Braies",
-    link: "https://code.s3.yandex.net/web-code/lago.jpg"
-  }
-];
+// gallery Elements
+const gallery = content.querySelector(".gallery");
+// card template Elements
+const cardTemplate = document.querySelector("#card-template").content;
+const cardElement = cardTemplate.querySelector('.card');
 
-/////////////////////////////////////////////////////////////////////////////
+// add-card popup Elements
+const addCardPopup = document.querySelector("#add-card-popup");
+const addCardPopupContainer = addCardPopup.querySelector(".popup__container");
+const addCardCloseButton = addCardPopupContainer.querySelector(".popup__close-button");
+const addCardForm = addCardPopupContainer.querySelector(".popup__form");
+const addCardFormTitle = addCardForm.querySelector(".popup__title");
+const addCardCreateButton = addCardForm.querySelector(".popup__submit-button");
+// user input fields
+const cardNameInput = addCardForm.querySelector(".popup__input-field_value_card-name");
+const cardLinkInput = addCardForm.querySelector(".popup__input-field_value_card-link");
 
-/////////////////////////      Event Listeners      /////////////////////////
-
-///// edit-profile popup /////
-
-profileEditButton.addEventListener("click", function(evt) {
-  changePopupStatus(editProfilePopup);
-  loadProfile();
-});
-
-editProfileCloseButton.addEventListener("click", function(evt) {
-  changePopupStatus(editProfilePopup);
-});
-
-// watch the submit-form event, it won't submit anywhere just yet
-editProfileForm.addEventListener('submit', handleProfileFormSubmit);
-
-
-///// add-card popup /////
-
-addCardButton.addEventListener("click", function(evt) {
-  changePopupStatus(addCardPopup);
-  setInputValues();
-});
-
-addCardCloseButton.addEventListener("click", function(evt) {
-  changePopupStatus(addCardPopup);
-});
-
-// watch the submit-form event, it won't submit anywhere just yet
-addCardForm.addEventListener('submit', handleAddCardSubmit);
-
-
+// card popup Elements
+const cardPopup = document.querySelector("#card-popup");
+const cardPopupContainer = cardPopup.querySelector(".popup__container_value_card-popup");
+const cardPopupCloseButton = cardPopupContainer.querySelector(".popup__close-button_placed_card-popup");
+const cardCloseUpPicture = cardPopupContainer.querySelector(".popup__close-up-picture");
+const cardPictureDetails = cardPopupContainer.querySelector(".popup__picture-details");
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -115,13 +55,57 @@ loadInitialCards(initialCards);
 
 /////////////////////////////////////////////////////////////////////////////
 
+/////////////////////////      Event Listeners      /////////////////////////
+
+ // edit-profile popup 
+
+profileEditButton.addEventListener("click", function(evt) {
+  loadProfile();
+  openPopup(editProfilePopup);
+});
+
+editProfileCloseButton.addEventListener("click", function(evt) {
+  closePopup(editProfilePopup);
+});
+
+// watch the submit-form event, it won't submit anywhere just yet
+editProfileForm.addEventListener('submit', handleProfileFormSubmit);
+
+
+ // add-card popup
+
+addCardButton.addEventListener("click", function(evt) {
+  openPopup(addCardPopup);
+  // setInputValues();
+});
+
+addCardCloseButton.addEventListener("click", function(evt) {
+  closePopup(addCardPopup);
+});
+
+// watch the submit-form event, it won't submit anywhere just yet
+addCardForm.addEventListener('submit', handleAddCardSubmit);
+
+
+// card Popup
+cardPopupCloseButton.addEventListener("click", function(evt) {
+  closePopup(cardPopup);
+});
+
+/////////////////////////////////////////////////////////////////////////////
+
 /////////////////////////  functions declarations   /////////////////////////
 
-// this function changes the popup status - open or close
-// close by defult, and changes status by click the buttons:
-// edit(for open) / close(for close)
-function changePopupStatus(popupElement) {
-  popupElement.classList.toggle("popup_opened");
+
+
+// this function opens the popup window
+function openPopup(popupElement) {
+  popupElement.classList.add("popup_opened");
+}
+
+// this function closes the popup window
+function closePopup(popupElement) {
+  popupElement.classList.remove("popup_opened");
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -130,164 +114,111 @@ function changePopupStatus(popupElement) {
 function loadProfile() {
   profileNameInput.value = profileName.textContent;
   profileJobInput.value = profileDetails.textContent;
-}
-
-/////////////////////////////////////////////////////////////////////////////
-
-// this function shows the defult values of input fileds on the add-card popup
-function setInputValues() {
-  cardNameInput.value = "Titel";
-  cardLinkInput.value = "Image link";
+  // profileNameInput.placeholder = profileName.textContent;
+  // profileJobInput.placeholder = profileDetails.textContent;
 }
 
 /////////////////////////////////////////////////////////////////////////////
 
 // this function edit the profile details by the user input
 function handleProfileFormSubmit(evt) {
-  // stops the browser from submitting the form in the default way.
   evt.preventDefault();
-
-  // Insert new values
   profileName.textContent = profileNameInput.value;
   profileDetails.textContent = profileJobInput.value;
-
-  //close edit-form Popup
-  changePopupStatus(editProfilePopup);
+  closePopup(editProfilePopup);
 }
 
 /////////////////////////////////////////////////////////////////////////////
 
 // this function edit the card values by the user input
 function handleAddCardSubmit(evt) {
-  // stops the browser from submitting the form in the default way.
   evt.preventDefault();
-
-  // Insert new values
-  addCard(cardNameInput.value, cardLinkInput.value);
-
-  //close add-card form Popup
-  changePopupStatus(addCardPopup);
+  const inputCardData = evt.target.closest(".popup__form_type_add-card").querySelectorAll(".popup__input-field");
+  const inputCard = createCard(inputCardData);
+  addCard(inputCard);
+  closePopup(addCardPopup);
 }
+
+/////////////////////////////////////////////////////////////////////////////
+
+
+// Constructor function for a Card Objects
+function Card(name, link) {
+  this.name = name;
+  this.link = link;
+}
+
+
+/////////////////////////////////////////////////////////////////////////////
+
+// this function creates a new card object
+function createCard(cardData) {
+  const cardName = cardData[0].value;
+  const cardLink = cardData[1].value;
+  const newCard = new Card(cardName, cardLink);
+  return newCard;
+}
+
+/////////////////////////////////////////////////////////////////////////////
+
+function renderCard(cardToRender) {
+  const renderedCard = cardElement.cloneNode(true);
+  const cardDeleteButton = renderedCard.querySelector(".card__delete-button");
+  const cardPicture = renderedCard.querySelector(".card__picture");
+  const cardInfo = renderedCard.querySelector(".card__info");
+  const cardTitle = cardInfo.querySelector(".card__title");
+  const cardLikeButton = cardInfo.querySelector(".card__like-button");
+
+  cardTitle.textContent = cardToRender.name;
+  cardPicture.src = cardToRender.link;
+
+  cardLikeButton.addEventListener("click", function(evt) {
+    evt.target.classList.toggle("card__like-button_active");
+  });
+  cardDeleteButton.addEventListener("click", function(evt) {
+    evt.target.closest(".card").remove();
+  });
+  cardPicture.addEventListener("click", handlePictureClick);
+
+  return renderedCard;
+}
+
+
+
+// this function gets a card, render and adds it to the DOM
+// make its content appear on the gallery
+function addCard(card) {
+  gallery.prepend(renderCard(card));
+}
+
+
+/////////////////////////////////////////////////////////////////////////////
+
+// This function opens a popup-card which contain close-up of a specific clicked-image
+function handlePictureClick(evt) {
+  const cardPicture = evt.target;
+  const cardToPopup = evt.target.closest(".card");
+  const cardInfo = cardToPopup.querySelector(".card__info");
+  const cardTitle = cardInfo.querySelector(".card__title");
+
+  cardPopupLink = cardPicture.src;
+  cardPopupName = cardTitle.textContent;
+
+  cardPictureDetails.textContent = cardPopupName;
+  cardCloseUpPicture.src = cardPopupLink;
+  cardCloseUpPicture.alt = "close up picture of " + cardPopupName;
+
+  openPopup(cardPopup);
+}
+
 
 /////////////////////////////////////////////////////////////////////////////
 
 // this function loads the initial Cards values using the addCard-function for each one of them
 function loadInitialCards(initialCards) {
   initialCards.forEach((card) => {
-    addCard(card.name, card.link);
+    addCard(card);
   });
 }
 
 /////////////////////////////////////////////////////////////////////////////
-
-// this function gets input card values and adds a new card element to the DOM
-function addCard(name, link) {
-
-  // select the template using id
-  const cardTemplate = document.querySelector("#card-template").content;
-
-  // clone the content of the template tag
-  const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
-
-  // to add content & compile it
-  const cardInfo = cardElement.querySelector(".card__info");
-  const cardTitle = cardInfo.querySelector(".card__title");
-  cardTitle.textContent = name;
-  const cardPicture = cardElement.querySelector(".card__picture");
-  cardPicture.src = link;
-
-  // Create a card-popup handler
-  cardPicture.addEventListener("click", handlePictureClick);
-
-  // Create a Like handler
-  const cardLikeButton = cardInfo.querySelector(".card__like-button");
-  cardLikeButton.addEventListener("click", function(evt) {
-    // event-target contain the specific clicked-on like-button
-    evt.target.classList.toggle("card__like-button_active");
-  });
-
-  // Create an delete handler
-  const cardDeleteButton = cardElement.querySelector(".card__delete-button");
-  cardDeleteButton.addEventListener("click", function(evt) {
-    // event-target contain the specific clicked delete-button
-    // delete the all cardElement - it's parent
-    evt.target.parentElement.remove();
-  });
-
-  // make cardElement content appear on the page = add it to the DOM
-  const gallery = content.querySelector(".gallery");
-  gallery.prepend(cardElement);
-}
-
-/////////////////////////////////////////////////////////////////////////////
-
-
-// This function creates a close-up of a specific clicked-image using template card
-function handlePictureClick(evt) {
-  // event-target contain the specific clicked-picture to popup
-  const pictureLink = evt.target.src;
-  // card__title is nephew of card__picture
-  const pictureName = evt.target.nextElementSibling.firstElementChild.textContent;
-
-  // select the template using id
-  const cardPopupTemplate = document.querySelector("#card-popup-template").content;
-  // clone the content of the template tag
-  const cardPopup = cardPopupTemplate.querySelector('.card-popup').cloneNode(true);
-
-  // to add content & compile it
-  const cardPopupContainer = cardPopup.querySelector(".card-popup__container");
-
-  const cardPopupPicture = cardPopupContainer.querySelector(".card-popup__picture");
-  const cardPopupTitle = cardPopupContainer.querySelector(".card-popup__title");
-  cardPopupPicture.src = pictureLink;
-  cardPopupTitle.textContent = pictureName;
-
-  // Create an close handler
-  const cardPopupCloseButton = cardPopupContainer.querySelector(".card-popup__close-button");
-  cardPopupCloseButton.addEventListener("click", handleCardPopupClose);
-
-  // make cardElement content appear on the page = add it to the DOM
-  const content = document.querySelector("#content");
-  content.prepend(cardPopup);
-  changeCardStatus(cardPopup);
-
-}
-
-
-// this function closes the popup card
-function handleCardPopupClose(evt) {
-  // event-target contain the clicked-close-button of the specific card-popup = grandparent
-  const cardPopup = evt.target.parentElement.parentElement;
-  changeCardStatus(cardPopup);
-  // evt.target.parentElement.parentElement.remove();
-}
-
-
-// this function changes the card-popup status - open or close
-// close by defult, and changes status by click the buttons:
-// card-picture(for open) / close(for close)
-function changeCardStatus(cardElement) {
-  cardElement.classList.toggle("card-popup_opened");
-}
-
-
-
-// ///////////////////////////////////////////////////////////////////////////
-//
-//     EventListener handle Syntax
-//
-//     anyVar.addEventListener('anyEvent', handleFunctionName);
-//     function handleFunctionName(evt) {
-//     }
-//
-//
-//     card Dom:
-//     gallery -> Lots of Card Elements by cardTemplate
-//     each cardElement -> cardDeleteButton & cardLinkInput & cardInfo
-//     cardInfo -> cardNameInput & cardLikeButton
-//
-//     gallery > cards by template / objects array > card
-//     card = btn + img + info
-//                         info = title + like
-//
-// /////////////////////////////////////////////////////////////////////////////

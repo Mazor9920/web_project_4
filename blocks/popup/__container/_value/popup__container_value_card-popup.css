@@ -1,0 +1,12 @@
+  .popup__container_value_card-popup {
+    max-width: 75%;
+    max-height: 75%;
+    display: grid;
+    grid-template-areas:
+      "close-up-picture"
+      "picture-details";
+    grid-template-rows: max-content auto;
+    grid-template-columns: min-content;
+    grid-row-gap: 10px;
+    position: relative;
+  }

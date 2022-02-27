@@ -1,0 +1,7 @@
+.popup__close-up-picture{
+  grid-area: close-up-picture;
+  max-height: 75vh;
+  max-width: 75vw;
+  margin: 0;
+
+}

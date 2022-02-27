@@ -28,6 +28,36 @@
       </section>
 
       <section class="gallery">
+
+        <!-- debug -->
+
+        <!-- <article class="card">
+          <button class="card__delete-button" aria-label="delete-button"></button>
+          <img alt="landscape-image" class="card__picture" src="https://code.s3.yandex.net/web-code/bald-mountains.jpg">
+          <div class="card__info">
+            <h2 class="card__title">1debug</h2>
+            <button class="card__like-button" aria-label="like-button" type="button"></button>
+          </div>
+        </article> -->
+
+        <!-- <article class="card">
+          <button class="card__delete-button" aria-label="delete-button"></button>
+          <img alt="landscape-image" class="card__picture" src="https://code.s3.yandex.net/web-code/latemar.jpg">
+          <div class="card__info">
+            <h2 class="card__title">2debug</h2>
+            <button class="card__like-button" aria-label="like-button" type="button"></button>
+          </div>
+        </article> -->
+
+        <!-- <section id="card-popup" class="popup popup_opened popup_type_card-popup">
+          <div class="popup__container_value_card-popup">
+            <button class="popup__close-button_placed_card-popup" aria-label="close-button">&times;</button>
+            <img alt="landscape-image" class="popup__close-up-picture" src="https://code.s3.yandex.net/web-code/bald-mountains.jpg">
+            <p class="popup__picture-details">debug1 debug1debug1 debug1debug1debug1 debug1debug debug1debug debug1debug debug1debug debug1debug</p>
+          </div>
+        </section> -->
+
+
       </section>
 
     </main>
@@ -41,8 +71,8 @@
         <button class="popup__close-button popup__close-button_placed_edit-profile-form" aria-label="close-button"></button>
         <form action="/action_page.php" name="edit-profile-form" class="popup__form popup__form_type_edit-profile">
           <h3 class="popup__title popup__title_value_edit-profile-form">Edit profile</h3>
-          <input type="text" class="popup__input-field popup__input-field_value_profile-name" name="profile-name" value="Name" required>
-          <input type="text" class="popup__input-field popup__input-field_value_profile-job" name="profile-job" value="About me" required>
+          <input type="text" class="popup__input-field popup__input-field_value_profile-name" name="profile-name" placeholder="Name" required>
+          <input type="text" class="popup__input-field popup__input-field_value_profile-job" name="profile-job" placeholder="About me" required>
           <input type="submit" class="popup__submit-button popup__submit-button_value_profile-save" value="Save">
         </form>
       </div>
@@ -53,23 +83,22 @@
         <button class="popup__close-button popup__close-button_placed_add-card-form" aria-label="close-button"></button>
         <form action="/action_page.php" name="add-card-form" class="popup__form popup__form_type_add-card">
           <h3 class="popup__title popup__title_value_add-card-form">New place</h3>
-          <input type="text" class="popup__input-field popup__input-field_value_card-name" name="card-name" value="Title" required>
-          <input type="text" class="popup__input-field popup__input-field_value_card-link" name="card-link" value="Image link" required>
+          <input type="text" class="popup__input-field popup__input-field_value_card-name" name="card-name" placeholder="Title" required>
+          <input type="text" class="popup__input-field popup__input-field_value_card-link" name="card-link" placeholder="Image link" required>
           <input type="submit" class="popup__submit-button popup__submit-button_value_create-card" value="Create">
         </form>
       </div>
     </section>
 
-    <!-- <article class="card-popup card-popup_opened">
-      <div class="card-popup__container">
-        <button class="card-popup__close-button" aria-label="close-button">&times;</button>
-        <img src="https://code.s3.yandex.net/web-code/lago.jpg" alt="landscape-image" class="card-popup__picture">
-        <h2 class="card-popup__title">Bald Mountains</h2>
+    <section id="card-popup" class="popup popup_type_card-popup">
+      <div class="popup__container_value_card-popup">
+        <button class="popup__close-button_placed_card-popup" aria-label="close-button">&times;</button>
+        <img alt="landscape-image" class="popup__close-up-picture">
+        <p class="popup__picture-details"></p>
       </div>
-    </article> -->
+    </section>
 
   </div>
-
 
   <template id="card-template" class="template template_card">
     <article class="card">
@@ -82,16 +111,8 @@
     </article>
   </template>
 
-  <template id="card-popup-template" class="template template_card-popup">
-    <article class="card-popup">
-      <div class="card-popup__container">
-        <button class="card-popup__close-button" aria-label="close-button">&times;</button>
-        <img alt="landscape-image" class="card-popup__picture">
-        <h2 class="card-popup__title"></h2>
-      </div>
-    </article>
-  </template>
 
+  <script src="./scripts/data/cards.js"></script>
   <script src="./scripts/script.js"></script>
 
 </body>
