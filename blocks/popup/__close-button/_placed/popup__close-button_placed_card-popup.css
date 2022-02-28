@@ -1,21 +1,4 @@
-.popup__close-button_placed_card-popup{
-  border: 0;
-  padding: 0;
-  position: absolute;
-  bottom: 100%;
-  left: 100%;
-  color: white;
-  font-size: 40px;
-  background: none;
-}
-
-.popup__close-button_placed_card-popup:hover {
-  cursor: pointer;
-  opacity: 0.6;
-}
-
-@media screen and (max-width: 768px) {
-  .popup__close-button_placed_card-popup{
-    font-size: 30px;
+  .popup__close-button_placed_card-popup {
+    bottom: 100%;
+    left: 100%;
   }
-}
