@@ -57,7 +57,7 @@ loadInitialCards(initialCards);
 
 /************************      Event Listeners      ************************/
 
-/** edit-profile popup */
+/** edit-profile-form popup */
 
 profileEditButton.addEventListener("click", function(evt) {
   loadProfile();
@@ -70,8 +70,7 @@ editProfileCloseButton.addEventListener("click", function(evt) {
 
 editProfileForm.addEventListener('submit', handleProfileFormSubmit);
 
-
-/** add-card popup */
+/** add-card-form popup */
 
 addCardButton.addEventListener("click", function(evt) {
   initialInputValues();
@@ -194,7 +193,7 @@ function initialInputValues(){
   cardLinkInput.value = "";
 }
 
-/******************************   card close up   **************************/
+/********************************   card popup   ***************************/
 
 /** opens a popup-card which contain close-up and description of a specific clicked-image */
 function handlePictureClick(evt) {
