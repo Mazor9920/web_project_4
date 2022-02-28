@@ -123,7 +123,7 @@ function handleProfileFormSubmit(evt) {
 
 /*********************************   cards   ****************************/
 
- /**
+/**
  * Represents a Card Object.
  * @constructor
  * @param {string} name - the title of the card.
@@ -135,11 +135,11 @@ function Card(name, link) {
 }
 
 /** creates a new card object
-* @param {string, string} cardData - input values array: title of the card ,link of the card picture.
-* @returns {Card} newCardObject
-* {string} Card.name - the title of the card.
-* {string} Card.link - the link of the card picture.
-*/
+ * @param {string, string} cardData - input values array: title of the card ,link of the card picture.
+ * @returns {Card} newCardObject
+ * {string} Card.name - the title of the card.
+ * {string} Card.link - the link of the card picture.
+ */
 function createCard(cardData) {
   const cardName = cardData[0].value;
   const cardLink = cardData[1].value;
@@ -148,10 +148,10 @@ function createCard(cardData) {
 }
 
 /** sets up card markup and functionality out of the card-template
-* @param {Card} cardToRender - a card object
-* {string} Card.name
-* {string} Card.link
-*/
+ * @param {Card} cardToRender - a card object
+ * {string} Card.name
+ * {string} Card.link
+ */
 function renderCard(cardToRender) {
   const renderedCard = cardElement.cloneNode(true);
   const cardDeleteButton = renderedCard.querySelector(".card__delete-button");
@@ -179,16 +179,16 @@ function renderCard(cardToRender) {
 }
 
 /** makes card content appear on the gallery
-* @param {Card} card - a card object
-* {string} Card.name
-* {string} Card.link
-*/
+ * @param {Card} card - a card object
+ * {string} Card.name
+ * {string} Card.link
+ */
 function addCard(card) {
   gallery.prepend(renderCard(card));
 }
 
 /** shows the placeholders values of the input fileds if those changed */
-function initialInputValues(){
+function initialInputValues() {
   cardNameInput.value = "";
   cardLinkInput.value = "";
 }
@@ -224,8 +224,8 @@ function handleAddCardSubmit(evt) {
 /********************************   load data   ****************************/
 
 /** loads the initial Cards values using the addCard-function for each one of the cards
-* @param {Array.<Card>} initialCards - an array of cards object
-*/
+ * @param {Array.<Card>} initialCards - an array of cards object
+ */
 function loadInitialCards(initialCards) {
   initialCards.forEach((card) => {
     addCard(card);
