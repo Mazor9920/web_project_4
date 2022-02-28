@@ -1,10 +1,10 @@
-/////////////////////////////////////////////////////////////////////////////
+/***************************************************************************/
 
-/////////////////////////       DOM selecting       /////////////////////////
+/************************       DOM selecting       ************************/
 
 const content = document.querySelector("#content");
 
-// profile Elements
+/** profile Elements */
 const profile = content.querySelector(".profile");
 const profileInfo = profile.querySelector(".profile__info");
 const profileEditButton = profileInfo.querySelector(".profile__edit-button");
@@ -12,52 +12,52 @@ const addCardButton = profile.querySelector(".profile__add-button");
 const profileName = profileInfo.querySelector(".profile__name");
 const profileDetails = profileInfo.querySelector(".profile__details");
 
-// edit-profile popup Elements
+/** edit-profile popup Elements */
 const editProfilePopup = document.querySelector("#edit-profile-popup");
 const editProfilePopupContainer = editProfilePopup.querySelector(".popup__container");
 const editProfileCloseButton = editProfilePopupContainer.querySelector(".popup__close-button");
 const editProfileForm = editProfilePopupContainer.querySelector(".popup__form");
 const editProfileFormTitle = editProfileForm.querySelector(".popup__title");
 const editProfileSaveButton = editProfileForm.querySelector(".popup__submit-button");
-// user input fields
+/** user input fields */
 const profileNameInput = editProfileForm.querySelector(".popup__input-field_value_profile-name");
 const profileJobInput = editProfileForm.querySelector(".popup__input-field_value_profile-job");
 
-// gallery Elements
+/** gallery Elements */
 const gallery = content.querySelector(".gallery");
-// card template Elements
+/** card-template Elements */
 const cardTemplate = document.querySelector("#card-template").content;
 const cardElement = cardTemplate.querySelector('.card');
 
-// add-card popup Elements
+/** add-card popup Elements */
 const addCardPopup = document.querySelector("#add-card-popup");
 const addCardPopupContainer = addCardPopup.querySelector(".popup__container");
 const addCardCloseButton = addCardPopupContainer.querySelector(".popup__close-button");
 const addCardForm = addCardPopupContainer.querySelector(".popup__form");
 const addCardFormTitle = addCardForm.querySelector(".popup__title");
 const addCardCreateButton = addCardForm.querySelector(".popup__submit-button");
-// user input fields
+/** user input fields */
 const cardNameInput = addCardForm.querySelector(".popup__input-field_value_card-name");
 const cardLinkInput = addCardForm.querySelector(".popup__input-field_value_card-link");
 
-// card popup Elements
+/** card popup Elements */
 const cardPopup = document.querySelector("#card-popup");
 const cardPopupContainer = cardPopup.querySelector(".popup__container_value_card-popup");
 const cardPopupCloseButton = cardPopupContainer.querySelector(".popup__close-button_placed_card-popup");
 const cardCloseUpPicture = cardPopupContainer.querySelector(".popup__close-up-picture");
 const cardPictureDetails = cardPopupContainer.querySelector(".popup__picture-details");
 
-/////////////////////////////////////////////////////////////////////////////
+/***************************************************************************/
 
-/////////////////////////      functions calls      /////////////////////////
+/************************      functions calls      ************************/
 
 loadInitialCards(initialCards);
 
-/////////////////////////////////////////////////////////////////////////////
+/***************************************************************************/
 
-/////////////////////////      Event Listeners      /////////////////////////
+/************************      Event Listeners      ************************/
 
- // edit-profile popup 
+/** edit-profile popup */
 
 profileEditButton.addEventListener("click", function(evt) {
   loadProfile();
@@ -68,59 +68,53 @@ editProfileCloseButton.addEventListener("click", function(evt) {
   closePopup(editProfilePopup);
 });
 
-// watch the submit-form event, it won't submit anywhere just yet
 editProfileForm.addEventListener('submit', handleProfileFormSubmit);
 
 
- // add-card popup
+/** add-card popup */
 
 addCardButton.addEventListener("click", function(evt) {
+  initialInputValues();
   openPopup(addCardPopup);
-  // setInputValues();
 });
 
 addCardCloseButton.addEventListener("click", function(evt) {
   closePopup(addCardPopup);
 });
 
-// watch the submit-form event, it won't submit anywhere just yet
 addCardForm.addEventListener('submit', handleAddCardSubmit);
 
+/** card Popup */
 
-// card Popup
 cardPopupCloseButton.addEventListener("click", function(evt) {
   closePopup(cardPopup);
 });
 
-/////////////////////////////////////////////////////////////////////////////
+/***************************************************************************/
 
-/////////////////////////  functions declarations   /////////////////////////
+/************************   functions declarations   ***********************/
 
+/*******************************   generals   ******************************/
 
-
-// this function opens the popup window
+/** opens the popup window */
 function openPopup(popupElement) {
   popupElement.classList.add("popup_opened");
 }
 
-// this function closes the popup window
+/** closes the popup window */
 function closePopup(popupElement) {
   popupElement.classList.remove("popup_opened");
 }
 
-/////////////////////////////////////////////////////////////////////////////
+/*********************************   profile   *****************************/
 
-// this function shows the existing profile values on input fileds
+/** shows the existing profile values on the input fileds */
 function loadProfile() {
   profileNameInput.value = profileName.textContent;
   profileJobInput.value = profileDetails.textContent;
-  // profileNameInput.placeholder = profileName.textContent;
-  // profileJobInput.placeholder = profileDetails.textContent;
 }
 
-/////////////////////////////////////////////////////////////////////////////
-
-// this function edit the profile details by the user input
+/** edits the profile details by the user input */
 function handleProfileFormSubmit(evt) {
   evt.preventDefault();
   profileName.textContent = profileNameInput.value;
@@ -128,39 +122,37 @@ function handleProfileFormSubmit(evt) {
   closePopup(editProfilePopup);
 }
 
-/////////////////////////////////////////////////////////////////////////////
+/*********************************   cards   ****************************/
 
-// this function edit the card values by the user input
-function handleAddCardSubmit(evt) {
-  evt.preventDefault();
-  const inputCardData = evt.target.closest(".popup__form_type_add-card").querySelectorAll(".popup__input-field");
-  const inputCard = createCard(inputCardData);
-  addCard(inputCard);
-  closePopup(addCardPopup);
-}
-
-/////////////////////////////////////////////////////////////////////////////
-
-
-// Constructor function for a Card Objects
+ /**
+ * Represents a Card Object.
+ * @constructor
+ * @param {string} name - the title of the card.
+ * @param {string} link - the link of the card picture.
+ */
 function Card(name, link) {
   this.name = name;
   this.link = link;
 }
 
-
-/////////////////////////////////////////////////////////////////////////////
-
-// this function creates a new card object
+/** creates a new card object
+* @param {string, string} cardData - input values array: title of the card ,link of the card picture.
+* @returns {Card} newCardObject
+* {string} Card.name - the title of the card.
+* {string} Card.link - the link of the card picture.
+*/
 function createCard(cardData) {
   const cardName = cardData[0].value;
   const cardLink = cardData[1].value;
-  const newCard = new Card(cardName, cardLink);
-  return newCard;
+  const newCardObject = new Card(cardName, cardLink);
+  return newCardObject;
 }
 
-/////////////////////////////////////////////////////////////////////////////
-
+/** sets up card markup and functionality out of the card-template
+* @param {Card} cardToRender - a card object
+* {string} Card.name
+* {string} Card.link
+*/
 function renderCard(cardToRender) {
   const renderedCard = cardElement.cloneNode(true);
   const cardDeleteButton = renderedCard.querySelector(".card__delete-button");
@@ -169,8 +161,12 @@ function renderCard(cardToRender) {
   const cardTitle = cardInfo.querySelector(".card__title");
   const cardLikeButton = cardInfo.querySelector(".card__like-button");
 
-  cardTitle.textContent = cardToRender.name;
-  cardPicture.src = cardToRender.link;
+  const cardLink = cardToRender.link;
+  const cardName = cardToRender.name;
+
+  cardTitle.textContent = cardName;
+  cardPicture.src = cardLink;
+  cardPicture.alt = "picture of " + cardName;
 
   cardLikeButton.addEventListener("click", function(evt) {
     evt.target.classList.toggle("card__like-button_active");
@@ -183,26 +179,32 @@ function renderCard(cardToRender) {
   return renderedCard;
 }
 
-
-
-// this function gets a card, render and adds it to the DOM
-// make its content appear on the gallery
+/** makes card content appear on the gallery
+* @param {Card} card - a card object
+* {string} Card.name
+* {string} Card.link
+*/
 function addCard(card) {
   gallery.prepend(renderCard(card));
 }
 
+/** shows the placeholders values of the input fileds if those changed */
+function initialInputValues(){
+  cardNameInput.value = "";
+  cardLinkInput.value = "";
+}
 
-/////////////////////////////////////////////////////////////////////////////
+/******************************   card close up   **************************/
 
-// This function opens a popup-card which contain close-up of a specific clicked-image
+/** opens a popup-card which contain close-up and description of a specific clicked-image */
 function handlePictureClick(evt) {
   const cardPicture = evt.target;
   const cardToPopup = evt.target.closest(".card");
   const cardInfo = cardToPopup.querySelector(".card__info");
   const cardTitle = cardInfo.querySelector(".card__title");
 
-  cardPopupLink = cardPicture.src;
-  cardPopupName = cardTitle.textContent;
+  const cardPopupLink = cardPicture.src;
+  const cardPopupName = cardTitle.textContent;
 
   cardPictureDetails.textContent = cardPopupName;
   cardCloseUpPicture.src = cardPopupLink;
@@ -211,14 +213,24 @@ function handlePictureClick(evt) {
   openPopup(cardPopup);
 }
 
+/** edits the card values by the user input */
+function handleAddCardSubmit(evt) {
+  evt.preventDefault();
+  const inputCardData = evt.target.closest(".popup__form_type_add-card").querySelectorAll(".popup__input-field");
+  const inputCard = createCard(inputCardData);
+  addCard(inputCard);
+  closePopup(addCardPopup);
+}
 
-/////////////////////////////////////////////////////////////////////////////
+/********************************   load data   ****************************/
 
-// this function loads the initial Cards values using the addCard-function for each one of them
+/** loads the initial Cards values using the addCard-function for each one of the cards
+* @param {Array.<Card>} - an array of cards object
+*/
 function loadInitialCards(initialCards) {
   initialCards.forEach((card) => {
     addCard(card);
   });
 }
 
-/////////////////////////////////////////////////////////////////////////////
+/***************************************************************************/
