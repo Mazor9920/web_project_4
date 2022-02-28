@@ -224,7 +224,7 @@ function handleAddCardSubmit(evt) {
 /********************************   load data   ****************************/
 
 /** loads the initial Cards values using the addCard-function for each one of the cards
-* @param {Array.<Card>} - an array of cards object
+* @param {Array.<Card>} initialCards - an array of cards object
 */
 function loadInitialCards(initialCards) {
   initialCards.forEach((card) => {
