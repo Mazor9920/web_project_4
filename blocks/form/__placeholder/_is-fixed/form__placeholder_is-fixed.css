@@ -1,0 +1,9 @@
+.form__placeholder_is-fixed {
+  font-size: 12px;
+  line-height: 14px;
+  -webkit-transform: translateY(-160%) scale(1);
+  -moz-transform: translateY(-160%) scale(1);
+  -ms-transform: translateY(-160%) scale(1);
+  -o-transform: translateY(-160%) scale(1);
+  transform: translateY(-160%) scale(1);
+}

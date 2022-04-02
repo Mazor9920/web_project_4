@@ -8,7 +8,7 @@
 @import url("../blocks/footer/footer.css");
 @import url("../blocks/popup/popup.css");
 
-/* Blocks/Elements within another Blocks */
+/*  nasted Blocks */
 
 /* logo Block (included in header Block) */
 @import url("../blocks/logo/logo.css");
@@ -16,6 +16,14 @@
 /* content Blocks */
 @import url("../blocks/profile/profile.css");
 @import url("../blocks/gallery/gallery.css");
+
+/* card Block - cloned & Reused template of gallery Block */
+@import url("../blocks/card/card.css");
+
+/* form Block (included in popup Block) */
+@import url("../blocks/form/form.css");
+
+/* Elements & Modifiers of Blocks */
 
 /* profile Elements */
 @import url("../blocks/profile/__picture/profile__picture.css");
@@ -25,10 +33,6 @@
 @import url("../blocks/profile/__edit-button/profile__edit-button.css");
 @import url("../blocks/profile/__add-button/profile__add-button.css");
 
-/* gallery template Blocks (Reused block) */
-
-/* card Block */
-@import url("../blocks/card/card.css");
 /* card Elements */
 @import url("../blocks/card/__picture/card__picture.css");
 @import url("../blocks/card/__info/card__info.css");
@@ -38,22 +42,33 @@
 /* card__like-button modifier */
 @import url("../blocks/card/__like-button/_active/card__like-button_active.css");
 
-/* footer Blocks */
+/* footer Elements */
 @import url("../blocks/footer/__copyright/footer__copyright.css");
 
 /* popup Elements */
+@import url("../blocks/popup/__form/popup__form.css");
 @import url("../blocks/popup/__container/popup__container.css");
 @import url("../blocks/popup/__close-button/popup__close-button.css");
-@import url("../blocks/popup/__title/popup__title.css");
-@import url("../blocks/popup/__form/popup__form.css");
-@import url("../blocks/popup/__input-field/popup__input-field.css");
-@import url("../blocks/popup/__submit-button/popup__submit-button.css");
 @import url("../blocks/popup/__close-up-picture/popup__close-up-picture.css");
 @import url("../blocks/popup/__picture-details/popup__picture-details.css");
 /* popup Modifiers */
 @import url("../blocks/popup/_opened/popup_opened.css");
 @import url("../blocks/popup/__container/_value/popup__container_value_card-popup.css");
 @import url("../blocks/popup/__close-button/_placed/popup__close-button_placed_card-popup.css");
+
+/* form Elements */
+/* @import url("../blocks/form/__set/form__set.css"); */
+@import url("../blocks/form/__title/form__title.css");
+@import url("../blocks/form/__field/form__field.css");
+@import url("../blocks/form/__input/form__input.css");
+@import url("../blocks/form/__placeholder/form__placeholder.css");
+@import url("../blocks/form/__input-error/form__input-error.css");
+@import url("../blocks/form/__submit-button/form__submit-button.css");
+/* form Modifiers */
+@import url("../blocks/form/__input/_type/_error/form__input_type_error.css");
+@import url("../blocks/form/__placeholder/_is-fixed/form__placeholder_is-fixed.css");
+@import url("../blocks/form/__input-error/_visible/form__input-error_visible.css");
+@import url("../blocks/form/__submit-button/_disabled/form__submit-button_disabled.css");
 
 
 /* Global Styles */

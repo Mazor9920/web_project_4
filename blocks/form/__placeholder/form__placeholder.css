@@ -1,0 +1,29 @@
+.form__placeholder {
+  color: #C4C4C4;
+  font-size: 16px;
+  line-height: 19px;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  -webkit-transform: translateY(-50%) scale(1);
+  -moz-transform: translateY(-50%) scale(1);
+  -ms-transform: translateY(-50%) scale(1);
+  -o-transform: translateY(-50%) scale(1);
+  transform: translateY(-50%) scale(1);
+  -webkit-transition: 0.3s;
+  -moz-transition: 0.3s;
+  -ms-transition: 0.3s;
+  -o-transition: 0.3s;
+  transition: 0.3s;
+  pointer-events: none;
+}
+
+.form__input:focus+.form__placeholder {
+  font-size: 12px;
+  line-height: 14px;
+  -webkit-transform: translateY(-160%) scale(1);
+  -moz-transform: translateY(-160%) scale(1);
+  -ms-transform: translateY(-160%) scale(1);
+  -o-transform: translateY(-160%) scale(1);
+  transform: translateY(-160%) scale(1);
+}

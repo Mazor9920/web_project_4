@@ -28,30 +28,6 @@
       </section>
 
       <section class="gallery">
-        <!-- debug -->
-        <!-- <article class="card">
-          <button class="card__delete-button" aria-label="delete-button"></button>
-          <img alt="landscape-image" class="card__picture" src="https://code.s3.yandex.net/web-code/bald-mountains.jpg">
-          <div class="card__info">
-            <h2 class="card__title">1debug</h2>
-            <button class="card__like-button" aria-label="like-button" type="button"></button>
-          </div>
-        </article> -->
-        <!-- <article class="card">
-          <button class="card__delete-button" aria-label="delete-button"></button>
-          <img alt="landscape-image" class="card__picture" src="https://code.s3.yandex.net/web-code/latemar.jpg">
-          <div class="card__info">
-            <h2 class="card__title">2debug</h2>
-            <button class="card__like-button" aria-label="like-button" type="button"></button>
-          </div>
-        </article> -->
-        <!-- <section id="card-popup" class="popup popup_opened popup_type_card-popup">
-          <div class="popup__container_value_card-popup">
-            <button class="popup__close-button_placed_card-popup" aria-label="close-button">&times;</button>
-            <img alt="landscape-image" class="popup__close-up-picture" src="https://code.s3.yandex.net/web-code/bald-mountains.jpg">
-            <p class="popup__picture-details">debug1 debug1debug1 debug1debug1debug1 debug1debug debug1debug debug1debug debug1debug debug1debug</p>
-          </div>
-        </section> -->
       </section>
 
     </main>
@@ -63,11 +39,22 @@
     <section id="edit-profile-popup" class="popup popup_type_edit-profile">
       <div class="popup__container popup__container_value_edit-profile-form">
         <button class="popup__close-button popup__close-button_placed_edit-profile-form" aria-label="close-button"></button>
-        <form action="/action_page.php" name="edit-profile-form" class="popup__form popup__form_type_edit-profile">
-          <h3 class="popup__title popup__title_value_edit-profile-form">Edit profile</h3>
-          <input type="text" class="popup__input-field popup__input-field_value_profile-name" name="profile-name" placeholder="Name" required>
-          <input type="text" class="popup__input-field popup__input-field_value_profile-job" name="profile-job" placeholder="About me" required>
-          <input type="submit" class="popup__submit-button popup__submit-button_value_profile-save" value="Save">
+        <form action="/action_page.php" name="edit-profile-form" class="form popup__form form__type_edit-profile" novalidate>
+          <h3 class="form__title form__title_placed_edit-profile-form">Edit profile</h3>
+
+          <label class="form__field">
+            <input type="text" id="profile-name-input" class="form__input form__input_value_profile-name" name="profile-name" minlength="2" maxlength="40" required>
+            <span class="form__placeholder profile-name-input-placeholder">Name</span>
+            <span class="form__input-error profile-name-input-error"></span>
+          </label>
+
+          <label class="form__field">
+            <input type="text" id="profile-job-input" class="form__input form__input_value_profile-job" name="profile-job" minlength="2" maxlength="200" required>
+            <span class="form__placeholder profile-job-input-placeholder">About me</span>
+            <span class="form__input-error profile-job-input-error"></span>
+          </label>
+
+          <button type="submit" class="form__submit-button form__submit-button_value_profile-save">Save</button>
         </form>
       </div>
     </section>
@@ -75,11 +62,22 @@
     <section id="add-card-popup" class="popup popup_type_add-card">
       <div class="popup__container popup__container_value_add-card-form">
         <button class="popup__close-button popup__close-button_placed_add-card-form" aria-label="close-button"></button>
-        <form action="/action_page.php" name="add-card-form" class="popup__form popup__form_type_add-card">
-          <h3 class="popup__title popup__title_value_add-card-form">New place</h3>
-          <input type="text" class="popup__input-field popup__input-field_value_card-name" name="card-name" placeholder="Title" required>
-          <input type="text" class="popup__input-field popup__input-field_value_card-link" name="card-link" placeholder="Image link" required>
-          <input type="submit" class="popup__submit-button popup__submit-button_value_create-card" value="Create">
+        <form action="/action_page.php" name="add-card-form" class="form popup__form form__type_add-card" novalidate>
+          <h3 class="form__title form__title_placed_add-card-form">New place</h3>
+
+          <label class="form__field">
+            <input type="text" id="card-name-input" class="form__input form__input_value_card-name" name="card-name" minlength="1" maxlength="30" required>
+            <span class="form__placeholder card-name-input-placeholder">Title</span>
+            <span class="form__input-error card-name-input-error"></span>
+          </label>
+
+          <label class="form__field">
+            <input type="url" id="card-link-input" class="form__input form__input_value_card-link" name="card-link" required>
+            <span class="form__placeholder card-link-input-placeholder">Image link</span>
+            <span class="form__input-error card-link-input-error"></span>
+          </label>
+
+          <button type="submit" class="form__submit-button form__submit-button_value_create-card">Create</button>
         </form>
       </div>
     </section>
@@ -87,7 +85,11 @@
     <section id="card-popup" class="popup popup_type_card-popup">
       <div class="popup__container popup__container_value_card-popup">
         <button class="popup__close-button popup__close-button_placed_card-popup" aria-label="close-button"></button>
+<<<<<<< HEAD
         <img alt="landscape-image" class="popup__close-up-picture" src=" ">
+=======
+        <img alt="landscape-image" class="popup__close-up-picture" src="">
+>>>>>>> cafe29c (refactor: project 5 after code review #1)
         <p class="popup__picture-details"></p>
       </div>
     </section>
@@ -107,6 +109,8 @@
 
   <script src="./scripts/data/cards.js"></script>
   <script src="./scripts/script.js"></script>
+  <script src="./scripts/forms_activate.js"></script>
+  <script src="./scripts/forms_validate.js"></script>
 
 </body>
 
