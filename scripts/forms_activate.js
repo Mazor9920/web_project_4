@@ -1,3 +1,5 @@
+/*************************   form-activation functions  *************************/
+
 const isEmpty = (formElement, inputElement) => {
   !inputElement.value.length >= 1 ? unfreezePlaceholder(formElement, inputElement) :
     freezePlaceholder(formElement, inputElement);

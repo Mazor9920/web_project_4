@@ -1,3 +1,5 @@
+/*************************   form-validation functions  *************************/
+
 const showInputError = (formElement, inputElement, errorMessage) => {
   const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
   inputElement.classList.add("form__input_type_error");
@@ -94,7 +96,8 @@ const enableValidation = (settings) => {
 };
 
 // enabling forms validation
-// accepts all the settings by configuration object which contains class names and class selectors
+// accepts all the settings by configuration object
+// which contains class names and class selectors
 enableValidation({
   formSelector: ".form",
   inputSelector: ".form__input",

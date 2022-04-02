@@ -97,17 +97,6 @@ cardPopupCloseButton.addEventListener("click", function(evt) {
 
 /************************   functions declarations   ***********************/
 
-/*******************************   generals   ******************************/
-
-/** opens the popup window */
-function openPopup(popupElement) {
-  popupElement.classList.add("popup_opened");
-}
-
-/** closes the popup window */
-function closePopup(popupElement) {
-  popupElement.classList.remove("popup_opened");
-}
 
 /*********************************   profile   *****************************/
 
@@ -118,12 +107,6 @@ function loadProfile() {
   freezePlaceholder(editProfileForm, profileNameInput);
   freezePlaceholder(editProfileForm, profileJobInput);
 }
-
-// const freezePlaceholder = (formElement, inputElement) => {
-//   const placeholderElement = formElement.querySelector(`.${inputElement.id}-placeholder`);
-//   placeholderElement.classList.add('form__placeholder_is-fixed');
-// };
-
 
 /** edits the profile details by the user input */
 function handleProfileFormSubmit(evt) {

@@ -19,15 +19,16 @@
   text-align: left;
 }
 
-.form__input {
-  /* background: transparent; */
-}
-
 /* DEBUG:  */
 .form__input:hover {
-  border-bottom-color: #000;
+  border-bottom-color: #008B8B;
 }
 
 .form__input:focus {
-  border-bottom-color: green;
+  border-bottom-color: black;
+  background-color: #FFFFE0;
+}
+
+.form__input:focusout{
+  background: transparent;
 }
