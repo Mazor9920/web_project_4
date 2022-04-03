@@ -27,7 +27,3 @@
   border-bottom-color: black;
   background-color: #FFFFE0;
 }
-
-.form__input:focusout{
-  background: none;
-}
