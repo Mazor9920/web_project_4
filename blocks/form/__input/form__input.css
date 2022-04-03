@@ -29,5 +29,5 @@
 }
 
 .form__input:focusout{
-  background: transparent;
+  background: none;
 }
