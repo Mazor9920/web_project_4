@@ -19,7 +19,6 @@
   text-align: left;
 }
 
-/* DEBUG:  */
 .form__input:hover {
   border-bottom-color: #008B8B;
 }
