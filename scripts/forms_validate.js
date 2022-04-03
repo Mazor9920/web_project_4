@@ -22,82 +22,62 @@ const checkInputValidity = (formElement, inputElement) => {
   }
 };
 
-// The function takes an array of form fields
-// and returns true if at least one field is invalid,
-// and returns false if all of them are valid.
-// The hasInvalidInput() function only checks for an invalid field
-// and signals whether the "Submit" button can be unlocked.
-// But it doesn't modify the "Submit" button itself.
+/** iterate over inputs array using the some() method
+* @param {Array.<inputElement>} inputList - an array of input Elements
+* @returns {boolean} - true if at least one input field is invalid
+*/
 const hasInvalidInput = (inputList) => {
-  // iterate over the array using the some() method
   return inputList.some((inputElement) => {
-    // If the field is invalid, the callback will return true.
-    // The method will then stop, and hasInvalidInput() function will return true
     return !inputElement.validity.valid;
   })
 };
 
 
-// function to control if the button is active or not
-// The function takes an array of input fields
-// and the button element, whose state you need to change
-// check all of the fields to know when the button should be active.
-// If all of our fields are valid - make the button active,
-// but if at least one is not valid - disable it.
+/** enable or disable form-submission according to the input validation
+* @param {Array.<inputElement>} inputList - an array of input Elements
+* @param buttonElement - button to control if is active or not
+*/
 const toggleButtonState = (inputList, buttonElement) => {
-  // If there is at least one invalid input
+  // at least one invalid input
   if (hasInvalidInput(inputList)) {
-    // make the button inactive
     buttonElement.classList.add("form__submit-button_disabled");
   } else {
-    // otherwise, make it active
     buttonElement.classList.remove("form__submit-button_disabled");
   }
 };
 
+/** enable or disable forms-submission */
 const setEventListeners = (formElement) => {
-  // Find all the form fields and make an array of them
   const inputList = Array.from(formElement.querySelectorAll(".form__input"));
-  // Find the submit button in the current form
+  // submit button in the current form
   const buttonElement = formElement.querySelector(".form__submit-button");
 
-  // check the button's active status on the first page load,
-  // and make it inactive until data is input to any of the fields.
+  // check button status and inactive it on the first page load
   toggleButtonState(inputList, buttonElement);
 
   inputList.forEach((inputElement) => {
     inputElement.addEventListener("input", () => {
       checkInputValidity(formElement, inputElement);
-
-      // pass an array of form fields and the button to it
-      // This will check the button's status upon every input change in any of the fields.
+      // check the button's status upon every input change in any of the inputs
       toggleButtonState(inputList, buttonElement);
     });
   });
 };
 
-const enableValidation = (settings) => {
 
-  // DEBUG:
-  // console.log(settings);
-
+/** enables forms validation
+ * @param {Object} settings - configuration object which contains generals classes and selectors names
+ */
+ const enableValidation = (settings) => {
   const formList = Array.from(document.querySelectorAll(settings.formSelector));
-
-  // DEBUG:
-  // console.log(formList);
-
   formList.forEach((formElement) => {
     formElement.addEventListener("submit", (evt) => {
       evt.preventDefault();
     });
     setEventListeners(formElement);
-    // setEventListeners(formElement, settings);
   });
 };
 
-// enabling forms validation
-// accepts all the settings by configuration object
-// which contains class names and class selectors
 enableValidation({
   formSelector: ".form",
   inputSelector: ".form__input",

@@ -17,7 +17,6 @@ const editProfilePopup = document.querySelector("#edit-profile-popup");
 const editProfilePopupContainer = editProfilePopup.querySelector(".popup__container");
 const editProfileCloseButton = editProfilePopupContainer.querySelector(".popup__close-button");
 const editProfileForm = editProfilePopupContainer.querySelector(".popup__form");
-// const editProfileForm = document.forms.edit-profile-form;
 
 const editProfileFormTitle = editProfileForm.querySelector(".form__title");
 const editProfileSaveButton = editProfileForm.querySelector(".form__submit-button");
@@ -36,7 +35,6 @@ const addCardPopup = document.querySelector("#add-card-popup");
 const addCardPopupContainer = addCardPopup.querySelector(".popup__container");
 const addCardCloseButton = addCardPopupContainer.querySelector(".popup__close-button");
 const addCardForm = addCardPopupContainer.querySelector(".popup__form");
-// const addCardForm = document.forms.add-card-form;
 
 const addCardFormTitle = addCardForm.querySelector(".form__title");
 const addCardCreateButton = addCardForm.querySelector(".form__submit-button");

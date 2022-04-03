@@ -5,12 +5,16 @@
 ### Project Description and its Functionality:
 
 HTML page, styled by CSS, and Connected Third-Party Code including Fonts.  
-The web page contains images, buttons, and grid layouts.
-JS code is set its behavior, which triggered by clicking buttons.
-
+The web page contains templates, forms, popups, images, buttons and grid layouts.
+JS code sets its behavior - activation and validation of forms, Importing content using HTML templates, and control popups functionality which is triggered by pressing keys or clicking buttons/windows.
 
 ### Technologies Description and Used Techniques:
-
+* Creating popups and managing their display, which helps to create a much better UX/UI.
+Coding some features which allow the users to close popups by clicking on the overlay or by pressing the Esc key.
+* Implementing instant form validation by instantly checking and responding to user inputs:
+ user-friendly customizing for easier and pleasant users interaction on the Client-side.
+ Verification of the correct format data input and the process-server safety on the Server-side.
+* Working with the standard browser methods as well as methods crafted using custom JavaScript, with the assistance of regular expressions.
 * Positioning elements using Flexbox, Grid layouts and Grid Areas to create adaptive and responsive web-page which change depending on the width of the browser window, avoiding horizontal scrolling, and allow using different devices.
 For Optimizing responsiveness I used Media Queries, The Fr Unit, Meta Tags, the calc() Function
 * I used prefixes where in special layout or borders to maintain the code mobility.
