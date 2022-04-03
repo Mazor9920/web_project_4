@@ -208,7 +208,7 @@ function handlePictureClick(evt) {
 /** edits the card values by the user input */
 function handleAddCardSubmit(evt) {
   evt.preventDefault();
-  const inputCardData = evt.target.closest(".form__type_add-card").querySelectorAll(".form__input");
+  const inputCardData = evt.target.closest(".form_type_add-card").querySelectorAll(".form__input");
   const inputCard = createCard(inputCardData);
   addCard(inputCard);
   closePopup(addCardPopup);
