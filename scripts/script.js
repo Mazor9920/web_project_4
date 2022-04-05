@@ -38,9 +38,6 @@ const addCardForm = addCardPopupContainer.querySelector(".popup__form");
 
 const addCardFormTitle = addCardForm.querySelector(".form__title");
 const addCardCreateButton = addCardForm.querySelector(".form__submit-button");
-/** user input fields */
-const cardNameInput = addCardForm.querySelector(".form__input_value_card-name");
-const cardLinkInput = addCardForm.querySelector(".form__input_value_card-link");
 
 /** card popup Elements */
 const cardPopup = document.querySelector("#card-popup");
@@ -75,7 +72,7 @@ editProfileForm.addEventListener('submit', handleProfileFormSubmit);
 /** add-card-form popup */
 
 addCardButton.addEventListener("click", function(evt) {
-  initialInputValues();
+  resetCardForm(settings, addCardForm);
   openPopup(addCardPopup);
 });
 
@@ -104,6 +101,9 @@ function loadProfile() {
   profileJobInput.value = profileDetails.textContent;
   freezePlaceholder(editProfileForm, profileNameInput);
   freezePlaceholder(editProfileForm, profileJobInput);
+  hideInputError(settings, editProfileForm, profileNameInput);
+  hideInputError(settings, editProfileForm, profileJobInput);
+  editProfileSaveButton.classList.add(settings.inactiveButtonClass);
 }
 
 /** edits the profile details by the user input */
@@ -133,9 +133,9 @@ function Card(name, link) {
  * {string} Card.name - the title of the card.
  * {string} Card.link - the link of the card picture.
  */
-function createCard(cardData) {
-  const cardName = cardData[0].value;
-  const cardLink = cardData[1].value;
+function createCard(addCardForm) {
+  const cardName = addCardForm.querySelector(".form__input_value_card-name").value;
+  const cardLink = addCardForm.querySelector(".form__input_value_card-link").value;
   const newCardObject = new Card(cardName, cardLink);
   return newCardObject;
 }
@@ -158,7 +158,7 @@ function renderCard(cardToRender) {
 
   cardTitle.textContent = cardName;
   cardPicture.src = cardLink;
-  cardPicture.alt = "picture of " + cardName;
+  cardPicture.alt = `picture of ${cardName}`;
 
   cardLikeButton.addEventListener("click", function(evt) {
     evt.target.classList.toggle("card__like-button_active");
@@ -180,11 +180,7 @@ function addCard(card) {
   gallery.prepend(renderCard(card));
 }
 
-/** shows the placeholders values of the input fileds if those changed */
-function initialInputValues() {
-  cardNameInput.value = "";
-  cardLinkInput.value = "";
-}
+
 
 /********************************   card popup   ***************************/
 
@@ -200,7 +196,7 @@ function handlePictureClick(evt) {
 
   cardPictureDetails.textContent = cardPopupName;
   cardCloseUpPicture.src = cardPopupLink;
-  cardCloseUpPicture.alt = "close up picture of " + cardPopupName;
+  cardCloseUpPicture.alt = `close up picture of ${cardPopupName}`;
 
   openPopup(cardPopup);
 }
@@ -208,8 +204,8 @@ function handlePictureClick(evt) {
 /** edits the card values by the user input */
 function handleAddCardSubmit(evt) {
   evt.preventDefault();
-  const inputCardData = evt.target.closest(".form").querySelectorAll(".form__input");
-  const inputCard = createCard(inputCardData);
+  const addCardForm = evt.target.closest(".form");
+  const inputCard = createCard(addCardForm);
   addCard(inputCard);
   closePopup(addCardPopup);
 }
