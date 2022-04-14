@@ -92,12 +92,13 @@
 
   </div>
 
+
   <template id="card-template" class="template template_card">
     <article class="card">
       <button class="card__delete-button" aria-label="delete-button"></button>
-      <img alt="landscape-image" class="card__picture" src=" ">
+      <img id="card-link-input-load-src" alt="landscape-image" class="card__picture" src=" ">
       <div class="card__info">
-        <h2 class="card__title"></h2>
+        <h2 id="card-name-input-load-value" class="card__title"></h2>
         <button class="card__like-button" aria-label="like-button" type="button"></button>
       </div>
     </article>
@@ -107,10 +108,15 @@
   <script src="./scripts/data/settings.js"></script>
   <script src="./scripts/data/cards.js"></script>
 
+  <!-- <script type="module" src="./scripts/classes/Card.js"></script>
+  <script type="module" src="./scripts/classes/FormValidator.js"></script>
+  <script type="module" src="./scripts/index.js"></script> -->
+
   <script src="./scripts/classes/Card.js"></script>
   <script src="./scripts/classes/FormValidator.js"></script>
-
   <script src="./scripts/index.js"></script>
+
+
   <script src="./scripts/utils.js"></script>
   <script src="./scripts/calls.js"></script>
 

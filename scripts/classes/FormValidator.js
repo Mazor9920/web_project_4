@@ -16,6 +16,7 @@ class FormValidator {
   _addTemplateElements() {
     this._submitButtonElement = this._formElement.querySelector(formSettings.submitButtonSelector);
     this._inputsList = Array.from(this._formElement.querySelectorAll(this._formSettings.inputSelector));
+    this._formPopup = this._formElement.closest(formSettings.formPopupClass);
   }
 
   _setCustomPlaceholders() {
@@ -45,13 +46,20 @@ class FormValidator {
 
     this._formElement.addEventListener("submit", (evt) => {
       evt.preventDefault();
+      this._handleSubmissionProcess();
     });
 
     this._enableInputsValidation();
 
     // check button status and inactive it on the first page load
     this._toggleButtonState();
-  };
+  }
+
+  _handleSubmissionProcess() {
+    this._handleSubmissionData();
+
+    closePopup(this._formPopup);
+  }
 
   /** enable or disable form-submission according to the input validation */
   _toggleButtonState() {
@@ -111,10 +119,21 @@ class FormValidator {
     return !(this._submitButtonElement.classList.contains(formSettings.inactiveButtonClass));
   }
 
+  _handleSubmissionData() {
+    if (this._isSubmissionValid()) {
+      this._validInputsList = this._inputsList.reduce((fieldData, inputElement) => {
+        fieldData[inputElement.id] = inputElement.value;
+        return fieldData;
+      }, {});
+    } else {
+      delete this._validInputsList;
+    }
+  }
+
 }
 
-
 class ResetFormValidator extends FormValidator {
+
   constructor(formSettings, formElement) {
     super(formSettings, formElement);
   }
@@ -130,8 +149,8 @@ class ResetFormValidator extends FormValidator {
 
     this._toggleButtonState();
   }
-}
 
+}
 
 class ReloadFormValidator extends FormValidator {
 
@@ -150,6 +169,7 @@ class ReloadFormValidator extends FormValidator {
     this._submitButtonElement.classList.add(this._formSettings.inactiveButtonClass);
   }
 
+
   _loadUzerInput() {
     this._inputsList.forEach((inputElement) => {
       this._loadElementsContainer.querySelector(`#${inputElement.id}-load-value`).textContent = inputElement.value;
@@ -157,4 +177,17 @@ class ReloadFormValidator extends FormValidator {
     this._submitButtonElement.classList.add(this._formSettings.inactiveButtonClass);
   }
 
+  _handleSubmissionData() {
+    if (this._isSubmissionValid()) {
+      this._loadUzerInput();
+    }
+  };
+
 }
+
+
+// export {
+//   FormValidator,
+//   ResetFormValidator,
+//   ReloadFormValidator
+// };

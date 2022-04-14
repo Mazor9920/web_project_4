@@ -4,6 +4,7 @@
 // stores selectors and classes for form Class
 const formSettings = {
   formSelector: `.form`,
+  formPopupClass: `.popup`,
   inputSelector: `.form__input`,
   submitButtonSelector: `.form__submit-button`,
   inactiveButtonClass: `form__submit-button_disabled`,

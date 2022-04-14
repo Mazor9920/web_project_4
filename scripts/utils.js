@@ -1,10 +1,12 @@
   /***************************************************************************/
 
   /** Various utility functions that are used throughout the codebase.
+   *  Contain the event handlers and the function that opens/closes modal windows.
    * @module utils
    */
 
   /***************************************************************************/
+
 
   /************************      Event Listeners      ************************/
 
@@ -18,8 +20,6 @@
   editProfileCloseButton.addEventListener("click", function(evt) {
     closePopup(editProfilePopup);
   });
-
-  editProfileForm.addEventListener('submit', handleProfileFormSubmit);
 
   /** add-card-form popup */
 
@@ -74,31 +74,4 @@
       const openedPopupElement = document.querySelector(".popup_opened");
       closePopup(openedPopupElement);
     }
-  }
-
-  /************************   add-card-form popup   ************************/
-
-  /** edits the card values by the user input */
-  function handleAddCardSubmit(evt) {
-    evt.preventDefault();
-
-    const uzerCardForm = evt.target;
-    const inputCard = getCardByUzer(uzerCardForm);
-
-    if (validatableForms.addCard._isSubmissionValid()) {
-      inputCard._addCardToGallery(gallery);
-    }
-    closePopup(addCardPopup);
-  }
-
-  /**********************   edit-profile-form popup   **********************/
-
-  /** edits the profile details by the user input */
-  function handleProfileFormSubmit(evt) {
-    evt.preventDefault();
-
-    if (validatableForms.editProfile._isSubmissionValid()) {
-      validatableForms.editProfile._loadUzerInput();
-    }
-    closePopup(editProfilePopup);
   }

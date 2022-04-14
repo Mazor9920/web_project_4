@@ -1,10 +1,19 @@
 /***************************************************************************/
+//
+// import {
+//   Card as Card,
+//   PopupCard as PopupCard
+// } from "./classes/Card.js";
+//
+// import {
+//   FormValidator as FormValidator,
+//   ResetFormValidator as ResetFormValidator,
+//   ReloadFormValidator as ReloadFormValidator
+// } from "./classes/FormValidator.js";
 
 /************************   functions declarations   ***********************/
 
-/**********************************   forms   ******************************/
-
-
+/*********************************   forms   *******************************/
 
 /** enables all forms validation */
 function getValidatableForm(formElement) {
@@ -26,39 +35,16 @@ function getValidatableForm(formElement) {
   return validatableForm;
 }
 
-
-
 /**********************************   cards   ******************************/
 
-
 /** loads the initial values using the addCard-function for each one of the cards
- * @param {Array.<CaritialCards - an array of cards object
+ * @param {Array.<initialCards>} - an array of cards object
  */
 function loadDataCards(initialCards) {
   initialCards.forEach((cardData) => {
-    const cardByData = getCardByData(cardData);
+    const cardByData = createCard(cardData);
     cardByData._addCardToGallery(gallery);
   });
-}
-
-function getCardByData(cardData) {
-  return createCard(cardData);
-}
-
-function getCardByUzer(addCardForm) {
-  const userCardData = getUserCardData(addCardForm);
-  const cardByUser = createCard(userCardData);
-  return cardByUser;
-}
-
-function getUserCardData(addCardForm) {
-  const inputCardData = {};
-  const inputCardNameElement = addCardForm.querySelector(cardSettings.inputCardNameSelector);
-  const inputCardLinkElement = addCardForm.querySelector(cardSettings.inputCardLinkSelector);
-
-  inputCardData.name = inputCardNameElement.value;
-  inputCardData.link = inputCardLinkElement.value;
-  return inputCardData;
 }
 
 function createCard(cardData) {
@@ -66,5 +52,39 @@ function createCard(cardData) {
   newCard.generateCard();
   return newCard;
 }
+
+function loadCardByUzer(userCardValidInputsList) {
+  const userCardData = [];
+  userCardData.name = userCardValidInputsList[`card-name-input`];
+  userCardData.link = userCardValidInputsList[`card-link-input`];
+  const cardByUser = createCard(userCardData);
+  cardByUser._addCardToGallery(gallery);
+}
+
+/************************   add-card-form popup   ************************/
+
+/** edits the card values by the user input */
+function handleAddCardSubmit(evt) {
+  evt.preventDefault();
+  // const uzerCardForm = evt.target;
+  // const inputCard = getCardByUzer(uzerCardForm);
+  if (`_validInputsList` in validatableForms.addCard){
+    const userCardValidInputsList = validatableForms.addCard._validInputsList;
+    loadCardByUzer(userCardValidInputsList);
+  }
+
+  closePopup(addCardPopup);
+}
+
+/***************************************************************************/
+
+/************************      functions calls      ************************/
+
+/** enables forms validation on page loading */
+const validatableForms = [];
+validatableForms.addCard = getValidatableForm(addCardForm);
+validatableForms.editProfile = getValidatableForm(editProfileForm);
+
+loadDataCards(initialCards);
 
 /***************************************************************************/
