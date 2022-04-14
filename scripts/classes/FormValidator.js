@@ -1,115 +1,168 @@
-// the code of the FormValidator class
+class FormValidator {
 
-/***************************************************************************/
-
-/*************************   form-validation functions  *************************/
-
-const showInputError = (settings, formElement, inputElement, errorMessage) => {
-  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-  inputElement.classList.add(settings.inputErrorClass);
-  errorElement.textContent = errorMessage;
-  errorElement.classList.add(settings.errorClass);
-};
-
-const hideInputError = (settings, formElement, inputElement) => {
-  const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-  inputElement.classList.remove(settings.inputErrorClass);
-  errorElement.classList.remove(settings.errorClass);
-  errorElement.textContent = "";
-};
-
-const checkInputValidity = (settings, formElement, inputElement) => {
-  if (!inputElement.validity.valid) {
-    showInputError(settings, formElement, inputElement, inputElement.validationMessage);
-  } else {
-    hideInputError(settings, formElement, inputElement);
+  constructor(formSettings, formElement) {
+    this._formSettings = formSettings;
+    this._formElement = formElement;
   }
-};
 
-/** iterate over inputs array using the some() method
- * @param {Array.<inputElement>} inputList - an array of input Elements
- * @returns {boolean} - true if at least one input field is invalid
- */
-const hasInvalidInput = (inputList) => {
-  return inputList.some((inputElement) => {
-    return !inputElement.validity.valid;
-  })
-};
 
-/** enable or disable form-submission according to the input validation
- * @param {Array.<inputElement>} inputList - an array of input Elements
- * @param buttonElement - button to control if is active or not
- */
-const toggleButtonState = (settings, inputList, buttonElement) => {
-  // at least one invalid input
-  if (hasInvalidInput(inputList)) {
-    buttonElement.classList.add(settings.inactiveButtonClass);
-  } else {
-    buttonElement.classList.remove(settings.inactiveButtonClass);
+  /** sets up form functionality, enables form validation */
+  enableValidation() {
+    this._addTemplateElements();
+    this._setEventListeners();
+    this._setCustomPlaceholders();
+    return this._formElement;
   }
-};
 
-/** enable or disable forms-submission */
-const setEventListeners = (settings, formElement) => {
-  const inputList = Array.from(formElement.querySelectorAll(settings.inputSelector));
-  // submit button in the current form
-  const buttonElement = formElement.querySelector(settings.submitButtonSelector);
+  _addTemplateElements() {
+    this._submitButtonElement = this._formElement.querySelector(formSettings.submitButtonSelector);
+    this._inputsList = Array.from(this._formElement.querySelectorAll(this._formSettings.inputSelector));
+  }
 
-  // check button status and inactive it on the first page load
-  toggleButtonState(settings, inputList, buttonElement);
+  _setCustomPlaceholders() {
 
-  inputList.forEach((inputElement) => {
-    inputElement.addEventListener("input", () => {
-      checkInputValidity(settings, formElement, inputElement);
-      // check the button's status upon every input change in any of the inputs
-      toggleButtonState(settings, inputList, buttonElement);
+    this._inputsList.forEach((inputElement) => {
+      inputElement.addEventListener('input', () =>
+        this._isEmpty(inputElement))
     });
-  });
-};
 
-/** restores a form element's default values and placeholders, inactive it's submit button */
-function resetCardForm(settings, formElement) {
-  const inputList = Array.from(formElement.querySelectorAll(settings.inputSelector));
-  const buttonElement = formElement.querySelector(settings.submitButtonSelector);
+  }
 
-  formElement.reset();
+  _isEmpty(inputElement) {
+    !inputElement.value.length >= 1 ? this._unfreezePlaceholder(inputElement) :
+      this._freezePlaceholder(inputElement);
+  };
 
-  inputList.forEach((inputElement) => {
-    unfreezePlaceholder(formElement, inputElement);
-    hideInputError(settings, formElement, inputElement);
-  });
+  _freezePlaceholder(inputElement) {
+    const placeholderElement = this._formElement.querySelector(`.${inputElement.id}-placeholder`);
+    placeholderElement.classList.add(this._formSettings.fixedPlaceholderClass);
+  };
 
-  toggleButtonState(settings, inputList, buttonElement);
-}
+  _unfreezePlaceholder(inputElement) {
+    const placeholderElement = this._formElement.querySelector(`.${inputElement.id}-placeholder`);
+    placeholderElement.classList.remove(this._formSettings.fixedPlaceholderClass);
+  };
 
-/** enables forms validation
- * @param {Object} settings - configuration object of form which contains generals classes and selectors names
- */
-const enableValidation = (settings) => {
-  const formList = Array.from(document.querySelectorAll(settings.formSelector));
-  formList.forEach((formElement) => {
-    formElement.addEventListener("submit", (evt) => {
+  /** enable or disable forms-submission */
+  _setEventListeners() {
+
+    this._formElement.addEventListener("submit", (evt) => {
       evt.preventDefault();
     });
-    setEventListeners(settings, formElement);
-  });
-};
 
-/** A Form configuration object */
-const settings = {
-  formSelector: ".form",
-  inputSelector: ".form__input",
-  submitButtonSelector: ".form__submit-button",
-  inactiveButtonClass: "form__submit-button_disabled",
-  inputErrorClass: "form__input_type_error",
-  errorClass: "form__input-error_visible"
-};
 
-/************************      functions calls      ************************/
+    this._enableInputsValidation();
 
-/** enables forms validation on page loading
- * @param {Object} settings - configuration object of form which contains generals classes and selectors names
- */
-enableValidation(settings);
+    // check button status and inactive it on the first page load
+    this._toggleButtonState();
 
-/***************************************************************************/
+  };
+
+  /** enable or disable form-submission according to the input validation */
+  _toggleButtonState() {
+    // at least one invalid input
+    if (this._hasInvalidInput(this._inputsList)) {
+      this._submitButtonElement.classList.add(this._formSettings.inactiveButtonClass);
+    } else {
+      this._submitButtonElement.classList.remove(this._formSettings.inactiveButtonClass);
+    }
+  }
+
+  _enableInputsValidation() {
+    this._inputsList.forEach((inputElement) => {
+      inputElement.addEventListener("input", () => {
+        // checking the field's validity
+        this._checkInputValidity(inputElement);
+        // check the button's status upon every input change in any of the inputs
+        this._toggleButtonState();
+      });
+    });
+  }
+
+  _checkInputValidity(inputElement) {
+    if (!inputElement.validity.valid) {
+      this._showInputError(inputElement, inputElement.validationMessage);
+    } else {
+      this._hideInputError(inputElement);
+    }
+  }
+
+
+
+  _showInputError(inputElement, errorMessage) {
+    const errorElement = this._formElement.querySelector(`.${inputElement.id}-error`);
+    inputElement.classList.add(this._formSettings.inputErrorClass);
+    errorElement.textContent = errorMessage;
+    errorElement.classList.add(this._formSettings.errorClass);
+  };
+
+  _hideInputError(inputElement) {
+    const errorElement = this._formElement.querySelector(`.${inputElement.id}-error`);
+    inputElement.classList.remove(this._formSettings.inputErrorClass);
+    errorElement.classList.remove(this._formSettings.errorClass);
+    errorElement.textContent = "";
+  };
+
+  /** iterate over inputs array using the some() method
+   * @returns {boolean} - true if at least one input field is invalid
+   */
+  _hasInvalidInput() {
+    return this._inputsList.some((inputElement) => {
+      return !inputElement.validity.valid;
+    });
+  }
+
+
+
+}
+
+
+class ResetFormValidator extends FormValidator {
+  constructor(formSettings, formElement) {
+    super(formSettings, formElement);
+  }
+
+  /** restores a form element's default values and placeholders, inactive it's submit button */
+  _resetForm() {
+    this._formElement.reset();
+
+    this._inputsList.forEach((inputElement) => {
+      this._unfreezePlaceholder(inputElement);
+      this._hideInputError(inputElement);
+    });
+
+    this._toggleButtonState();
+  }
+
+}
+
+
+class ReloadFormValidator extends FormValidator {
+
+  constructor(formSettings, formElement, loadElementsContainer) {
+    super(formSettings, formElement);
+    this._loadElementsContainer = loadElementsContainer;
+  }
+
+
+  /** shows the existing profile values on the input fileds */
+  _loadExistData() {
+    this._inputsList.forEach((inputElement) => {
+      inputElement.value = this._loadElementsContainer.querySelector(`#${inputElement.id}-load-value`).textContent;
+      this._freezePlaceholder(inputElement);
+      this._hideInputError(inputElement);
+    });
+    this._submitButtonElement.classList.add(this._formSettings.inactiveButtonClass);
+  }
+
+  _loadUzerInput() {
+    this._inputsList.forEach((inputElement) => {
+      this._loadElementsContainer.querySelector(`#${inputElement.id}-load-value`).textContent = inputElement.value;
+    });
+    this._submitButtonElement.classList.add(this._formSettings.inactiveButtonClass);
+  }
+
+
+
+
+}

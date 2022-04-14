@@ -21,7 +21,7 @@ const setCustomPlaceholders = (formElement) => {
     .addEventListener('input', () => isEmpty(formElement, inputElement)))
 };
 
-const activateForm = () => {
+const activateForms = () => {
   const getFormList = Array.from(document.querySelectorAll(`.form`));
   getFormList.forEach((formElement) => {
     setCustomPlaceholders(formElement);
@@ -29,5 +29,4 @@ const activateForm = () => {
 };
 
 
-// import actiate file
-activateForm();
+activateForms();

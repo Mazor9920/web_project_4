@@ -17,12 +17,12 @@
 
     <main class="content" id="content">
 
-      <section class="profile">
+      <section id="profile" class="profile">
         <div class="profile__info">
           <img src="./images/profile-picture.png" alt="profile-picture" class="profile__picture">
-          <h1 class="profile__name">Jacques Cousteau</h1>
+          <h1 id="profile-name-input-load-value" class="profile__name">Jacques Cousteau</h1>
           <button class="profile__edit-button" aria-label="edit-button" type="button"></button>
-          <p class="profile__details">Explorer</p>
+          <p id="profile-job-input-load-value" class="profile__details">Explorer</p>
         </div>
         <button class="profile__add-button" aria-label="add-button" type="button"></button>
       </section>
@@ -39,7 +39,7 @@
     <section id="edit-profile-popup" class="popup popup_type_edit-profile">
       <div class="popup__container popup__container_value_edit-profile-form">
         <button class="popup__close-button popup__close-button_placed_edit-profile-form" aria-label="close-button"></button>
-        <form action="/action_page.php" name="edit-profile-form" class="form popup__form" novalidate>
+        <form id="edit-profile-form" action="/action_page.php" name="edit-profile-form" class="form popup__form" novalidate>
           <h3 class="form__title form__title_placed_edit-profile-form">Edit profile</h3>
 
           <label class="form__field">
@@ -62,7 +62,7 @@
     <section id="add-card-popup" class="popup popup_type_add-card">
       <div class="popup__container popup__container_value_add-card-form">
         <button class="popup__close-button popup__close-button_placed_add-card-form" aria-label="close-button"></button>
-        <form action="/action_page.php" name="add-card-form" class="form popup__form" novalidate>
+        <form id="add-card-form" action="/action_page.php" name="add-card-form" class="form popup__form" novalidate>
           <h3 class="form__title form__title_placed_add-card-form">New place</h3>
 
           <label class="form__field">
@@ -104,12 +104,16 @@
   </template>
 
 
+  <script src="./scripts/data/settings.js"></script>
   <script src="./scripts/data/cards.js"></script>
+
   <script src="./scripts/classes/Card.js"></script>
-  <script src="./scripts/classes/FormActivator.js"></script>
   <script src="./scripts/classes/FormValidator.js"></script>
+
   <script src="./scripts/index.js"></script>
   <script src="./scripts/utils.js"></script>
+  <script src="./scripts/calls.js"></script>
+
 
 
 </body>

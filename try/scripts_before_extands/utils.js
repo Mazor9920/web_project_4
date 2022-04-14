@@ -1,3 +1,5 @@
+
+
 /***************************************************************************/
 
 /**
@@ -12,7 +14,8 @@
 /** edit-profile-form popup */
 
 profileEditButton.addEventListener("click", function(evt) {
-  validatableForms.editProfile._loadExistData();
+
+  loadProfile();
   openPopup(editProfilePopup);
 });
 
@@ -25,7 +28,7 @@ editProfileForm.addEventListener('submit', handleProfileFormSubmit);
 /** add-card-form popup */
 
 addCardButton.addEventListener("click", function(evt) {
-  validatableForms.addCard._resetForm();
+  // addCardForm.resetCardForm(formSettings, addCardForm);
   openPopup(addCardPopup);
 });
 
@@ -83,15 +86,9 @@ function handleEscPopup(evt) {
 /** edits the card values by the user input */
 function handleAddCardSubmit(evt) {
   evt.preventDefault();
-  const uzerCardForm = evt.target.closest(formSettings.formSelector);
-  // const addCardButton = uzerCardForm.querySelector(formSettings.submitButtonSelector);
-  const inputCard = createCardByUzer(uzerCardForm);
-
-  if (validatableForms.addCard._hasInvalidInput == false) {
-    // if (!addCardButton.classList.contains(formSettings.inactiveButtonClass)) {
-    inputCard._addCardToGallery(gallery);
-  }
-
+  const addCardForm = evt.target.closest(".form");
+  const inputCard = createCardByUzer(addCardForm);
+  inputCard._addCardToGallery(gallery);
   closePopup(addCardPopup);
 }
 
@@ -100,6 +97,7 @@ function handleAddCardSubmit(evt) {
 /** edits the profile details by the user input */
 function handleProfileFormSubmit(evt) {
   evt.preventDefault();
-  validatableForms.editProfile._loadUzerInput();
+  profileName.textContent = profileNameInput.value;
+  profileDetails.textContent = profileJobInput.value;
   closePopup(editProfilePopup);
 }
