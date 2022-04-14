@@ -7,7 +7,7 @@ class Card {
     this._cardSettings = cardSettings;
   }
 
-  // sets up card markup
+  /** sets up card markup */
   _getTemplate() {
     const cardElement = document
       .querySelector(this._cardTemplateSelector)
@@ -18,7 +18,7 @@ class Card {
     return cardElement;
   }
 
-  // /** sets up card content and functionality
+  /** sets up card content and functionality */
   generateCard() {
 
     this._element = this._getTemplate();

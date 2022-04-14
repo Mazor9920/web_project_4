@@ -1,105 +1,104 @@
-/***************************************************************************/
+  /***************************************************************************/
 
-/**
- *  Various utility functions that are used throughout the codebase.
- * @module utils
- */
+  /** Various utility functions that are used throughout the codebase.
+   * @module utils
+   */
 
-/***************************************************************************/
+  /***************************************************************************/
 
-/************************      Event Listeners      ************************/
+  /************************      Event Listeners      ************************/
 
-/** edit-profile-form popup */
+  /** edit-profile-form popup */
 
-profileEditButton.addEventListener("click", function(evt) {
-  validatableForms.editProfile._loadExistData();
-  openPopup(editProfilePopup);
-});
+  profileEditButton.addEventListener("click", function(evt) {
+    validatableForms.editProfile._loadExistData();
+    openPopup(editProfilePopup);
+  });
 
-editProfileCloseButton.addEventListener("click", function(evt) {
-  closePopup(editProfilePopup);
-});
+  editProfileCloseButton.addEventListener("click", function(evt) {
+    closePopup(editProfilePopup);
+  });
 
-editProfileForm.addEventListener('submit', handleProfileFormSubmit);
+  editProfileForm.addEventListener('submit', handleProfileFormSubmit);
 
-/** add-card-form popup */
+  /** add-card-form popup */
 
-addCardButton.addEventListener("click", function(evt) {
-  validatableForms.addCard._resetForm();
-  openPopup(addCardPopup);
-});
+  addCardButton.addEventListener("click", function(evt) {
+    validatableForms.addCard._resetForm();
+    openPopup(addCardPopup);
+  });
 
-addCardCloseButton.addEventListener("click", function(evt) {
-  closePopup(addCardPopup);
-});
+  addCardCloseButton.addEventListener("click", function(evt) {
+    closePopup(addCardPopup);
+  });
 
-addCardForm.addEventListener('submit', handleAddCardSubmit);
-
+  addCardForm.addEventListener('submit', handleAddCardSubmit);
 
 
-/*************************************************************************/
+  /*************************************************************************/
 
-/************************   functions declarations   *********************/
+  /************************   functions declarations   *********************/
 
-/***************************   general popups   **************************/
+  /***************************   general popups   **************************/
 
-/** opens the popup window */
-function openPopup(popupElement) {
-  popupElement.classList.add("popup_opened");
-  // add a temporary Listeners:
-  popupElement.addEventListener('mousedown', handleFocusOutPopup);
-  document.addEventListener('keydown', handleEscPopup);
-}
-
-/** closes the popup window */
-function closePopup(popupElement) {
-  popupElement.classList.remove("popup_opened");
-  // remove temporary Listeners:
-  popupElement.removeEventListener('mousedown', handleFocusOutPopup);
-  document.removeEventListener('keydown', handleEscPopup);
-}
-
-/** allows the users to close the popup by clicking on the overlay */
-function handleFocusOutPopup(evt) {
-  const openedPopupElement = evt.currentTarget;
-  const clickedElement = evt.target;
-  // if the focus is outside the popup content
-  if (clickedElement == openedPopupElement) {
-    closePopup(openedPopupElement);
-  }
-}
-
-/** allows the users to close an open popup by pressing the Esc key */
-function handleEscPopup(evt) {
-  const pressedKey = evt.key;
-  if (pressedKey === "Escape") {
-    const openedPopupElement = document.querySelector(".popup_opened");
-    closePopup(openedPopupElement);
-  }
-}
-
-/************************   add-card-form popup   ************************/
-
-/** edits the card values by the user input */
-function handleAddCardSubmit(evt) {
-  evt.preventDefault();
-  const uzerCardForm = evt.target.closest(formSettings.formSelector);
-  // const addCardButton = uzerCardForm.querySelector(formSettings.submitButtonSelector);
-  const inputCard = createCardByUzer(uzerCardForm);
-
-  if (validatableForms.addCard._hasInvalidInput == false) {
-    // if (!addCardButton.classList.contains(formSettings.inactiveButtonClass)) {
-    inputCard._addCardToGallery(gallery);
+  /** opens the popup window */
+  function openPopup(popupElement) {
+    popupElement.classList.add("popup_opened");
+    // add a temporary Listeners:
+    popupElement.addEventListener('mousedown', handleFocusOutPopup);
+    document.addEventListener('keydown', handleEscPopup);
   }
 
-  closePopup(addCardPopup);
-}
+  /** closes the popup window */
+  function closePopup(popupElement) {
+    popupElement.classList.remove("popup_opened");
+    // remove temporary Listeners:
+    popupElement.removeEventListener('mousedown', handleFocusOutPopup);
+    document.removeEventListener('keydown', handleEscPopup);
+  }
 
-/**********************   edit-profile-form popup   **********************/
+  /** allows the users to close the popup by clicking on the overlay */
+  function handleFocusOutPopup(evt) {
+    const openedPopupElement = evt.currentTarget;
+    const clickedElement = evt.target;
+    // if the focus is outside the popup content
+    if (clickedElement == openedPopupElement) {
+      closePopup(openedPopupElement);
+    }
+  }
 
-/** edits the profile details by the user input */
-function handleProfileFormSubmit(evt) {
-  evt.preventDefault();
-  validatableForms.editProfile._loadUzerInput();
-  closePopup(editProfilePopup);
-}
+  /** allows the users to close an open popup by pressing the Esc key */
+  function handleEscPopup(evt) {
+    const pressedKey = evt.key;
+    if (pressedKey === "Escape") {
+      const openedPopupElement = document.querySelector(".popup_opened");
+      closePopup(openedPopupElement);
+    }
+  }
+
+  /************************   add-card-form popup   ************************/
+
+  /** edits the card values by the user input */
+  function handleAddCardSubmit(evt) {
+    evt.preventDefault();
+
+    const uzerCardForm = evt.target;
+    const inputCard = getCardByUzer(uzerCardForm);
+
+    if (validatableForms.addCard._isSubmissionValid()) {
+      inputCard._addCardToGallery(gallery);
+    }
+    closePopup(addCardPopup);
+  }
+
+  /**********************   edit-profile-form popup   **********************/
+
+  /** edits the profile details by the user input */
+  function handleProfileFormSubmit(evt) {
+    evt.preventDefault();
+
+    if (validatableForms.editProfile._isSubmissionValid()) {
+      validatableForms.editProfile._loadUzerInput();
+    }
+    closePopup(editProfilePopup);
+  }

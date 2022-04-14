@@ -1,7 +1,6 @@
 
 /********************   configuration settings objects   *******************/
 
-
 // stores selectors and classes for form Class
 const formSettings = {
   formSelector: `.form`,
@@ -32,8 +31,6 @@ const cardPopupSettings = {
   cardPopupNameSelector: `.popup__picture-details`,
   cardPopupLinkSelector: `.popup__close-up-picture`
 }
-
-
 
 /***************************************************************************/
 

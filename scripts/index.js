@@ -31,30 +31,24 @@ function getValidatableForm(formElement) {
 /**********************************   cards   ******************************/
 
 
-
-class PopupCardByUzer extends PopupCard {
-
-}
-
-
-class PopupCardByData extends PopupCard {
-
-}
-
-
-
 /** loads the initial values using the addCard-function for each one of the cards
  * @param {Array.<CaritialCards - an array of cards object
  */
 function loadDataCards(initialCards) {
   initialCards.forEach((cardData) => {
-    const cardByData = createCardByData(cardData);
+    const cardByData = getCardByData(cardData);
     cardByData._addCardToGallery(gallery);
   });
 }
 
-function createCardByData(cardData) {
+function getCardByData(cardData) {
   return createCard(cardData);
+}
+
+function getCardByUzer(addCardForm) {
+  const userCardData = getUserCardData(addCardForm);
+  const cardByUser = createCard(userCardData);
+  return cardByUser;
 }
 
 function getUserCardData(addCardForm) {
@@ -65,12 +59,6 @@ function getUserCardData(addCardForm) {
   inputCardData.name = inputCardNameElement.value;
   inputCardData.link = inputCardLinkElement.value;
   return inputCardData;
-}
-
-function createCardByUzer(addCardForm) {
-  const userCardData = getUserCardData(addCardForm);
-  const cardByUser = createCard(userCardData);
-  return cardByUser;
 }
 
 function createCard(cardData) {

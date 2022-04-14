@@ -5,7 +5,6 @@ class FormValidator {
     this._formElement = formElement;
   }
 
-
   /** sets up form functionality, enables form validation */
   enableValidation() {
     this._addTemplateElements();
@@ -20,12 +19,10 @@ class FormValidator {
   }
 
   _setCustomPlaceholders() {
-
     this._inputsList.forEach((inputElement) => {
       inputElement.addEventListener('input', () =>
         this._isEmpty(inputElement))
     });
-
   }
 
   _isEmpty(inputElement) {
@@ -50,12 +47,10 @@ class FormValidator {
       evt.preventDefault();
     });
 
-
     this._enableInputsValidation();
 
     // check button status and inactive it on the first page load
     this._toggleButtonState();
-
   };
 
   /** enable or disable form-submission according to the input validation */
@@ -87,8 +82,6 @@ class FormValidator {
     }
   }
 
-
-
   _showInputError(inputElement, errorMessage) {
     const errorElement = this._formElement.querySelector(`.${inputElement.id}-error`);
     inputElement.classList.add(this._formSettings.inputErrorClass);
@@ -112,7 +105,11 @@ class FormValidator {
     });
   }
 
-
+  /** @returns {boolean} - true if all inputs are valid for submission
+   */
+  _isSubmissionValid() {
+    return !(this._submitButtonElement.classList.contains(formSettings.inactiveButtonClass));
+  }
 
 }
 
@@ -133,7 +130,6 @@ class ResetFormValidator extends FormValidator {
 
     this._toggleButtonState();
   }
-
 }
 
 
@@ -143,7 +139,6 @@ class ReloadFormValidator extends FormValidator {
     super(formSettings, formElement);
     this._loadElementsContainer = loadElementsContainer;
   }
-
 
   /** shows the existing profile values on the input fileds */
   _loadExistData() {
@@ -161,8 +156,5 @@ class ReloadFormValidator extends FormValidator {
     });
     this._submitButtonElement.classList.add(this._formSettings.inactiveButtonClass);
   }
-
-
-
 
 }
