@@ -1,3 +1,27 @@
+/***************************************************************************/
+
+/** FormValidator class
+ * Contain FormValidator class which sets settings for validating form fields.
+ * It has private methods for processing the form,
+ * and a public method enableValidation(), which enables form validation.
+ *
+ * It has 2 extensiones:
+ * 1. ResetFormValidator  - for forms that reset on opening
+ * 2. ReloadFormValidator - for forms that reload on opening
+ *
+ * @module FormValidator
+ */
+
+/***************************************************************************/
+
+// import {
+//   popupSettings,
+//   closePopup
+// } from "../utils.js";
+
+/***************************************************************************/
+
+
 class FormValidator {
 
   constructor(formSettings, formElement) {
@@ -14,9 +38,9 @@ class FormValidator {
   }
 
   _addTemplateElements() {
-    this._submitButtonElement = this._formElement.querySelector(formSettings.submitButtonSelector);
+    this._submitButtonElement = this._formElement.querySelector(this._formSettings.submitButtonSelector);
     this._inputsList = Array.from(this._formElement.querySelectorAll(this._formSettings.inputSelector));
-    this._formPopup = this._formElement.closest(formSettings.formPopupClass);
+    this._formPopup = this._formElement.closest(this._formSettings.formPopupClass);
   }
 
   _setCustomPlaceholders() {
@@ -53,12 +77,6 @@ class FormValidator {
 
     // check button status and inactive it on the first page load
     this._toggleButtonState();
-  }
-
-  _handleSubmissionProcess() {
-    this._handleSubmissionData();
-
-    closePopup(this._formPopup);
   }
 
   /** enable or disable form-submission according to the input validation */
@@ -116,10 +134,17 @@ class FormValidator {
   /** @returns {boolean} - true if all inputs are valid for submission
    */
   _isSubmissionValid() {
-    return !(this._submitButtonElement.classList.contains(formSettings.inactiveButtonClass));
+    return !(this._submitButtonElement.classList.contains(this._formSettings.inactiveButtonClass));
+  }
+
+  _handleSubmissionProcess() {
+    this._handleSubmissionData();
+    this._handleCloseForm();
   }
 
   _handleSubmissionData() {
+    this._validInputsList = [];
+
     if (this._isSubmissionValid()) {
       this._validInputsList = this._inputsList.reduce((fieldData, inputElement) => {
         fieldData[inputElement.id] = inputElement.value;
@@ -130,7 +155,13 @@ class FormValidator {
     }
   }
 
+  _handleCloseForm() {
+    closePopup(this._formPopup);
+  }
+
 }
+
+/***************************************************************************/
 
 class ResetFormValidator extends FormValidator {
 
@@ -151,6 +182,8 @@ class ResetFormValidator extends FormValidator {
   }
 
 }
+
+/***************************************************************************/
 
 class ReloadFormValidator extends FormValidator {
 
@@ -181,13 +214,16 @@ class ReloadFormValidator extends FormValidator {
     if (this._isSubmissionValid()) {
       this._loadUzerInput();
     }
-  };
+  }
 
 }
 
 
-// export {
-//   FormValidator,
-//   ResetFormValidator,
-//   ReloadFormValidator
-// };
+/***************************************************************************/
+
+
+export {
+  FormValidator,
+  ResetFormValidator,
+  ReloadFormValidator
+};

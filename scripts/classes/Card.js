@@ -1,3 +1,29 @@
+/***************************************************************************/
+
+/** Card class
+ * Contain Card class which creates a card with text and an image link
+ * It has private methods for working with markup, adding event listeners,
+ * and preparing the card for display.
+ * It has one public method generateCard(),that returns
+ * a fully functional card element populated with data. with attached event listeners.
+ *
+ * It has 1 extension:
+ * PopupCard - for creating a card that has it's own attached popup modal window
+ *
+ * @module Card
+ */
+
+/***************************************************************************/
+
+// import {
+//   popupSettings,
+//   openPopup,
+//   closePopup
+// } from "../utils.js";
+
+/***************************************************************************/
+
+
 class Card {
 
   constructor(data, cardTemplateSelector, cardSettings) {
@@ -62,12 +88,9 @@ class Card {
     this._cardDeleteButton.closest(this._cardSettings.cardSelector).remove();
   }
 
-  _addCardToGallery(gallerySelector) {
-    gallerySelector.prepend(this._element);
-  }
-
 }
 
+/***************************************************************************/
 
 class PopupCard extends Card {
 
@@ -79,9 +102,9 @@ class PopupCard extends Card {
   _addTemplateElements() {
     super._addTemplateElements();
     this._cardPopup = document.querySelector(this._cardPopupSettings.cardPopupSelector);
-    this._cardPopupCloseButton = cardPopup.querySelector(this._cardPopupSettings.cardPopupCloseButtonSelector);
-    this._cardPopupName = cardPopup.querySelector(this._cardPopupSettings.cardPopupNameSelector);
-    this._cardPopupLink = cardPopup.querySelector(this._cardPopupSettings.cardPopupLinkSelector);
+    this._cardPopupCloseButton = this._cardPopup.querySelector(this._cardPopupSettings.cardPopupCloseButtonSelector);
+    this._cardPopupName = this._cardPopup.querySelector(this._cardPopupSettings.cardPopupNameSelector);
+    this._cardPopupLink = this._cardPopup.querySelector(this._cardPopupSettings.cardPopupLinkSelector);
   }
 
   _setEventListeners() {
@@ -115,7 +138,9 @@ class PopupCard extends Card {
 
 }
 
-// export {
-//   Card,
-//   PopupCard
-// };
+/***************************************************************************/
+
+export {
+  Card,
+  PopupCard
+};

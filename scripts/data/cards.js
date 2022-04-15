@@ -1,6 +1,13 @@
-// initial cards value as defult
-const initialCards = [
-  {
+/***************************************************************************/
+
+/** Contain Data of initial cards values for first loading as defult
+ *
+ * @module cards
+ */
+
+/***************************************************************************/
+
+const cardsData = [{
     name: "Yosemite Valley",
     link: "https://code.s3.yandex.net/web-code/yosemite.jpg"
   },
@@ -25,3 +32,9 @@ const initialCards = [
     link: "https://code.s3.yandex.net/web-code/lago.jpg"
   }
 ];
+
+/***************************************************************************/
+
+export{
+  cardsData
+};

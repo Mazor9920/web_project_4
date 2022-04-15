@@ -1,12 +1,38 @@
   /***************************************************************************/
 
   /** Various utility functions that are used throughout the codebase.
-   *  Contain the event handlers and the function that opens/closes modal windows.
+   *  Contain event handlers and function that opens/closes modal windows.
    * @module utils
    */
 
   /***************************************************************************/
 
+  import {
+    editProfilePopup,
+    editProfileForm,
+    profileEditButton,
+    editProfileCloseButton
+  } from "./index.js";
+
+  import {
+    addCardPopup,
+    addCardForm,
+    addCardButton,
+    addCardCloseButton,
+  } from "./index.js";
+
+  import {
+    validatableForms
+  } from "./index.js";
+
+  /***************************************************************************/
+
+  /****************   popup caseonfiguration settings object   ***************/
+
+  const popupSettings = {
+    openPopupClass: `popup_opened`,
+    openPopupSelector: `.popup_opened`
+  }
 
   /************************      Event Listeners      ************************/
 
@@ -32,9 +58,6 @@
     closePopup(addCardPopup);
   });
 
-  addCardForm.addEventListener('submit', handleAddCardSubmit);
-
-
   /*************************************************************************/
 
   /************************   functions declarations   *********************/
@@ -43,7 +66,7 @@
 
   /** opens the popup window */
   function openPopup(popupElement) {
-    popupElement.classList.add("popup_opened");
+    popupElement.classList.add(popupSettings.openPopupClass);
     // add a temporary Listeners:
     popupElement.addEventListener('mousedown', handleFocusOutPopup);
     document.addEventListener('keydown', handleEscPopup);
@@ -51,7 +74,7 @@
 
   /** closes the popup window */
   function closePopup(popupElement) {
-    popupElement.classList.remove("popup_opened");
+    popupElement.classList.remove(popupSettings.openPopupClass);
     // remove temporary Listeners:
     popupElement.removeEventListener('mousedown', handleFocusOutPopup);
     document.removeEventListener('keydown', handleEscPopup);
@@ -71,7 +94,17 @@
   function handleEscPopup(evt) {
     const pressedKey = evt.key;
     if (pressedKey === "Escape") {
-      const openedPopupElement = document.querySelector(".popup_opened");
+      const openedPopupElement = document.querySelector(popupSettings.openPopupSelector);
       closePopup(openedPopupElement);
     }
   }
+
+  /*************************************************************************/
+
+  export {
+    popupSettings,
+    openPopup,
+    closePopup,
+    handleFocusOutPopup,
+    handleEscPopup
+  };
