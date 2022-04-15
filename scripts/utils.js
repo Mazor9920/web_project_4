@@ -58,10 +58,10 @@
 
   /*************************************************************************/
 
-  // export {
-  //   popupSettings,
-  //   openPopup,
-  //   closePopup,
-  //   handleFocusOutPopup,
-  //   handleEscPopup
-  // };
+  export {
+    popupSettings,
+    openPopup,
+    closePopup,
+    handleFocusOutPopup,
+    handleEscPopup
+  };

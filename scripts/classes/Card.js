@@ -15,13 +15,13 @@
 
 /***************************************************************************/
 
-// import {
-//   popupSettings,
-//   openPopup,
-//   closePopup,
-//   handleFocusOutPopup,
-//   handleEscPopup
-// } from "../utils.js";
+import {
+  popupSettings,
+  openPopup,
+  closePopup,
+  handleFocusOutPopup,
+  handleEscPopup
+} from "../utils.js";
 
 /***************************************************************************/
 
@@ -144,7 +144,7 @@ class PopupCard extends Card {
 
 /***************************************************************************/
 
-// export {
-//   Card,
-//   PopupCard
-// };
+export {
+  Card,
+  PopupCard
+};

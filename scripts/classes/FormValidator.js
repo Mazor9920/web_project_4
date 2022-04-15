@@ -14,13 +14,13 @@
 
 /***************************************************************************/
 
-// import {
-//   popupSettings,
-//   openPopup,
-//   closePopup,
-//   handleFocusOutPopup,
-//   handleEscPopup
-// } from "../utils.js";
+import {
+  popupSettings,
+  openPopup,
+  closePopup,
+  handleFocusOutPopup,
+  handleEscPopup
+} from "../utils.js";
 
 /***************************************************************************/
 
@@ -72,6 +72,10 @@ class FormValidator {
 
   /** enable or disable forms-submission */
   _setEventListeners() {
+    this._formElement.addEventListener('submit', (evt) => {
+      evt.preventDefault();
+      this._handleSubmissionProcess();
+    });
 
     this._openFormButton.addEventListener("click", () => {
       this._handleOpenForm();
@@ -87,12 +91,7 @@ class FormValidator {
     this._toggleButtonState();
   }
 
-
   _handleOpenForm() {
-    this._formElement.addEventListener('submit', (evt) => {
-      evt.preventDefault();
-      this._handleSubmissionProcess();
-    });
     openPopup(this._formPopup);
   }
 
@@ -160,7 +159,6 @@ class FormValidator {
 
   _handleSubmissionProcess() {
     this._handleSubmissionData();
-    this._formElement.submit();
     this._handleCloseForm();
   }
 
@@ -171,7 +169,11 @@ class FormValidator {
         fieldData[inputElement.name] = inputElement.value;
         return fieldData;
       }, {});
-      // loadUzerInput(this._validInputsList);
+
+      handleAddCardSubmit();
+
+      // _loadUzerInput(this._validInputsList);
+
 
     } else {
       delete this._validInputsList;
@@ -204,6 +206,11 @@ class ResetFormValidator extends FormValidator {
     super._handleCloseForm();
     this._resetForm();
   }
+
+
+  _handleCloseForm() {
+    closePopup(this._formPopup);
+  }
 }
 
 /***************************************************************************/
@@ -214,6 +221,14 @@ class ReloadFormValidator extends FormValidator {
     super(formSettings, formElement);
     this._loadElementsContainer = loadElementsContainer;
   }
+
+  // _setEventListeners() {
+  //   super._setEventListeners();
+  //   this._formElement.addEventListener('submit', (evt) => {
+  //     evt.preventDefault();
+  //     this._handleSubmissionProcess();
+  //   });
+  // }
 
   /** shows the existing profile values on the input fileds */
   _loadExistData() {
@@ -248,8 +263,8 @@ class ReloadFormValidator extends FormValidator {
 
 /***************************************************************************/
 
-// export {
-//   FormValidator,
-//   ResetFormValidator,
-//   ReloadFormValidator
-// };
+export {
+  FormValidator,
+  ResetFormValidator,
+  ReloadFormValidator
+};

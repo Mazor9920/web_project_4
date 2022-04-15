@@ -11,29 +11,20 @@
 
 /***************************************************************************/
 
-// import {
-//   initialCards
-// } from "./data/cards.js";
-//
-// import {
-//   popupSettings,
-//   openPopup,
-//   closePopup,
-//   handleFocusOutPopup,
-//   handleEscPopup
-// } from "./utils.js";
+import {
+  initialCards
+} from "./data/cards.js";
 
+import {
+  Card,
+  PopupCard
+} from "./classes/Card.js";
 
-// import {
-//   Card,
-//   PopupCard
-// } from "./classes/Card.js";
-//
-// import {
-//   FormValidator,
-//   ResetFormValidator,
-//   ReloadFormValidator
-// } from "./classes/FormValidator.js";
+import {
+  FormValidator,
+  ResetFormValidator,
+  ReloadFormValidator
+} from "./classes/FormValidator.js";
 
 /***************************************************************************/
 
@@ -191,7 +182,7 @@ function loadCardByUzer(userCardData) {
   const cardByUser = createCard(userCardData);
 }
 
-function handleAddCardSubmit(evt) {
+function handleAddCardSubmit() {
   if (`_validInputsList` in validatableForms.addCard) {
     const userCardValidInputsList = validatableForms.addCard._validInputsList;
     loadCardByUzer(userCardValidInputsList);
