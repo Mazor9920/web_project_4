@@ -122,7 +122,12 @@ const cardPopupSettings = {
 
 /***************************   Event Listeners   ***************************/
 
-addCardForm.addEventListener("submit", handleAddCardSubmit);
+
+addCardButton.addEventListener("click", watchForSubmit);
+
+function watchForSubmit() {
+  addCardForm.addEventListener("submit", loadUzerCard);
+}
 
 
 /***************************************************************************/
@@ -164,10 +169,6 @@ function getValidatableForm(formElement) {
 
 /**********************************   cards   ******************************/
 
-function createCard(cardData) {
-  const newCard = new PopupCard(cardData, cardSettings.cardTemplateSelector, cardSettings, cardPopupSettings);
-  addCardToGallery(newCard.generateCard());
-}
 
 /** loads the initial values using the addCard-function for each one of the cards
  * @param {Array.<initialCards>} - an array of cards object
@@ -178,15 +179,18 @@ function loadDataCards(initialCards) {
   });
 }
 
-function loadCardByUzer(userCardData) {
-  const cardByUser = createCard(userCardData);
+// load Card by the uzer
+function loadUzerCard() {
+  const userCardData = validatableForms.addCard._handleSubmissionData();
+  if (userCardData) {
+    const cardByUser = createCard(userCardData);
+  }
+  addCardForm.removeEventListener("submit", loadUzerCard);
 }
 
-function handleAddCardSubmit() {
-  if (`_validInputsList` in validatableForms.addCard) {
-    const userCardValidInputsList = validatableForms.addCard._validInputsList;
-    loadCardByUzer(userCardValidInputsList);
-  }
+function createCard(cardData) {
+  const newCard = new PopupCard(cardData, cardSettings.cardTemplateSelector, cardSettings, cardPopupSettings);
+  addCardToGallery(newCard.generateCard());
 }
 
 function addCardToGallery(generatedCard) {
@@ -194,9 +198,3 @@ function addCardToGallery(generatedCard) {
 }
 
 /***************************************************************************/
-
-// export {
-//   formSettings,
-//   cardSettings,
-//   cardPopupSettings
-// };

@@ -72,9 +72,11 @@ class FormValidator {
 
   /** enable or disable forms-submission */
   _setEventListeners() {
+
     this._formElement.addEventListener('submit', (evt) => {
       evt.preventDefault();
-      this._handleSubmissionProcess();
+      this._handleSubmissionData();
+      this._handleCloseForm();
     });
 
     this._openFormButton.addEventListener("click", () => {
@@ -154,32 +156,19 @@ class FormValidator {
   /** @returns {boolean} - true if all inputs are valid for submission
    */
   _isSubmissionValid() {
-    return !(this._submitButtonElement.classList.contains(this._formSettings.inactiveButtonClass));
-  }
-
-  _handleSubmissionProcess() {
-    this._handleSubmissionData();
-    this._handleCloseForm();
+    return !this._hasInvalidInput();
   }
 
   _handleSubmissionData() {
-    this._validInputsList = [];
     if (this._isSubmissionValid()) {
       this._validInputsList = this._inputsList.reduce((fieldData, inputElement) => {
         fieldData[inputElement.name] = inputElement.value;
         return fieldData;
       }, {});
 
-      handleAddCardSubmit();
-
-      // _loadUzerInput(this._validInputsList);
-
-
-    } else {
-      delete this._validInputsList;
+      return this._validInputsList;
     }
   }
-
 }
 
 /***************************************************************************/
@@ -202,15 +191,11 @@ class ResetFormValidator extends FormValidator {
     this._toggleButtonState();
   }
 
-  _handleCloseForm() {
-    super._handleCloseForm();
+  _handleOpenForm() {
     this._resetForm();
+    super._handleOpenForm();
   }
 
-
-  _handleCloseForm() {
-    closePopup(this._formPopup);
-  }
 }
 
 /***************************************************************************/
@@ -221,14 +206,6 @@ class ReloadFormValidator extends FormValidator {
     super(formSettings, formElement);
     this._loadElementsContainer = loadElementsContainer;
   }
-
-  // _setEventListeners() {
-  //   super._setEventListeners();
-  //   this._formElement.addEventListener('submit', (evt) => {
-  //     evt.preventDefault();
-  //     this._handleSubmissionProcess();
-  //   });
-  // }
 
   /** shows the existing profile values on the input fileds */
   _loadExistData() {
@@ -259,7 +236,6 @@ class ReloadFormValidator extends FormValidator {
   }
 
 }
-
 
 /***************************************************************************/
 
