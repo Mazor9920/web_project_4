@@ -1,29 +1,10 @@
   /***************************************************************************/
 
   /** Various utility functions that are used throughout the codebase.
-   *  Contain event handlers and function that opens/closes modal windows.
+   *  Contain function and event handlers that opens/closes modal windows.
+   *
    * @module utils
    */
-
-  /***************************************************************************/
-
-  import {
-    editProfilePopup,
-    editProfileForm,
-    profileEditButton,
-    editProfileCloseButton
-  } from "./index.js";
-
-  import {
-    addCardPopup,
-    addCardForm,
-    addCardButton,
-    addCardCloseButton,
-  } from "./index.js";
-
-  import {
-    validatableForms
-  } from "./index.js";
 
   /***************************************************************************/
 
@@ -34,31 +15,7 @@
     openPopupSelector: `.popup_opened`
   }
 
-  /************************      Event Listeners      ************************/
-
-  /** edit-profile-form popup */
-
-  profileEditButton.addEventListener("click", function(evt) {
-    validatableForms.editProfile._loadExistData();
-    openPopup(editProfilePopup);
-  });
-
-  editProfileCloseButton.addEventListener("click", function(evt) {
-    closePopup(editProfilePopup);
-  });
-
-  /** add-card-form popup */
-
-  addCardButton.addEventListener("click", function(evt) {
-    validatableForms.addCard._resetForm();
-    openPopup(addCardPopup);
-  });
-
-  addCardCloseButton.addEventListener("click", function(evt) {
-    closePopup(addCardPopup);
-  });
-
-  /*************************************************************************/
+  /***************************************************************************/
 
   /************************   functions declarations   *********************/
 
@@ -101,10 +58,10 @@
 
   /*************************************************************************/
 
-  export {
-    popupSettings,
-    openPopup,
-    closePopup,
-    handleFocusOutPopup,
-    handleEscPopup
-  };
+  // export {
+  //   popupSettings,
+  //   openPopup,
+  //   closePopup,
+  //   handleFocusOutPopup,
+  //   handleEscPopup
+  // };

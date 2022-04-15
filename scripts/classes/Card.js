@@ -18,7 +18,9 @@
 // import {
 //   popupSettings,
 //   openPopup,
-//   closePopup
+//   closePopup,
+//   handleFocusOutPopup,
+//   handleEscPopup
 // } from "../utils.js";
 
 /***************************************************************************/
@@ -78,6 +80,7 @@ class Card {
     this._cardDeleteButton.addEventListener("click", () => {
       this._handleCardDelete();
     });
+
   }
 
   _handleCardLikeClick() {
@@ -87,6 +90,7 @@ class Card {
   _handleCardDelete() {
     this._cardDeleteButton.closest(this._cardSettings.cardSelector).remove();
   }
+
 
 }
 
@@ -140,7 +144,7 @@ class PopupCard extends Card {
 
 /***************************************************************************/
 
-export {
-  Card,
-  PopupCard
-};
+// export {
+//   Card,
+//   PopupCard
+// };

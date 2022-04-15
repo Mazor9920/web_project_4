@@ -2,6 +2,7 @@
 
 /** Contain all the spesific functions:
  * DOM Elements Selecting
+ *  All the configuration settings objects that their values depend on the HTML file
  * functions that are used to Create Class instances of Forms or Cards.
  * triggered functions - used by calling
  *
@@ -10,35 +11,29 @@
 
 /***************************************************************************/
 
-import {
-  popupSettings,
-  openPopup,
-  closePopup,
-  handleFocusOutPopup,
-  handleEscPopup
-} from "./utils.js";
+// import {
+//   initialCards
+// } from "./data/cards.js";
+//
+// import {
+//   popupSettings,
+//   openPopup,
+//   closePopup,
+//   handleFocusOutPopup,
+//   handleEscPopup
+// } from "./utils.js";
 
-import {
-  Card,
-  PopupCard
-} from "./classes/Card.js";
 
-import {
-  FormValidator,
-  ResetFormValidator,
-  ReloadFormValidator
-} from "./classes/FormValidator.js";
-
-import {
-  cardsData as initialCards
-} from "./data/cards.js";
-
-import {
-  formSettings,
-  cardSettings,
-  cardPopupSettings
-} from "./data/settings.js";
-
+// import {
+//   Card,
+//   PopupCard
+// } from "./classes/Card.js";
+//
+// import {
+//   FormValidator,
+//   ResetFormValidator,
+//   ReloadFormValidator
+// } from "./classes/FormValidator.js";
 
 /***************************************************************************/
 
@@ -69,6 +64,7 @@ const profileJobInput = editProfileForm.querySelector(".form__input_value_profil
 
 /** gallery */
 const gallery = content.querySelector(".gallery");
+
 /** card-template */
 const cardTemplate = document.querySelector("#card-template");
 const cardElement = cardTemplate.querySelector('.card');
@@ -92,9 +88,64 @@ const cardPictureDetails = cardPopup.querySelector(".popup__picture-details");
 
 /***************************************************************************/
 
+/***************************************************************************/
+
+/********************   caseonfiguration settings objects   *******************/
+
+// stores selectors and classes for form Class
+const formSettings = {
+  formSelector: `.form`,
+  formPopupClass: `.popup`,
+  inputSelector: `.form__input`,
+  submitButtonSelector: `.form__submit-button`,
+  inactiveButtonClass: `form__submit-button_disabled`,
+  inputErrorClass: `form__input_type_error`,
+  errorClass: `form__input-error_visible`,
+  fixedPlaceholderClass: `form__placeholder_is-fixed`
+};
+
+// stores selectors and classes for Card Class
+const cardSettings = {
+  cardSelector: `.card`,
+  cardTemplateSelector: `.template_card`,
+  inputCardNameSelector: `.form__input_value_card-name`,
+  inputCardLinkSelector: `.form__input_value_card-link`,
+  cardTitleSelector: `.card__title`,
+  cardPictureSelector: `.card__picture`,
+  cardLikeButtonSelector: `.card__like-button`,
+  cardLikeButtonActiveClass: "card__like-button_active",
+  cardDeleteButtonSelector: `.card__delete-button`,
+  inputCardNameID: `card-name-input`,
+  inputCardLinkID: `card-link-input`,
+  cardsContainerSelector: `#gallery`
+}
+
+const cardPopupSettings = {
+  cardPopupSelector: `#card-popup`,
+  cardPopupCloseButtonSelector: `.popup__close-button_placed_card-popup`,
+  cardPopupNameSelector: `.popup__picture-details`,
+  cardPopupLinkSelector: `.popup__close-up-picture`
+}
+
+/***************************************************************************/
+
 /***************************   Event Listeners   ***************************/
 
 addCardForm.addEventListener("submit", handleAddCardSubmit);
+
+
+/***************************************************************************/
+
+/************************      functions calls      ************************/
+
+/** enables forms validation on page loading */
+const validatableForms = [];
+validatableForms.addCard = getValidatableForm(addCardForm);
+validatableForms.editProfile = getValidatableForm(editProfileForm);
+
+loadDataCards(initialCards);
+
+/***************************************************************************/
 
 /************************   functions declarations   ***********************/
 
@@ -124,8 +175,7 @@ function getValidatableForm(formElement) {
 
 function createCard(cardData) {
   const newCard = new PopupCard(cardData, cardSettings.cardTemplateSelector, cardSettings, cardPopupSettings);
-  newCard.generateCard();
-  return newCard;
+  addCardToGallery(newCard.generateCard());
 }
 
 /** loads the initial values using the addCard-function for each one of the cards
@@ -134,16 +184,11 @@ function createCard(cardData) {
 function loadDataCards(initialCards) {
   initialCards.forEach((cardData) => {
     const cardByData = createCard(cardData);
-    addCardToGallery(cardByData, gallery);
   });
 }
 
-function loadCardByUzer(userCardValidInputsList) {
-  const userCardData = [];
-  userCardData.name = userCardValidInputsList[cardSettings.inputCardNameID];
-  userCardData.link = userCardValidInputsList[cardSettings.inputCardLinkID];
+function loadCardByUzer(userCardData) {
   const cardByUser = createCard(userCardData);
-  addCardToGallery(cardByUser, gallery);
 }
 
 function handleAddCardSubmit(evt) {
@@ -153,39 +198,14 @@ function handleAddCardSubmit(evt) {
   }
 }
 
-function addCardToGallery(cardElement, gallerySelector) {
-  gallerySelector.prepend(card);
+function addCardToGallery(generatedCard) {
+  gallery.prepend(generatedCard);
 }
 
-
-
 /***************************************************************************/
 
-/************************      functions calls      ************************/
-
-/** enables forms validation on page loading */
-const validatableForms = [];
-validatableForms.addCard = getValidatableForm(addCardForm);
-validatableForms.editProfile = getValidatableForm(editProfileForm);
-
-loadDataCards(initialCards);
-
-/***************************************************************************/
-
-export {
-  editProfilePopup,
-  editProfileForm,
-  profileEditButton,
-  editProfileCloseButton
-};
-
-export {
-  addCardPopup,
-  addCardForm,
-  addCardButton,
-  addCardCloseButton
-};
-
-export {
-  validatableForms
-};
+// export {
+//   formSettings,
+//   cardSettings,
+//   cardPopupSettings
+// };

@@ -16,7 +16,10 @@
 
 // import {
 //   popupSettings,
-//   closePopup
+//   openPopup,
+//   closePopup,
+//   handleFocusOutPopup,
+//   handleEscPopup
 // } from "../utils.js";
 
 /***************************************************************************/
@@ -27,6 +30,8 @@ class FormValidator {
   constructor(formSettings, formElement) {
     this._formSettings = formSettings;
     this._formElement = formElement;
+    this._openFormButton = document.querySelector(`#btn-open-${formElement.id}`);
+    this._closeFormButton = document.querySelector(`#btn-close-${formElement.id}`);
   }
 
   /** sets up form functionality, enables form validation */
@@ -68,15 +73,31 @@ class FormValidator {
   /** enable or disable forms-submission */
   _setEventListeners() {
 
-    this._formElement.addEventListener("submit", (evt) => {
-      evt.preventDefault();
-      this._handleSubmissionProcess();
+    this._openFormButton.addEventListener("click", () => {
+      this._handleOpenForm();
+    });
+
+    this._closeFormButton.addEventListener("click", () => {
+      this._handleCloseForm();
     });
 
     this._enableInputsValidation();
 
     // check button status and inactive it on the first page load
     this._toggleButtonState();
+  }
+
+
+  _handleOpenForm() {
+    this._formElement.addEventListener('submit', (evt) => {
+      evt.preventDefault();
+      this._handleSubmissionProcess();
+    });
+    openPopup(this._formPopup);
+  }
+
+  _handleCloseForm() {
+    closePopup(this._formPopup);
   }
 
   /** enable or disable form-submission according to the input validation */
@@ -139,24 +160,22 @@ class FormValidator {
 
   _handleSubmissionProcess() {
     this._handleSubmissionData();
+    this._formElement.submit();
     this._handleCloseForm();
   }
 
   _handleSubmissionData() {
     this._validInputsList = [];
-
     if (this._isSubmissionValid()) {
       this._validInputsList = this._inputsList.reduce((fieldData, inputElement) => {
-        fieldData[inputElement.id] = inputElement.value;
+        fieldData[inputElement.name] = inputElement.value;
         return fieldData;
       }, {});
+      // loadUzerInput(this._validInputsList);
+
     } else {
       delete this._validInputsList;
     }
-  }
-
-  _handleCloseForm() {
-    closePopup(this._formPopup);
   }
 
 }
@@ -181,6 +200,10 @@ class ResetFormValidator extends FormValidator {
     this._toggleButtonState();
   }
 
+  _handleCloseForm() {
+    super._handleCloseForm();
+    this._resetForm();
+  }
 }
 
 /***************************************************************************/
@@ -202,7 +225,6 @@ class ReloadFormValidator extends FormValidator {
     this._submitButtonElement.classList.add(this._formSettings.inactiveButtonClass);
   }
 
-
   _loadUzerInput() {
     this._inputsList.forEach((inputElement) => {
       this._loadElementsContainer.querySelector(`#${inputElement.id}-load-value`).textContent = inputElement.value;
@@ -216,14 +238,18 @@ class ReloadFormValidator extends FormValidator {
     }
   }
 
+  _handleOpenForm() {
+    this._loadExistData();
+    super._handleOpenForm();
+  }
+
 }
 
 
 /***************************************************************************/
 
-
-export {
-  FormValidator,
-  ResetFormValidator,
-  ReloadFormValidator
-};
+// export {
+//   FormValidator,
+//   ResetFormValidator,
+//   ReloadFormValidator
+// };
