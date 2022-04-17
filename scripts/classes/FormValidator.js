@@ -20,7 +20,12 @@ import {
   closePopup,
   handleFocusOutPopup,
   handleEscPopup
-} from "../utils.js";
+} from "../utils/utils.js";
+
+
+import {
+  formSettings
+} from "../utils/constants.js";
 
 /***************************************************************************/
 
@@ -51,13 +56,16 @@ class FormValidator {
   _setCustomPlaceholders() {
     this._inputsList.forEach((inputElement) => {
       inputElement.addEventListener('input', () =>
-        this._isEmpty(inputElement))
+        this._togglePlaceholder(inputElement))
     });
   }
 
-  _isEmpty(inputElement) {
-    !inputElement.value.length >= 1 ? this._unfreezePlaceholder(inputElement) :
-      this._freezePlaceholder(inputElement);
+  _togglePlaceholder(inputElement) {
+    if (!inputElement.value.length >= 1) {
+      this._unfreezePlaceholder(inputElement)
+    } else {
+      this._freezePlaceholder(inputElement)
+    }
   };
 
   _freezePlaceholder(inputElement) {
@@ -169,15 +177,6 @@ class FormValidator {
       return this._validInputsList;
     }
   }
-}
-
-/***************************************************************************/
-
-class ResetFormValidator extends FormValidator {
-
-  constructor(formSettings, formElement) {
-    super(formSettings, formElement);
-  }
 
   /** restores a form element's default values and placeholders, inactive it's submit button */
   _resetForm() {
@@ -189,6 +188,15 @@ class ResetFormValidator extends FormValidator {
     });
 
     this._toggleButtonState();
+  }
+}
+
+/***************************************************************************/
+
+class ResetFormValidator extends FormValidator {
+
+  constructor(formSettings, formElement) {
+    super(formSettings, formElement);
   }
 
   _handleOpenForm() {

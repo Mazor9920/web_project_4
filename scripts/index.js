@@ -15,10 +15,21 @@ import {
   initialCards
 } from "./data/cards.js";
 
+
 import {
-  Card,
+  formSettings,
+  cardSettings,
+  cardPopupSettings
+} from "./utils/constants.js";
+
+import {
+  Card
+} from "./classes/Card/Card.js";
+
+import {
   PopupCard
-} from "./classes/Card.js";
+} from "./classes/Card/__PopupCard/Card__PopupCard.js";
+
 
 import {
   FormValidator,
@@ -79,47 +90,6 @@ const cardPictureDetails = cardPopup.querySelector(".popup__picture-details");
 
 /***************************************************************************/
 
-/***************************************************************************/
-
-/********************   caseonfiguration settings objects   *******************/
-
-// stores selectors and classes for form Class
-const formSettings = {
-  formSelector: `.form`,
-  formPopupClass: `.popup`,
-  inputSelector: `.form__input`,
-  submitButtonSelector: `.form__submit-button`,
-  inactiveButtonClass: `form__submit-button_disabled`,
-  inputErrorClass: `form__input_type_error`,
-  errorClass: `form__input-error_visible`,
-  fixedPlaceholderClass: `form__placeholder_is-fixed`
-};
-
-// stores selectors and classes for Card Class
-const cardSettings = {
-  cardSelector: `.card`,
-  cardTemplateSelector: `.template_card`,
-  inputCardNameSelector: `.form__input_value_card-name`,
-  inputCardLinkSelector: `.form__input_value_card-link`,
-  cardTitleSelector: `.card__title`,
-  cardPictureSelector: `.card__picture`,
-  cardLikeButtonSelector: `.card__like-button`,
-  cardLikeButtonActiveClass: "card__like-button_active",
-  cardDeleteButtonSelector: `.card__delete-button`,
-  inputCardNameID: `card-name-input`,
-  inputCardLinkID: `card-link-input`,
-  cardsContainerSelector: `#gallery`
-}
-
-const cardPopupSettings = {
-  cardPopupSelector: `#card-popup`,
-  cardPopupCloseButtonSelector: `.popup__close-button_placed_card-popup`,
-  cardPopupNameSelector: `.popup__picture-details`,
-  cardPopupLinkSelector: `.popup__close-up-picture`
-}
-
-/***************************************************************************/
-
 /***************************   Event Listeners   ***************************/
 
 
@@ -134,10 +104,17 @@ function watchForSubmit() {
 
 /************************      functions calls      ************************/
 
+/*********************************   forms   *******************************/
+
 /** enables forms validation on page loading */
 const validatableForms = [];
-validatableForms.addCard = getValidatableForm(addCardForm);
-validatableForms.editProfile = getValidatableForm(editProfileForm);
+validatableForms.addCard = new ResetFormValidator(formSettings, addCardForm);
+validatableForms.addCard.enableValidation();
+
+validatableForms.editProfile = new ReloadFormValidator(formSettings, editProfileForm, profile);
+validatableForms.editProfile.enableValidation();
+
+/**********************************   cards   ******************************/
 
 loadDataCards(initialCards);
 
@@ -147,25 +124,7 @@ loadDataCards(initialCards);
 
 /*********************************   forms   *******************************/
 
-/** enables all forms validation */
-function getValidatableForm(formElement) {
 
-  var validatableForm;
-
-  switch (formElement) {
-
-    case editProfileForm:
-      validatableForm = new ReloadFormValidator(formSettings, editProfileForm, profile);
-      break;
-
-    case addCardForm:
-      validatableForm = new ResetFormValidator(formSettings, addCardForm);
-      break;
-  }
-
-  validatableForm.enableValidation();
-  return validatableForm;
-}
 
 /**********************************   cards   ******************************/
 
