@@ -126,7 +126,6 @@ loadDataCards(initialCards);
 /***********************      Edit Profile Form      ***********************/
 
 function handleOpenEditProfileForm() {
-  profileEditButton.removeEventListener("click", handleOpenEditProfileForm);
   loadExistData(editProfileForm, profile);
   editProfileCloseButton.addEventListener("click", handleCloseEditProfileForm);
   editProfileForm.addEventListener("submit", handleEditProfileSubmit);
@@ -160,13 +159,11 @@ function editProfileByUzer(profileData) {
 function handleCloseEditProfileForm() {
   editProfileCloseButton.removeEventListener("click", handleCloseEditProfileForm);
   closePopup(editProfilePopup);
-  profileEditButton.addEventListener("click", handleOpenEditProfileForm);
 }
 
 /*************************      Add Card Form      *************************/
 
 function handleOpenAddCardForm() {
-  addCardButton.removeEventListener("click", handleOpenAddCardForm);
   validatableForms.addCard.resetForm();
   addCardCloseButton.addEventListener("click", handleCloseAddCardForm);
   addCardForm.addEventListener("submit", handleAddCardSubmit);
@@ -183,7 +180,6 @@ function handleAddCardSubmit() {
 function handleCloseAddCardForm() {
   closePopup(addCardPopup);
   addCardCloseButton.removeEventListener("click", handleCloseAddCardForm);
-  addCardButton.addEventListener("click", handleOpenAddCardForm);
 }
 
 /**********************************   cards   ******************************/

@@ -15,9 +15,9 @@ Coding some features which allow the users to close popups by clicking on the ov
 user-friendly customizing for easier and pleasant users interaction on the Client-side.
 Verification of the correct format data input and the process-server safety on the Server-side.
 * Working with the standard browser methods as well as methods crafted using custom JavaScript, with the assistance of regular expressions.
-* I divided the website's functionality into classes according to the principles of OOP — encapsulation, inheritance, and polymorphism.
-* I organized and divided the code into separate independent units in order to maintain the mobility of the code.
-I practiced import and export statements to manage the interactions between the JS models by using a local server for running them on my computer.
+* I divided the website's functionality into classes by implementing the principles of OOP — encapsulation, inheritance, and polymorphism.
+* I organized the code as separate independent units in order to maintain the mobility of the code.
+* I practiced import and export statements to manage the interactions between the JS models by using a local server for running them on my computer.
 * Positioning elements using Flexbox, Grid layouts and Grid Areas to create adaptive and responsive web-page which change depending on the width of the browser window, avoiding horizontal scrolling, and allow using different devices.
 For Optimizing responsiveness I used Media Queries, The Fr Unit, Meta Tags, the calc() Function
 * I used prefixes where in special layout or borders to maintain the code mobility.
