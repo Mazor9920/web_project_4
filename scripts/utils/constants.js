@@ -11,14 +11,18 @@
 /** stores selectors and classes for form Class */
 const formSettings = {
   formSelector: `.form`,
-  formPopupClass: `.popup`,
   inputSelector: `.form__input`,
   submitButtonSelector: `.form__submit-button`,
   inactiveButtonClass: `form__submit-button_disabled`,
   inputErrorClass: `form__input_type_error`,
   errorClass: `form__input-error_visible`,
-  fixedPlaceholderClass: `form__placeholder_is-fixed`
+  fixedPlaceholderClass: `form__placeholder_is-fixed`,
+  closeButtonSelector: `.popup__close-button`
+  
 };
+
+
+
 
 /** stores selectors and classes for Card Class */
 const cardSettings = {
@@ -44,10 +48,18 @@ const cardPopupSettings = {
   cardPopupLinkSelector: `.popup__close-up-picture`
 }
 
+
+const popupFormSettings = {
+  formSelector: `.form`,
+  formPopupSelector: `.popup`,
+  closeButtonSelector: `.popup__close-button`
+};
+
 /***************************************************************************/
 
-export{
+export {
   formSettings,
   cardSettings,
-  cardPopupSettings
+  cardPopupSettings,
+  popupFormSettings
 };

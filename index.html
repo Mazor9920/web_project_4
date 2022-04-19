@@ -36,7 +36,7 @@
       <p class="footer__copyright">© 2021 Around The U.S.</p>
     </footer>
 
-    <section id="edit-profile-popup" class="popup popup_type_edit-profile">
+    <section id="edit-profile-form-popup" class="popup popup_type_edit-profile">
       <div class="popup__container popup__container_value_edit-profile-form">
         <button id="btn-close-edit-profile-form" class="popup__close-button popup__close-button_placed_edit-profile-form" aria-label="close-button"></button>
         <form id="edit-profile-form" action="/action_page.php" name="edit-profile-form" class="form popup__form" novalidate>
@@ -59,7 +59,7 @@
       </div>
     </section>
 
-    <section id="add-card-popup" class="popup popup_type_add-card">
+    <section id="add-card-form-popup" class="popup popup_type_add-card">
       <div class="popup__container popup__container_value_add-card-form">
         <button id="btn-close-add-card-form" class="popup__close-button popup__close-button_placed_add-card-form" aria-label="close-button"></button>
         <form id="add-card-form" action="/action_page.php" name="add-card-form" class="form popup__form" novalidate>
@@ -105,7 +105,9 @@
   </template>
 
 
-  <script type="module" src="./scripts/classes/FormValidator.js"></script>
+  <script type="module" src="./scripts/classes/FormValidator/FormValidator.js"></script>
+  <!-- <script type="module" src="./scripts/classes/Form/Form.js"></script> -->
+  <!-- <script type="module" src="./scripts/classes/PopupFormActivator/PopupFormActivator.js"></script> -->
   <script type="module" src="./scripts/classes/Card/Card.js"></script>
   <script type="module" src="./scripts/classes/Card/__PopupCard/Card__PopupCard.js"></script>
 

@@ -19,8 +19,17 @@ import {
 import {
   formSettings,
   cardSettings,
-  cardPopupSettings
+  cardPopupSettings,
+  popupFormSettings
 } from "./utils/constants.js";
+
+import {
+  popupSettings,
+  openPopup,
+  closePopup,
+  handleFocusOutPopup,
+  handleEscPopup
+} from "./utils/utils.js";
 
 import {
   Card
@@ -32,10 +41,9 @@ import {
 
 
 import {
-  FormValidator,
-  ResetFormValidator,
-  ReloadFormValidator
-} from "./classes/FormValidator.js";
+  FormValidator
+} from "./classes/FormValidator/FormValidator.js";
+
 
 /***************************************************************************/
 
@@ -52,7 +60,7 @@ const profileName = profileInfo.querySelector(".profile__name");
 const profileDetails = profileInfo.querySelector(".profile__details");
 
 /** edit-profile popup */
-const editProfilePopup = document.querySelector("#edit-profile-popup");
+const editProfilePopup = document.querySelector("#edit-profile-form-popup");
 const editProfilePopupContainer = editProfilePopup.querySelector(".popup__container");
 const editProfileCloseButton = editProfilePopup.querySelector(".popup__close-button");
 const editProfileForm = editProfilePopup.querySelector("#edit-profile-form");
@@ -71,8 +79,8 @@ const gallery = content.querySelector(".gallery");
 const cardTemplate = document.querySelector("#card-template");
 const cardElement = cardTemplate.querySelector('.card');
 
-/** add-card popup */
-const addCardPopup = document.querySelector("#add-card-popup");
+/** add-card */
+const addCardPopup = document.querySelector("#add-card-form-popup");
 const addCardPopupContainer = addCardPopup.querySelector(".popup__container");
 const addCardCloseButton = addCardPopup.querySelector(".popup__close-button");
 const addCardForm = addCardPopup.querySelector("#add-card-form");
@@ -90,44 +98,104 @@ const cardPictureDetails = cardPopup.querySelector(".popup__picture-details");
 
 /***************************************************************************/
 
+
 /***************************   Event Listeners   ***************************/
 
+/*****   Activate Forms   **************************************************/
 
-addCardButton.addEventListener("click", watchForSubmit);
+/** Edit Profile Form */
+profileEditButton.addEventListener("click", handleOpenEditProfileForm);
 
-function watchForSubmit() {
-  addCardForm.addEventListener("submit", loadUzerCard);
-}
+/** Add Card Form */
+addCardButton.addEventListener("click", handleOpenAddCardForm);
 
-
-/***************************************************************************/
 
 /************************      functions calls      ************************/
 
-/*********************************   forms   *******************************/
+/*****   Forms   ***********************************************************/
 
 /** enables forms validation on page loading */
 const validatableForms = [];
-validatableForms.addCard = new ResetFormValidator(formSettings, addCardForm);
+
+validatableForms.addCard = new FormValidator(formSettings, addCardForm);
 validatableForms.addCard.enableValidation();
 
-validatableForms.editProfile = new ReloadFormValidator(formSettings, editProfileForm, profile);
+validatableForms.editProfile = new FormValidator(formSettings, editProfileForm);
 validatableForms.editProfile.enableValidation();
 
-/**********************************   cards   ******************************/
+/*****   Cards   ***********************************************************/
 
 loadDataCards(initialCards);
 
 /***************************************************************************/
 
+
 /************************   functions declarations   ***********************/
 
-/*********************************   forms   *******************************/
+/***********************      Edit Profile Form      ***********************/
 
+function handleOpenEditProfileForm() {
+  profileEditButton.removeEventListener("click", handleOpenEditProfileForm);
+  loadExistData(editProfileForm, profile);
+  editProfileCloseButton.addEventListener("click", handleCloseEditProfileForm);
+  editProfileForm.addEventListener("submit", handleEditProfileSubmit);
+  openPopup(editProfilePopup);
+}
 
+/** shows the existing profile values on the input fileds */
+function loadExistData(formElement, loadInputsContainer) {
+  validatableForms.editProfile.loadFormData();
+  const inputsList = Array.from(formElement.querySelectorAll(formSettings.inputSelector));
+  inputsList.forEach((inputElement) => {
+    inputElement.value = loadInputsContainer.querySelector(`#${inputElement.id}-load-value`).textContent;
+  });
+}
+
+function handleEditProfileSubmit() {
+  const profileUserData = validatableForms.editProfile.getSubmissionData();
+  if (profileUserData) {
+    editProfileByUzer(profileUserData);
+  }
+  editProfileForm.removeEventListener("submit", handleEditProfileSubmit);
+  handleCloseEditProfileForm();
+}
+
+function editProfileByUzer(profileData) {
+  for (let inputElement in profileData) {
+    profile.querySelector(`#${inputElement}-input-load-value`).textContent = `${profileData[inputElement]}`;
+  }
+}
+
+function handleCloseEditProfileForm() {
+  editProfileCloseButton.removeEventListener("click", handleCloseEditProfileForm);
+  closePopup(editProfilePopup);
+  profileEditButton.addEventListener("click", handleOpenEditProfileForm);
+}
+
+/*************************      Add Card Form      *************************/
+
+function handleOpenAddCardForm() {
+  addCardButton.removeEventListener("click", handleOpenAddCardForm);
+  validatableForms.addCard.resetForm();
+  addCardCloseButton.addEventListener("click", handleCloseAddCardForm);
+  addCardForm.addEventListener("submit", handleAddCardSubmit);
+  openPopup(addCardPopup);
+}
+
+/** load Card by the uzer */
+function handleAddCardSubmit() {
+  addCardByUzer();
+  handleCloseAddCardForm();
+  addCardForm.removeEventListener("submit", handleAddCardSubmit);
+}
+
+function handleCloseAddCardForm() {
+  closePopup(addCardPopup);
+  addCardCloseButton.removeEventListener("click", handleCloseAddCardForm);
+  addCardButton.addEventListener("click", handleOpenAddCardForm);
+}
 
 /**********************************   cards   ******************************/
-
 
 /** loads the initial values using the addCard-function for each one of the cards
  * @param {Array.<initialCards>} - an array of cards object
@@ -138,13 +206,12 @@ function loadDataCards(initialCards) {
   });
 }
 
-// load Card by the uzer
-function loadUzerCard() {
-  const userCardData = validatableForms.addCard._handleSubmissionData();
+/** load Card by the uzer */
+function addCardByUzer() {
+  const userCardData = validatableForms.addCard.getSubmissionData();
   if (userCardData) {
     const cardByUser = createCard(userCardData);
   }
-  addCardForm.removeEventListener("submit", loadUzerCard);
 }
 
 function createCard(cardData) {
