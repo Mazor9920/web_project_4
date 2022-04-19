@@ -18,11 +18,7 @@ const formSettings = {
   errorClass: `form__input-error_visible`,
   fixedPlaceholderClass: `form__placeholder_is-fixed`,
   closeButtonSelector: `.popup__close-button`
-  
 };
-
-
-
 
 /** stores selectors and classes for Card Class */
 const cardSettings = {
@@ -48,18 +44,10 @@ const cardPopupSettings = {
   cardPopupLinkSelector: `.popup__close-up-picture`
 }
 
-
-const popupFormSettings = {
-  formSelector: `.form`,
-  formPopupSelector: `.popup`,
-  closeButtonSelector: `.popup__close-button`
-};
-
 /***************************************************************************/
 
 export {
   formSettings,
   cardSettings,
-  cardPopupSettings,
-  popupFormSettings
+  cardPopupSettings
 };

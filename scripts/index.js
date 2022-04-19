@@ -19,8 +19,7 @@ import {
 import {
   formSettings,
   cardSettings,
-  cardPopupSettings,
-  popupFormSettings
+  cardPopupSettings
 } from "./utils/constants.js";
 
 import {
@@ -101,30 +100,22 @@ const cardPictureDetails = cardPopup.querySelector(".popup__picture-details");
 
 /***************************   Event Listeners   ***************************/
 
-/*****   Activate Forms   **************************************************/
-
-/** Edit Profile Form */
+/** Activate Edit Profile Form */
 profileEditButton.addEventListener("click", handleOpenEditProfileForm);
 
-/** Add Card Form */
+/** Activate Add Card Form */
 addCardButton.addEventListener("click", handleOpenAddCardForm);
-
 
 /************************      functions calls      ************************/
 
-/*****   Forms   ***********************************************************/
-
 /** enables forms validation on page loading */
 const validatableForms = [];
-
 validatableForms.addCard = new FormValidator(formSettings, addCardForm);
 validatableForms.addCard.enableValidation();
-
 validatableForms.editProfile = new FormValidator(formSettings, editProfileForm);
 validatableForms.editProfile.enableValidation();
 
-/*****   Cards   ***********************************************************/
-
+/** enables cards loading on page loading */
 loadDataCards(initialCards);
 
 /***************************************************************************/
