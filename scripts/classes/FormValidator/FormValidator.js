@@ -27,10 +27,8 @@ class FormValidator {
   }
 
   _addFormElements() {
-    this._formElement = this._formElement;
     this._submitButtonElement = this._formElement.querySelector(this._formSettings.submitButtonSelector);
     this._inputsList = Array.from(this._formElement.querySelectorAll(this._formSettings.inputSelector));
-    // this._validInputsList = [];
   }
 
   /** enable or disable forms-submission */
@@ -43,20 +41,7 @@ class FormValidator {
 
     this._formElement.addEventListener('submit', (evt) => {
       evt.preventDefault();
-      this._validInputsList = [];
-      if (this._hasInvalidInput()) {
-        delete this._validInputsList;
-      } else {
-        this._handleSubmissionData();
-      }
     });
-  }
-
-  _handleSubmissionData() {
-    this._validInputsList = this._inputsList.reduce((fieldData, inputElement) => {
-      fieldData[inputElement.name] = inputElement.value;
-      return fieldData;
-    }, {});
   }
 
   _setCustomPlaceholders() {
@@ -89,8 +74,10 @@ class FormValidator {
     // at least one invalid input
     if (this._hasInvalidInput(this._inputsList)) {
       this._submitButtonElement.classList.add(this._formSettings.inactiveButtonClass);
+      this._submitButtonElement.disabled = true;
     } else {
       this._submitButtonElement.classList.remove(this._formSettings.inactiveButtonClass);
+      this._submitButtonElement.disabled = false;
     }
   }
 
@@ -138,11 +125,6 @@ class FormValidator {
 
   /***************************   public methods:   ***************************/
 
-  getSubmissionData() {
-    return this._validInputsList;
-  }
-
-
   /** restores a form element's default values and placeholders,
   inactive it's submit button */
   resetForm() {
@@ -156,7 +138,6 @@ class FormValidator {
     this._toggleButtonState();
   }
 
-
   /** Initializes the placeholders status of a data-filled form-values,
   inactive it's submit button */
   loadFormData() {
@@ -164,9 +145,10 @@ class FormValidator {
       this._freezePlaceholder(inputElement);
       this._hideInputError(inputElement);
     });
+    /** inactive submit button on form-opening */
     this._submitButtonElement.classList.add(this._formSettings.inactiveButtonClass);
+    this._submitButtonElement.disabled = true;
   }
-
 
 }
 

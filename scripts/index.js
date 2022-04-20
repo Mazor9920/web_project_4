@@ -101,9 +101,13 @@ const cardPictureDetails = cardPopup.querySelector(".popup__picture-details");
 
 /** Activate Edit Profile Form */
 profileEditButton.addEventListener("click", handleOpenEditProfileForm);
+editProfileForm.addEventListener("submit", handleEditProfileSubmit);
+editProfileCloseButton.addEventListener("click", () => closePopup(editProfilePopup));
 
 /** Activate Add Card Form */
 addCardButton.addEventListener("click", handleOpenAddCardForm);
+addCardForm.addEventListener("submit", handleAddCardSubmit);
+addCardCloseButton.addEventListener("click", () => closePopup(addCardPopup));
 
 /************************      functions calls      ************************/
 
@@ -126,59 +130,68 @@ loadDataCards(initialCards);
 
 function handleOpenEditProfileForm() {
   loadExistData(editProfileForm, profile);
-  editProfileCloseButton.addEventListener("click", handleCloseEditProfileForm);
-  editProfileForm.addEventListener("submit", handleEditProfileSubmit);
+  validatableForms.editProfile.loadFormData();
   openPopup(editProfilePopup);
 }
 
-/** shows the existing profile values on the input fileds */
-function loadExistData(formElement, loadInputsContainer) {
-  validatableForms.editProfile.loadFormData();
-  const inputsList = Array.from(formElement.querySelectorAll(formSettings.inputSelector));
-  inputsList.forEach((inputElement) => {
-    inputElement.value = loadInputsContainer.querySelector(`#${inputElement.id}-load-value`).textContent;
-  });
-}
-
 function handleEditProfileSubmit() {
-  const profileUserData = validatableForms.editProfile.getSubmissionData();
-  if (profileUserData) {
-    editProfileByUzer(profileUserData);
-  }
-  editProfileForm.removeEventListener("submit", handleEditProfileSubmit);
-  handleCloseEditProfileForm();
-}
-
-function editProfileByUzer(profileData) {
-  for (let inputElement in profileData) {
-    profile.querySelector(`#${inputElement}-input-load-value`).textContent = `${profileData[inputElement]}`;
+  /** avoid submit after closing form-popup by popup utils (as ESC) */
+  if (editProfilePopup.classList.contains(popupSettings.openPopupClass)) {
+    editProfileByUzer();
+    closePopup(editProfilePopup);
   }
 }
 
-function handleCloseEditProfileForm() {
-  editProfileCloseButton.removeEventListener("click", handleCloseEditProfileForm);
-  closePopup(editProfilePopup);
+function editProfileByUzer() {
+  const profileData = getSubmissionData(editProfileForm);
+  if (profileData) {
+    for (const inputElement in profileData) {
+      profile.querySelector(`#${inputElement}-input-load-value`).textContent = `${profileData[inputElement]}`;
+    }
+  }
 }
 
 /*************************      Add Card Form      *************************/
 
 function handleOpenAddCardForm() {
   validatableForms.addCard.resetForm();
-  addCardCloseButton.addEventListener("click", handleCloseAddCardForm);
-  addCardForm.addEventListener("submit", handleAddCardSubmit);
   openPopup(addCardPopup);
 }
 
 /** load Card by the uzer */
 function handleAddCardSubmit() {
-  addCardByUzer();
-  handleCloseAddCardForm();
-  addCardForm.removeEventListener("submit", handleAddCardSubmit);
+  /** avoid submit after closing form-popup by popup utils (as ESC) */
+  if (addCardPopup.classList.contains(popupSettings.openPopupClass)) {
+    addCardByUzer();
+    closePopup(addCardPopup);
+  }
 }
 
-function handleCloseAddCardForm() {
-  closePopup(addCardPopup);
-  addCardCloseButton.removeEventListener("click", handleCloseAddCardForm);
+/** load Card by the uzer */
+function addCardByUzer() {
+  const userCardData = getSubmissionData(addCardForm);
+  if (userCardData) {
+    createCard(userCardData);
+  }
+}
+
+/*************************      general Forms      *************************/
+
+function getSubmissionData(formElement) {
+  const inputsList = Array.from(formElement.querySelectorAll(formSettings.inputSelector));
+  const submissionData = inputsList.reduce((fieldData, inputElement) => {
+    fieldData[inputElement.name] = inputElement.value;
+    return fieldData;
+  }, {});
+  return submissionData;
+}
+
+/** shows the existing values of the loadInputsContainer on the input fileds of the formElement */
+function loadExistData(formElement, loadInputsContainer) {
+  const inputsList = Array.from(formElement.querySelectorAll(formSettings.inputSelector));
+  inputsList.forEach((inputElement) => {
+    inputElement.value = loadInputsContainer.querySelector(`#${inputElement.id}-load-value`).textContent;
+  });
 }
 
 /**********************************   cards   ******************************/
@@ -188,16 +201,8 @@ function handleCloseAddCardForm() {
  */
 function loadDataCards(initialCards) {
   initialCards.forEach((cardData) => {
-    const cardByData = createCard(cardData);
+    createCard(cardData);
   });
-}
-
-/** load Card by the uzer */
-function addCardByUzer() {
-  const userCardData = validatableForms.addCard.getSubmissionData();
-  if (userCardData) {
-    const cardByUser = createCard(userCardData);
-  }
 }
 
 function createCard(cardData) {
