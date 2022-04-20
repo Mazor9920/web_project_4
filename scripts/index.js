@@ -36,8 +36,7 @@ import {
 
 import {
   PopupCard
-} from "./classes/Card/__PopupCard/Card__PopupCard.js";
-
+} from "./classes/PopupCard.js";
 
 import {
   FormValidator

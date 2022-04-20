@@ -20,12 +20,12 @@ import {
   closePopup,
   handleFocusOutPopup,
   handleEscPopup
-} from "../../../utils/utils.js";
+} from "../utils/utils.js";
 
 
 import {
   Card
-} from "../Card.js";
+} from "./Card/Card.js";
 
 /***************************************************************************/
 
