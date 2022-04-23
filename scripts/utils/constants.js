@@ -1,6 +1,7 @@
 /***************************************************************************/
 
-/** Contain all the global constant, caseonfiguration settings objects
+/** Contain all the global constant,
+ *  configuration settings objects which their values depend on the HTML file
  *
  * @module constants
  */

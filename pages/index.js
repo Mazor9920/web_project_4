@@ -1,9 +1,11 @@
 /***************************************************************************/
-
-/** Contain all the spesific functions:
+/**  The primary module of this project.
+ * Contain all the spesific code and functions which unique to this specific page.
+ *
+ * Includes:
  * DOM Elements Selecting
- *  All the configuration settings objects that their values depend on the HTML file
- * functions that are used to Create Class instances of Forms or Cards.
+ * Creation of new class instances for Forms and Cards, by data transferring.
+ * descriptions of the interactions between these classes, defining their relationship.
  * triggered functions - used by calling
  *
  * @module index
@@ -13,14 +15,15 @@
 
 import {
   initialCards
-} from "./data/cards.js";
+}
+from "../scripts/data/cards.js";
 
 
 import {
   formSettings,
   cardSettings,
   cardPopupSettings
-} from "./utils/constants.js";
+} from "../scripts/utils/constants.js";
 
 import {
   popupSettings,
@@ -28,19 +31,19 @@ import {
   closePopup,
   handleFocusOutPopup,
   handleEscPopup
-} from "./utils/utils.js";
+} from "../scripts/utils/utils.js";
 
 import {
   Card
-} from "./classes/Card/Card.js";
+} from "../scripts/components/Card/Card.js";
 
 import {
   PopupCard
-} from "./classes/PopupCard.js";
+} from "../scripts/components/PopupCard.js";
 
 import {
   FormValidator
-} from "./classes/FormValidator/FormValidator.js";
+} from "../scripts/components/FormValidator/FormValidator.js";
 
 
 /***************************************************************************/

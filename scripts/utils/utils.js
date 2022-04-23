@@ -1,7 +1,11 @@
   /***************************************************************************/
 
   /** Various utility functions that are used throughout the codebase.
-   *  Contain function and event handlers that opens/closes modal windows.
+   * Contain general separate functions, constants, and event handlers,
+   * which don't belong to any particular class and are not unique to any page.
+   *
+   * Includes:
+   * opens/closes modal-windows(popups) functions
    *
    * @module utils
    */

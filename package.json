@@ -1,0 +1,21 @@
+{
+  "name": "web_project_4",
+  "version": "1.0.0",
+  "description": "## Creating a responsive & interactive web page where users can add, remove, or like photos.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mazor9920/web_project_4.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Mazor9920/web_project_4/issues"
+  },
+  "homepage": "https://github.com/Mazor9920/web_project_4#readme",
+  "dependencies": {}
+}
