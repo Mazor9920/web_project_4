@@ -13,8 +13,36 @@
 
 /***************************************************************************/
 
-import "./styles/index.css";    // add import of the main stylesheets file
+/***************************************************************************/
 
+// the main stylesheets file
+import "./styles/index.css";
+
+// local images as strings → using an array of objects to create DOM elements to add to the page.    
+import logoSvg from "../images/logo.svg";
+import profileImageSrc from "../images/profile-picture.png";
+
+
+  import {
+    initialCards
+  } from "../scripts/data/cards.js";
+ 
+  import {
+    formSettings,
+    cardSettings,
+    popupSettings,
+    popupFormSettings,
+    popupImageSettings
+  } from "../scripts/utils/constants.js";
+ 
+// components
+import Card from "../scripts/components/Card/Card.js";
+import FormValidator from "../scripts/components/FormValidator/FormValidator.js";
+import Popup from "../scripts/components/Popup/Popup.js";
+import PopupWithImage from "../scripts/components/Popup/PopupWithImage.js";
+import PopupWithForm from "../scripts/components/Popup/PopupWithForm.js";
+import Section from "../scripts/components/Section/Section.js";
+import UserInfo from "../scripts/components/UserInfo/UserInfo.js";
 
 
 /***************************************************************************/

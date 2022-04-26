@@ -38,12 +38,12 @@ const cardSettings = {
 }
 
 /** stores selectors and classes for PopupCard Class */
-const cardPopupSettings = {
-  cardPopupSelector: `#card-popup`,
-  cardPopupCloseButtonSelector: `.popup__close-button_placed_card-popup`,
-  cardPopupNameSelector: `.popup__picture-details`,
-  cardPopupLinkSelector: `.popup__close-up-picture`
-}
+// const cardPopupSettings = {
+//   cardPopupSelector: `#card-popup`,
+//   cardPopupCloseButtonSelector: `.popup__close-button_placed_card-popup`,
+//   cardPopupNameSelector: `.popup__picture-details`,
+//   cardPopupLinkSelector: `.popup__close-up-picture`
+// }
 
 /***************************************************************************/
 
@@ -71,6 +71,8 @@ const popupImageSettings = {
 export {
   formSettings,
   cardSettings,
-  cardPopupSettings,
-  popupSettings
+  // cardPopupSettings,
+  popupSettings,
+  popupFormSettings,
+  popupImageSettings
 };

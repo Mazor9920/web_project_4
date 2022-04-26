@@ -7,31 +7,18 @@
  * It has one public method generateCard(),that returns
  * a fully functional card element populated with data. with attached event listeners.
  *
- * It has 1 extension:
- * PopupCard - for creating a card that has it's own attached popup modal window
- *
  * @module Card
  */
 
 /***************************************************************************/
 
-import {
-  popupSettings,
-  openPopup,
-  closePopup,
-  handleFocusOutPopup,
-  handleEscPopup
-} from "../../utils/utils.js";
 
-/***************************************************************************/
-
-
-class Card {
+export default class Card {
   /**
    * Create a Card object
    * @callback handleCardClick - a function which set the functionality of card click event
    */
-  constructor(data, cardTemplateSelector, cardSettings, handleCardClick {
+  constructor(data, cardTemplateSelector, cardSettings, handleCardClick) {
     this._name = data.name;
     this._link = data.link;
     this._cardTemplateSelector = cardTemplateSelector;
@@ -104,7 +91,3 @@ class Card {
 }
 
 /***************************************************************************/
-
-export {
-  Card
-};

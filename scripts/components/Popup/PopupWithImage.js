@@ -16,9 +16,7 @@ import {
   popupImageSettings
 } from "../../utils/constants.js";
 
-import {
-  Popup
-} from "./Popup.js";
+import Popup from "./Popup.js";
 
 /***************************************************************************/
 

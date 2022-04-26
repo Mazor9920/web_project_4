@@ -12,14 +12,14 @@
   <div class="page" id="page">
 
     <header class="header">
-      <img class="logo" src="./images/logo.svg" alt="logo-placed-header">
+      <img class="logo" src="<%= require('../images/logo.svg')%>" alt="logo-placed-header">
     </header>
 
     <main class="content" id="content">
 
       <section id="profile" class="profile">
         <div class="profile__info">
-          <img src="./images/profile-picture.png" alt="profile-picture" class="profile__picture">
+          <img src="<%= require('../images/profile-picture.png')%>" alt="profile-picture" class="profile__picture">
           <h1 id="profile-name-input-load-value" class="profile__name">Jacques Cousteau</h1>
           <button id="btn-open-edit-profile-form" class="profile__edit-button" aria-label="edit-button" type="button"></button>
           <p id="profile-job-input-load-value" class="profile__details">Explorer</p>
@@ -85,7 +85,7 @@
     <section id="card-popup" class="popup popup_type_card-popup">
       <div class="popup__container popup__container_value_card-popup">
         <button class="popup__close-button popup__close-button_placed_card-popup" aria-label="close-button"></button>
-        <img alt="landscape-image" class="popup__close-up-picture" src=" ">
+        <img alt="landscape-image" class="popup__close-up-picture">
         <p class="popup__picture-details"></p>
       </div>
     </section>
@@ -96,7 +96,7 @@
   <template id="card-template" class="template template_card">
     <article class="card">
       <button class="card__delete-button" aria-label="delete-button"></button>
-      <img id="card-link-input-load-src" alt="landscape-image" class="card__picture" src=" ">
+      <img id="card-link-input-load-src" alt="landscape-image" class="card__picture">
       <div class="card__info">
         <h2 id="card-name-input-load-value" class="card__title"></h2>
         <button class="card__like-button" aria-label="like-button" type="button"></button>

@@ -49,7 +49,7 @@ export default class Popup {
   }
 
   /** allows the users to close the popup by clicking on the overlay, the shaded area around the popup */
-  _handleFocusOutPopup(evt) => {
+  _handleFocusOutPopup(evt){
     // const openedPopupElement = evt.currentTarget;
     // const clickedElement = evt.target;
     // // if the focus is outside the popup content

@@ -16,11 +16,7 @@ import {
   popupFormSettings
 } from "../../utils/constants.js";
 
-import {
-  Popup
-} from "./Popup.js";
-
-import FormValidator from "../scripts/components/FormValidator/FormValidator.js";
+import Popup from "./Popup.js";
 
 /***************************************************************************/
 

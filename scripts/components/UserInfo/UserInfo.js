@@ -50,3 +50,5 @@ export default class UserInfo {
     this._profileJobElement.textContent = uzerJob;
   }
 }
+
+/***************************************************************************/
