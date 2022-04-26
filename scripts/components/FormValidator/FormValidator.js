@@ -10,8 +10,7 @@
 
 /***************************************************************************/
 
-
-class FormValidator {
+export default class FormValidator {
 
   constructor(formSettings, formElement) {
     this._formSettings = formSettings;
@@ -154,7 +153,3 @@ class FormValidator {
 
 
 /***************************************************************************/
-
-export {
-  FormValidator
-};

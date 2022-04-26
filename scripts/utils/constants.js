@@ -47,8 +47,30 @@ const cardPopupSettings = {
 
 /***************************************************************************/
 
+/** stores selectors and classes for Popup Class */
+const popupSettings = {
+  openPopupClass: `popup_opened`,
+  openPopupSelector: `.popup_opened`,
+  closeButtonSelector: `.popup__close-button`
+}
+/**   Popup class Extensions */
+
+/** PopupWithForm */
+const popupFormSettings = {
+  popupFormSelector: `popup__form`,
+  popupFormInputSelector: `.form__input`
+}
+/** PopupWithImage */
+const popupImageSettings = {
+  popupImageSelector: `.popup__close-up-picture`,
+  popupImageCaprionSelector: `.popup__picture-details`
+}
+
+/***************************************************************************/
+
 export {
   formSettings,
   cardSettings,
-  cardPopupSettings
+  cardPopupSettings,
+  popupSettings
 };
