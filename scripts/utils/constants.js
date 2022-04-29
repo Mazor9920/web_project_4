@@ -35,44 +35,50 @@ const cardSettings = {
   inputCardNameID: `card-name-input`,
   inputCardLinkID: `card-link-input`,
   cardsContainerSelector: `#gallery`
-}
+};
 
-/** stores selectors and classes for PopupCard Class */
-// const cardPopupSettings = {
-//   cardPopupSelector: `#card-popup`,
-//   cardPopupCloseButtonSelector: `.popup__close-button_placed_card-popup`,
-//   cardPopupNameSelector: `.popup__picture-details`,
-//   cardPopupLinkSelector: `.popup__close-up-picture`
-// }
+/** stores selectors for UzerInfo Class */
+const uzerInfoProfileSelectors = { 
+  name: `#profile-name-input-load-value`, 
+  job: `#profile-job-input-load-value` 
+};
 
 /***************************************************************************/
 
 /** stores selectors and classes for Popup Class */
 const popupSettings = {
+  popupSelector: `.popup`,
   openPopupClass: `popup_opened`,
   openPopupSelector: `.popup_opened`,
   closeButtonSelector: `.popup__close-button`
-}
+};
+
 /**   Popup class Extensions */
 
 /** PopupWithForm */
 const popupFormSettings = {
-  popupFormSelector: `popup__form`,
+  popupFormSelector: `.popup__form`,
   popupFormInputSelector: `.form__input`
-}
+};
+
 /** PopupWithImage */
 const popupImageSettings = {
   popupImageSelector: `.popup__close-up-picture`,
   popupImageCaprionSelector: `.popup__picture-details`
-}
+};
+
+// const cardPopupSettings = {
+//   cardPopupSelector: `#card-popup`,
+//   cardPopupCloseButtonSelector: `.popup__close-button_placed_card-popup`,
+// }
 
 /***************************************************************************/
 
 export {
   formSettings,
   cardSettings,
-  // cardPopupSettings,
   popupSettings,
   popupFormSettings,
-  popupImageSettings
+  popupImageSettings,
+  uzerInfoProfileSelectors
 };

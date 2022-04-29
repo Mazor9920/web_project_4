@@ -16,12 +16,12 @@
 
 export default class Section {
   /**
-    * renders a list of elements on a page
-    * @param {string} containerSelector - a CSS class selector of the container element which the renderered-items add to.
-    * @param {Object} - object with 2 properties (items and renderer).
-    * @type {Array.<Object>} Object.items - serves as an array of data, which loads on a page when initializing the class.
-    * @callback Object.renderer - a function which responsible for render each individual item as element on a page.
-    */
+   * renders a list of elements on a page
+   * @param {Object} - object with 2 properties (items and renderer).
+   * @param {Array.<Object>} items - serves as an array of data, which loads on a page when initializing the class.
+   * @callback Object.renderer - a function which responsible for render each individual item as element on a page.
+   * @param {string} containerSelector - a CSS class selector of the container element which the renderered-items add to.
+   */
   constructor({
     items,
     renderer
@@ -31,20 +31,19 @@ export default class Section {
     this._container = document.querySelector(containerSelector);
   }
 
-  addItem(element) {
-    this._container.append(element);
-  }
 
-  // clear() {
-  //   this._container.innerHTML = "";
-  // }
+  addItem(element) {
+    this._container.prepend(element);
+  }
 
   renderItems() {
-    // this.clear();
-    this._renderedItems.forEach(item => {
-      this._renderer(item);
-    });
+    this._renderedItems.forEach(item => this._renderer(item));
   }
+
+  // resetItems(newItems){
+  //   this._renderedItems = newItems;
+  //   resetItems();
+  // }
 
 }
 

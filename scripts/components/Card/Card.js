@@ -18,7 +18,7 @@ export default class Card {
    * Create a Card object
    * @callback handleCardClick - a function which set the functionality of card click event
    */
-  constructor(data, cardTemplateSelector, cardSettings, handleCardClick) {
+  constructor({data, cardTemplateSelector, cardSettings, handleCardClick}) {
     this._name = data.name;
     this._link = data.link;
     this._cardTemplateSelector = cardTemplateSelector;
@@ -65,7 +65,7 @@ export default class Card {
   _setEventListeners() {
 
     this._element.addEventListener("click", () => {
-      this._handleCardClick();
+      this._cardPicture._handleCardClick({name: this._name, link: this._link});
     });
 
     this._cardLikeButton.addEventListener("click", () => {

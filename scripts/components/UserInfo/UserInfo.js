@@ -38,17 +38,19 @@ export default class UserInfo {
 
   /**
    * takes new user data and reset it on the page
-   * @param {Object.<string, string>} - object with 2 properties (job and name) which contain the uzer data
-   * @param uzerName - selector of the element that contain the profile name.
-   * @param uzerJob - selector of the element that contain the profile job.
+   * @param {Object.<string, string>} newUzerInfo - object with 2 properties (job and name) which contain the uzer data
+   * @param newUzerInfo.name - selector of the element that contain the profile name.
+   * @param newUzerInfo.job - selector of the element that contain the profile job.
    */
-  setUserInfo({
-    uzerName,
-    uzerJob
-  }) {
-    this._profileNameElement.textContent = uzerName;
-    this._profileJobElement.textContent = uzerJob;
+  setUserInfo(newUzerInfo) {
+    this._profileNameElement.textContent = newUzerInfo.name;
+    this._profileJobElement.textContent = newUzerInfo.job;
   }
+
 }
+
+
+
+ 
 
 /***************************************************************************/

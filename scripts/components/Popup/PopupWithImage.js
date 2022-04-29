@@ -24,13 +24,13 @@ export default class PopupWithImage extends Popup {
   /**
    * Create a Popup with an image
    * @param {string} popupSelector - a CSS class selector of the popup element.
-   * @param {Object.<string, string>} imageData - object with 2 properties (link, image).
+   * @param {Object.<string, string>} imageData - object with 2 properties (link, caption).
    * @param {string} imageData.link - the image src attribute value.
    * @param {string} imageData.caption - a caption for the image.
    */
-  constructor(popupSelector, imageData) {
+  
+  constructor(popupSelector) {
     super(popupSelector);
-    this._imageData = imageData;
     this._imageLinkElement = this._popupElement.querySelector(popupImageSettings.popupImageSelector);
     this._imageCaptionElement = this._popupElement.querySelector(popupImageSettings.popupImageCaprionSelector);
   }
@@ -43,9 +43,17 @@ export default class PopupWithImage extends Popup {
 
   /** presents the content of the popup (image and its caption) */
   _setPopupContent() {
-    this._imageLinkElement.src = this._imageData.link;
-    this._imageLinkElement.alt = `close up picture of ${this._imageData.caption}`;
-    this._imageCaptionElement.textContent = this._imageData.caption;
-  }
+    this._imageLinkElement.src =this._imageLink;
+    this._imageLinkElement.alt = `close up picture of ${this._imageCaption}`;
+    this._imageCaptionElement.textContent = this._imageCaption;
+  };
+  
+  setImageData(imageData){
+    this._imageLink = imageData.link;
+    this._imageCaption = imageData.caption;
+  };
+ 
 
 }
+
+

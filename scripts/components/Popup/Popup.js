@@ -36,30 +36,22 @@ export default class Popup {
    */
   constructor(popupSelector) {
     this._popupElement = document.querySelector(popupSelector);
-    this._closePopupButtonElement = popupSelector.querySelector(popupSettings.closeButtonSelector);
+    this._closePopupButtonElement = this._popupElement.querySelector(popupSettings.closeButtonSelector);
   }
 
   /** allows the users to close an open popup by pressing the Esc key */
   _handleEscClose(evt) {
     const pressedKey = evt.key;
     if (pressedKey === "Escape") {
-      const openedPopupElement = document.querySelector(popupSettings.openPopupSelector);
-      closePopup(openedPopupElement);
+      this.closePopup();
     }
   }
 
   /** allows the users to close the popup by clicking on the overlay, the shaded area around the popup */
-  _handleFocusOutPopup(evt){
-    // const openedPopupElement = evt.currentTarget;
-    // const clickedElement = evt.target;
-    // // if the focus is outside the popup content
-    // if (clickedElement == openedPopupElement) {
-    //   closePopup(openedPopupElement);
-    // }
-
+  _handleFocusOutPopup(evt) {
     /** if the focus is outside the popup content */
     if (evt.target == this._popupElement) {
-      closePopup(this._popupElement);
+      this.closePopup();
     }
   };
 
@@ -76,21 +68,29 @@ export default class Popup {
   };
 
   /** add Listeners for events of popup opening/closing */
-  setEventListeners() {
-    this._closePopupButtonElement.addEventListener("click", () => closePopup(this._popupElement));
-    _addTempCloseListeners();
+  setEventListeners() {    
+    this._closePopupButtonElement.addEventListener("click", () => {
+      this.closePopup();
+    });
+    this._addTempCloseListeners();
   }
 
   /** add temporary Listeners */
   _addTempCloseListeners() {
-    this._popupElement.addEventListener('mousedown', _handleFocusOutPopup);
-    document.addEventListener('keydown', _handleEscClose);
+    this._popupElement.addEventListener('mousedown', (evt) =>{
+      this._handleFocusOutPopup(evt);
+    } );
+    document.addEventListener('keydown', (evt) => {
+      this._handleEscClose(evt);
+    });
   };
 
   /** remove temporary Listeners */
   _removeTempCloseListeners() {
-    this._popupElement.removeEventListener('mousedown', _handleFocusOutPopup);
-    document.removeEventListener('keydown', _handleEscClose);
+    this._popupElement.removeEventListener('mousedown', this._handleFocusOutPopup);
+    document.removeEventListener('keydown', this._handleEscClose);
   };
 
 }
+
+/***************************************************************************/
