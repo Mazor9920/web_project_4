@@ -42,7 +42,10 @@ export default class Card {
     return cardElement;
   }
 
-  /** sets up card content and functionality, returns a functional card element */
+  /**
+   * sets up card content and functionality
+   * @returns {HTMLElement} - returns a functional card element
+   */
   generateCard() {
 
     this._element = this._getTemplate();
