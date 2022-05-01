@@ -187,7 +187,8 @@ activePopupForms.editProfile = new PopupWithForm({
     /** avoid submit after closing form-popup by popup utils (as ESC) */
     if (editProfilePopup.classList.contains(popupSettings.openPopupClass)) {
       /** set new uzer profile details */
-      profileSection.rerenderItems([newUzerProfileData]);
+      uzerInfoProfile.setUserInfo(newUzerProfileData);
+      // profileSection.rerenderItems([newUzerProfileData]);
     }
   }
 });
