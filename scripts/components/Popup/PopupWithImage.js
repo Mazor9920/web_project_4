@@ -28,11 +28,15 @@ export default class PopupWithImage extends Popup {
    * @param {string} imageData.link - the image src attribute value.
    * @param {string} imageData.caption - a caption for the image.
    */
-  
-  constructor(popupSelector) {
+  constructor({
+    popupSelector,
+    imageData
+  }) {
     super(popupSelector);
     this._imageLinkElement = this._popupElement.querySelector(popupImageSettings.popupImageSelector);
     this._imageCaptionElement = this._popupElement.querySelector(popupImageSettings.popupImageCaprionSelector);
+    this._imageLink = imageData.link;
+    this._imageCaption = imageData.caption;
   }
 
   /** opens the popup-image window */
@@ -43,17 +47,15 @@ export default class PopupWithImage extends Popup {
 
   /** presents the content of the popup (image and its caption) */
   _setPopupContent() {
-    this._imageLinkElement.src =this._imageLink;
+    this._imageLinkElement.src = this._imageLink;
     this._imageLinkElement.alt = `close up picture of ${this._imageCaption}`;
     this._imageCaptionElement.textContent = this._imageCaption;
   };
-  
-  setImageData(imageData){
-    this._imageLink = imageData.link;
-    this._imageCaption = imageData.caption;
+
+  resetImageData(newImageData) {
+    this._imageLink = newImageData.link;
+    this._imageCaption = newImageData.caption;
   };
- 
+
 
 }
-
-

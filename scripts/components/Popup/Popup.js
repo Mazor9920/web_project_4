@@ -68,7 +68,7 @@ export default class Popup {
   };
 
   /** add Listeners for events of popup opening/closing */
-  setEventListeners() {    
+  setEventListeners() {
     this._closePopupButtonElement.addEventListener("click", () => {
       this.closePopup();
     });
@@ -77,9 +77,9 @@ export default class Popup {
 
   /** add temporary Listeners */
   _addTempCloseListeners() {
-    this._popupElement.addEventListener('mousedown', (evt) =>{
+    this._popupElement.addEventListener('mousedown', (evt) => {
       this._handleFocusOutPopup(evt);
-    } );
+    });
     document.addEventListener('keydown', (evt) => {
       this._handleEscClose(evt);
     });

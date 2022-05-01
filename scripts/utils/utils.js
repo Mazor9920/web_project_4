@@ -4,6 +4,13 @@
    * Contain general separate functions, constants, and event handlers,
    * which don't belong to any particular class and are not unique to any page.
    *
-   * 
+   *
    * @module utils
    */
+
+
+
+  // function setContainerTextContent({containerElement, sourceElementSelector, newTextValue}){
+  //   const sourceElement = containerElement.querySelector(sourceElementSelector);
+  //   sourceElement.textContent = newTextValue;
+  // };

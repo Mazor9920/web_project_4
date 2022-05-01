@@ -28,11 +28,16 @@ import {
 } from "../scripts/data/cards.js";
 
 import {
+  initialUzerProfile
+} from "../scripts/data/uzerProfile.js";
+
+import {
   formSettings,
   cardSettings,
   popupSettings,
   popupFormSettings,
-  popupImageSettings
+  popupImageSettings,
+  uzerInfoProfileSelectors
 } from "../scripts/utils/constants.js";
 
 // components
@@ -43,7 +48,6 @@ import PopupWithImage from "../scripts/components/Popup/PopupWithImage.js";
 import PopupWithForm from "../scripts/components/Popup/PopupWithForm.js";
 import Section from "../scripts/components/Section/Section.js";
 import UserInfo from "../scripts/components/UserInfo/UserInfo.js";
-
 
 /***************************************************************************/
 
@@ -98,183 +102,160 @@ const cardPictureDetails = cardPopup.querySelector(".popup__picture-details");
 
 /***************************************************************************/
 
+/******************************   Constants   ******************************/
+
+/** create card-popup (popup with card, contains image & caption) */
+const closeUpCardPopup = new PopupWithImage({
+  popupSelector: `#card-popup`,
+  imageData: {}
+});
+
+/** creates a section gallery of cards  */
+const cardsGallerySection = new Section({
+  initialSection: {
+    items: initialCards,
+    renderer: (cardDataItem) => {
+      gallery.prepend(getCardWithPopup(cardDataItem, closeUpCardPopup));
+    }
+  },
+  containerSelector: `#gallery`
+});
+
+/** creates the uzer info which is part of the profile section */
+const uzerInfoProfile = new UserInfo(uzerInfoProfileSelectors);
+
+/** creates the section profile  */
+const profileSection = new Section({
+  initialSection: {
+    items: [initialUzerProfile],
+    renderer: (uzerProfileData) => {
+      for (const dataItem in uzerProfileData) {
+        profileSection.setContainerTextContent({
+          sourceElementSelector: `#${dataItem}-profile-load-value`,
+          newTextValue: uzerProfileData[dataItem]
+        });
+      }
+    }
+  },
+  containerSelector: `#profile`
+});
+
+/** creates the section edit-profile form  */
+const profileFormSection = new Section({
+  initialSection: {
+    items: [initialUzerProfile],
+    renderer: (uzerProfileData) => {
+      for (const dataItem in uzerProfileData) {
+        profileFormSection.setContainerValues({
+          sourceElementSelector: `#profile-${dataItem}-input`,
+          newValue: uzerProfileData[dataItem]
+        });
+      }
+    }
+  },
+  containerSelector: `#edit-profile-form`
+});
+
+
+/**********   forms   **********/
+
+/** forms validation - creates validators for the forms */
+const validatableForms = [];
+
+validatableForms.editProfile = new FormValidator(formSettings, editProfileForm);
+validatableForms.addCard = new FormValidator(formSettings, addCardForm);
+
+
+/** forms activation - creates activators for the forms*/
+const activePopupForms = [];
+
+activePopupForms.addCard = new PopupWithForm({
+  popupSelector: `#add-card-form-popup`,
+  handleFormSubmit: (newCardData) => {
+    validatableForms.addCard.resetForm();
+    /** avoid submit after closing form-popup by popup utils (as ESC) */
+    if (addCardPopup.classList.contains(popupSettings.openPopupClass)) {
+      cardsGallerySection.renderNewItem(newCardData);
+    }
+  }
+});
+
+activePopupForms.editProfile = new PopupWithForm({
+  popupSelector: `#edit-profile-form-popup`,
+  handleFormSubmit: (newUzerProfileData) => {
+    validatableForms.editProfile.resetForm();
+    /** avoid submit after closing form-popup by popup utils (as ESC) */
+    if (editProfilePopup.classList.contains(popupSettings.openPopupClass)) {
+      /** set new uzer profile details */
+      profileSection.rerenderItems([newUzerProfileData]);
+    }
+  }
+});
 
 /***************************************************************************/
+
+
+/***************************************************************************/
+
+/***************************   Functions calls   ***************************/
+
+/** enables forms validation on page loading */
+validatableForms.editProfile.enableValidation();
+validatableForms.addCard.enableValidation();
+
+/** load initial data */
+cardsGallerySection.renderItems();
+profileSection.renderItems();
+profileFormSection.renderItems();
 
 /***************************   Event Listeners   ***************************/
 
-// profileEditButton.addEventListener("click", handleOpenEditProfileForm);
+addCardButton.addEventListener("click", handleOpenAddCardForm);
+profileEditButton.addEventListener("click", handleOpenEditProfileForm);
 
-
-/***************************      constants      ***************************/
-
-
-const editProfile = [];
-const addCard = [];
-
+/***************************************************************************/
 
 
 /***************************************************************************/
 
-editProfile.validatableForm = new FormValidator(formSettings, editProfileForm);
-addCard.validatableForm = new FormValidator(formSettings, addCardForm);
+/************************   Functions declerations   ***********************/
 
+/** return card with extra functionality of popup with image, which contains the card data */
+function getCardWithPopup(cardData, popupWithCard) {
+  const newCard = new Card({
+    data: cardData,
+    cardTemplateSelector: cardSettings.cardTemplateSelector,
+    cardSettings,
+    handleCardClick: (cardData) => handleCardPopupClick(cardData, popupWithCard)
+  });
+  return newCard.generateCard();
+};
 
-/** enables forms validation on page loading */
-editProfile.validatableForm.enableValidation();
-addCard.validatableForm.enableValidation();
-/***************************************************************************/
-
-
-addCard.cardPopup = new PopupWithImage(`#card-popup`); 
-
-
-/** presents the card-popup(popup with image) when the user trigger the opening */
-const handleCardPopupClick = (clickedCardData) => {
-  addCard.cardPopup.setImageData({
-    link: clickedCardData.link, 
-    caption: clickedCardData.name
+/** presents the closeUpCardPopup when the user trigger its opening */
+function handleCardPopupClick(cardData, popupWithCard) {
+  popupWithCard.resetImageData({
+    link: cardData.link,
+    caption: cardData.name
   })
-  addCard.cardPopup.openPopup();
-
+  popupWithCard.openPopup();
 }
 
+/**********   forms   **********/
 
-/***************************************************************************/
-
-const getPopupCard = (cardData) => {
-  const newCard = new Card({
-    data: cardData, 
-    cardTemplateSelector: cardSettings.cardTemplateSelector, 
-    cardSettings, 
-    handleCardClick: handleCardPopupClick(cardData)});
-    return newCard.generateCard();
+function handleOpenAddCardForm() {
+  validatableForms.addCard.resetForm();
+  activePopupForms.addCard.setEventListeners();
+  activePopupForms.addCard.openPopup();
 };
 
+function handleOpenEditProfileForm() {
+  // load exist data
+  const curentUzerInfoData = uzerInfoProfile.getUserInfo();
+  profileFormSection.rerenderItems([curentUzerInfoData]);
+  validatableForms.editProfile.loadFormData();
 
-const addCardToGallery = (generatedCard, gallerySection) => {
-  gallerySection.addItem(generatedCard);
+  activePopupForms.editProfile.setEventListeners();
+  activePopupForms.editProfile.openPopup();
 };
 
 /***************************************************************************/
-
-const cardsGallerySection = new Section({
-  items: initialCards,
-  renderer: (item) => {
-      gallery.prepend(getPopupCard(item));
-  }
-}, `#gallery`);
-
-/** load initial data cards */ 
-cardsGallerySection.renderItems();
-
-/***************************************************************************/
-
-
- 
-addCard.activePopupForm = new PopupWithForm({
-  popupSelector: `#add-card-form-popup`,
-  handleSubmitData: (newCardData) => {
-    const newPopupCard = getPopupCard(newCardData);
-    addCardToGallery(newPopupCard, cardsGallerySection);
-  }
-});
-
-
-
-addCardButton.addEventListener("click", ()=>{
-  //reset in the popup-form class
-  addCard.activePopupForm.setEventListeners();
-  addCard.activePopupForm.openPopup();
-});
-
-
-
-
-
-
-/***************************************************************************/
-
-
-
-/***************************************************************************/
-
-
-
-
-/*************************      functions calls      ***********************/
-
-
-// const uzerInfoProfile = new UserInfo(uzerInfoProfileSelectors);
-
-// const uzerInfoProfileData = uzerInfoProfile.getUserInfo();
-// console.log("values:  " + uzerInfoProfileData);
-/***************************************************************************/
-
-// editProfile.popupWithForm = new PopupWithForm(`#edit-profile-form-popup`, (profileDataInputs) => {
-//   editProfile.profileUzerInfo.setUserInfo(profileDataInputs);
-//   editProfile.popupWithForm.closePopup();
-// }
-// );
-
-
-// /** enables the loading of the exist profile data */
-// editProfile.profileSection = new Section({
-//   items: [],
-//   loadExistData(inputElement){
-//     inputElement.value = loadInputsContainer.querySelector(`#${inputElement.id}-load-value`).textContent;
-//   }
-// }, `#profile`);
-
-// set initial form user data on page loading
-// editProfile.profileSection.renderItems(userInfoData);
-
-
-// resetItems(newItems)
-
-/***************************************************************************/
-
-
-
-
-
-/*************************      functions calls      ***********************/
-
-/***************************************************************************/
-
-/** enables forms activation on page loading */
-// editProfile.popupWithForm.setEventListeners();
-// addCard.popupWithForm.setEventListeners();
-
-
- /************************   functions declarations   ***********************/
-
-/***************************************************************************/
-
-/***********************      Edit Profile Form      ***********************/
-
-// function handleOpenEditProfileForm(){
-  // editProfile.profileSection.renderItems();
-  // editProfile.validatableForm.loadFormData();
-  // editProfile.popupWithForm.openPopup();
-// };
-
-// const handleEditProfileSubmit = (profileDataInputs) => {
-//   editProfile.profileUzerInfo.setUserInfo(profileDataInputs);
-//   editProfile.PopupWithForm.closePopup();
-// };
-
-/***************************************************************************/
-
-/*************************      Add Card Form      *************************/
-
-
-// const handleAddCardSubmit = (cardDataByUzer) => {
-//   addCard.cardsGallerySection.addItem(cardDataByUzer);
-// };
-
-
-/*************************      general Forms      *************************/
-
-
-/**********************************   cards   ******************************/

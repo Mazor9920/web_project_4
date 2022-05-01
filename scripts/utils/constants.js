@@ -37,12 +37,6 @@ const cardSettings = {
   cardsContainerSelector: `#gallery`
 };
 
-/** stores selectors for UzerInfo Class */
-const uzerInfoProfileSelectors = { 
-  name: `#profile-name-input-load-value`, 
-  job: `#profile-job-input-load-value` 
-};
-
 /***************************************************************************/
 
 /** stores selectors and classes for Popup Class */
@@ -67,10 +61,13 @@ const popupImageSettings = {
   popupImageCaprionSelector: `.popup__picture-details`
 };
 
-// const cardPopupSettings = {
-//   cardPopupSelector: `#card-popup`,
-//   cardPopupCloseButtonSelector: `.popup__close-button_placed_card-popup`,
-// }
+/***************************************************************************/
+
+/** stores selectors for UzerInfo Class */
+const uzerInfoProfileSelectors = {
+  name: `#name-profile-load-value`,
+  job: `#job-profile-load-value`
+};
 
 /***************************************************************************/
 

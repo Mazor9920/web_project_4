@@ -18,7 +18,12 @@ export default class Card {
    * Create a Card object
    * @callback handleCardClick - a function which set the functionality of card click event
    */
-  constructor({data, cardTemplateSelector, cardSettings, handleCardClick}) {
+  constructor({
+    data,
+    cardTemplateSelector,
+    cardSettings,
+    handleCardClick
+  }) {
     this._name = data.name;
     this._link = data.link;
     this._cardTemplateSelector = cardTemplateSelector;
@@ -37,7 +42,7 @@ export default class Card {
     return cardElement;
   }
 
-  /** sets up card content and functionality */
+  /** sets up card content and functionality, returns a functional card element */
   generateCard() {
 
     this._element = this._getTemplate();
@@ -64,16 +69,20 @@ export default class Card {
 
   _setEventListeners() {
 
-    this._element.addEventListener("click", () => {
-      this._cardPicture._handleCardClick({name: this._name, link: this._link});
-    });
-
     this._cardLikeButton.addEventListener("click", () => {
       this._handleCardLikeClick();
     });
 
     this._cardDeleteButton.addEventListener("click", () => {
       this._handleCardDelete();
+    });
+
+    this._cardPicture.addEventListener("click", () => {
+      const cardData = {
+        name: this._name,
+        link: this._link
+      };
+      this._handleCardClick(cardData);
     });
 
   }
@@ -86,7 +95,6 @@ export default class Card {
     this._element.remove();
     this._element = null;
   }
-
 
 }
 

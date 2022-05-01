@@ -22,7 +22,6 @@ export default class FormValidator {
     this._addFormElements();
     this._enableSubmitValidation();
     this._setCustomPlaceholders();
-    // return this._formElement;
   }
 
   _addFormElements() {
@@ -35,8 +34,8 @@ export default class FormValidator {
 
     this._enableInputsValidation();
 
-    // check button status and inactive it on the first page load
-    this._toggleButtonState();
+    // inactive the submit button on the first page load
+    this._disableSubmit();
 
     this._formElement.addEventListener('submit', (evt) => {
       evt.preventDefault();
@@ -69,16 +68,24 @@ export default class FormValidator {
   };
 
   /** enable or disable form-submission according to the input validation */
-  _toggleButtonState() {
+  _toggleSubmitButtonState() {
     // at least one invalid input
     if (this._hasInvalidInput(this._inputsList)) {
-      this._submitButtonElement.classList.add(this._formSettings.inactiveButtonClass);
-      this._submitButtonElement.disabled = true;
+      this._disableSubmit();
     } else {
-      this._submitButtonElement.classList.remove(this._formSettings.inactiveButtonClass);
-      this._submitButtonElement.disabled = false;
+      this._ableSubmit();
     }
   }
+
+  _disableSubmit() {
+    this._submitButtonElement.classList.add(this._formSettings.inactiveButtonClass);
+    this._submitButtonElement.disabled = true;
+  };
+
+  _ableSubmit() {
+    this._submitButtonElement.classList.remove(this._formSettings.inactiveButtonClass);
+    this._submitButtonElement.disabled = false;
+  };
 
   _enableInputsValidation() {
     this._inputsList.forEach((inputElement) => {
@@ -86,7 +93,7 @@ export default class FormValidator {
         // checking the field's validity
         this._checkInputValidity(inputElement);
         // check the button's status upon every input change in any of the inputs
-        this._toggleButtonState();
+        this._toggleSubmitButtonState();
       });
     });
   }
@@ -134,7 +141,9 @@ export default class FormValidator {
       this._hideInputError(inputElement);
     });
 
-    this._toggleButtonState();
+    /** inactive submit button after reset */
+    this._disableSubmit();
+
   }
 
   /** Initializes the placeholders status of a data-filled form-values,
@@ -145,8 +154,7 @@ export default class FormValidator {
       this._hideInputError(inputElement);
     });
     /** inactive submit button on form-opening */
-    this._submitButtonElement.classList.add(this._formSettings.inactiveButtonClass);
-    this._submitButtonElement.disabled = true;
+    this._disableSubmit();
   }
 
 }

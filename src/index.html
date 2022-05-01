@@ -20,9 +20,9 @@
       <section id="profile" class="profile">
         <div id="profile-info" class="profile__info">
           <img src="<%= require('../images/profile-picture.png')%>" alt="profile-picture" class="profile__picture">
-          <h1 id="profile-name-input-load-value" class="profile__name">Jacques Cousteau</h1>
+          <h1 id="name-profile-load-value" class="profile__name"></h1>
           <button id="btn-open-edit-profile-form" class="profile__edit-button" aria-label="edit-button" type="button"></button>
-          <p id="profile-job-input-load-value" class="profile__details">Explorer</p>
+          <p id="job-profile-load-value" class="profile__details"></p>
         </div>
         <button id="btn-open-add-card-form" class="profile__add-button" aria-label="add-button" type="button"></button>
       </section>
@@ -43,13 +43,13 @@
           <h3 class="form__title form__title_placed_edit-profile-form">Edit profile</h3>
 
           <label class="form__field">
-            <input type="text" id="profile-name-input" class="form__input form__input_value_profile-name" name="profile-name" minlength="2" maxlength="40" required>
+            <input type="text" id="profile-name-input" class="form__input form__input_value_profile-name" name="name" minlength="2" maxlength="40" required>
             <span class="form__placeholder profile-name-input-placeholder">Name</span>
             <span class="form__input-error profile-name-input-error"></span>
           </label>
 
           <label class="form__field">
-            <input type="text" id="profile-job-input" class="form__input form__input_value_profile-job" name="profile-job" minlength="2" maxlength="200" required>
+            <input type="text" id="profile-job-input" class="form__input form__input_value_profile-job" name="job" minlength="2" maxlength="200" required>
             <span class="form__placeholder profile-job-input-placeholder">About me</span>
             <span class="form__input-error profile-job-input-error"></span>
           </label>
