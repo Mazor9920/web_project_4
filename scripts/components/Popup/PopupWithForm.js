@@ -27,17 +27,20 @@ export default class PopupWithForm extends Popup {
   /**
    * Create a Popup with a form
    * @param {string} popupSelector - a CSS class selector of the popup element.
-   * @callback handleFormSubmit - a function which calls when the form’s submit event fires.
+   * @callback handleFormSubmitData - a function which calls when the form’s submit event fires.
    */
   //   @param {string} openButtonSelector - a CSS class selector of the popup element.
 
   constructor({
     popupSelector,
-    handleFormSubmit
+    handleFormSubmitData
   }) {
     super(popupSelector);
     this._formElement = this._popupElement.querySelector(popupFormSettings.popupFormSelector);
-    this._handleFormSubmit = handleFormSubmit;
+    this._handleFormSubmitData = handleFormSubmitData;
+    /** bind() method used to prevent loosing 'this' when a function is used as a callback */
+    this.closePopup = this.closePopup.bind(this);
+    this._handleFormSubmit = this._handleFormSubmit.bind(this);
   }
 
   /** collects data from all the input fields and returns that data as an object */
@@ -50,23 +53,30 @@ export default class PopupWithForm extends Popup {
     return this._formValues;
   }
 
-
-  /** modifies the parent method in order to add the `submit` event handler to the form */
-  setEventListeners() {
-    super.setEventListeners();
-
-    this._formElement.addEventListener("submit", (evt) => {
-      evt.preventDefault();
-      this._handleFormSubmit(this._getInputValues());
-      this.closePopup();
-    });
-  }
-
   /** modifies the parent method in order to reset the form once the popup is closed */
   closePopup() {
-    this._formElement.reset();
     super.closePopup();
+    this._formElement.reset();
   };
 
+  _handleFormSubmit(evt) {
+    evt.preventDefault();
+    this._handleFormSubmitData(this._getInputValues());
+    this.closePopup();
+  };
+
+  /** modifies the parent methods in order to add the `submit` event handler to the form: */
+
+  _setTempEventListeners() {
+    super._setTempEventListeners();
+    this._formElement.addEventListener('submit', this._handleFormSubmit);
+  };
+
+  _removeTempEventListeners() {
+    super._removeTempEventListeners();
+    this._formElement.removeEventListener('submit', this._handleFormSubmit);
+  };
 
 }
+
+/***************************************************************************/

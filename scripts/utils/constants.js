@@ -63,8 +63,8 @@ const popupImageSettings = {
 
 /***************************************************************************/
 
-/** stores selectors for UzerInfo Class */
-const uzerInfoProfileSelectors = {
+/** stores selectors for UserInfo Class */
+const userInfoProfileSelectors = {
   name: `#name-profile-load-value`,
   job: `#job-profile-load-value`
 };
@@ -77,5 +77,5 @@ export {
   popupSettings,
   popupFormSettings,
   popupImageSettings,
-  uzerInfoProfileSelectors
+  userInfoProfileSelectors
 };

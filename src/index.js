@@ -18,7 +18,7 @@
 // the main stylesheets file
 import "./styles/index.css";
 
-// local images as strings → using an array of objects to create DOM elements to add to the page.
+// local images as strings - using an array of objects to create DOM elements to add to the page.
 import logoSvg from "../images/logo.svg";
 import profileImageSrc from "../images/profile-picture.png";
 
@@ -28,8 +28,8 @@ import {
 } from "../scripts/data/cards.js";
 
 import {
-  initialUzerProfile
-} from "../scripts/data/uzerProfile.js";
+  initialUserProfile
+} from "../scripts/data/userProfile.js";
 
 import {
   formSettings,
@@ -37,7 +37,7 @@ import {
   popupSettings,
   popupFormSettings,
   popupImageSettings,
-  uzerInfoProfileSelectors
+  userInfoProfileSelectors
 } from "../scripts/utils/constants.js";
 
 // components
@@ -48,6 +48,7 @@ import PopupWithImage from "../scripts/components/Popup/PopupWithImage.js";
 import PopupWithForm from "../scripts/components/Popup/PopupWithForm.js";
 import Section from "../scripts/components/Section/Section.js";
 import UserInfo from "../scripts/components/UserInfo/UserInfo.js";
+import TextContainer from "../scripts/components/TextContainer/TextContainer.js";
 
 /***************************************************************************/
 
@@ -105,57 +106,61 @@ const cardPictureDetails = cardPopup.querySelector(".popup__picture-details");
 /******************************   Constants   ******************************/
 
 /** create card-popup (popup with card, contains image & caption) */
-const closeUpCardPopup = new PopupWithImage({
-  popupSelector: `#card-popup`,
-  imageData: {}
-});
+const closeUpCardPopup = new PopupWithImage(`#card-popup`);
 
 /** creates a section gallery of cards  */
 const cardsGallerySection = new Section({
   initialSection: {
     items: initialCards,
-    renderer: (cardDataItem) => {
-      gallery.prepend(getCardWithPopup(cardDataItem, closeUpCardPopup));
+    renderItem: (cardDataItem) => {
+      const newCardElement = getCardWithPopup(cardDataItem, closeUpCardPopup);
+      cardsGallerySection.addItemToBeginning(newCardElement);
     }
   },
   containerSelector: `#gallery`
 });
 
-/** creates the uzer info which is part of the profile section */
-const uzerInfoProfile = new UserInfo(uzerInfoProfileSelectors);
+/** creates the user info which is part of the profile section */
+const userInfoProfile = new UserInfo(userInfoProfileSelectors);
 
 /** creates the section profile  */
-const profileSection = new Section({
+const profileSection = new TextContainer({
+  containerSelector: `#profile`,
   initialSection: {
-    items: [initialUzerProfile],
-    renderer: (uzerProfileData) => {
-      for (const dataItem in uzerProfileData) {
-        profileSection.setContainerTextContent({
-          sourceElementSelector: `#${dataItem}-profile-load-value`,
-          newTextValue: uzerProfileData[dataItem]
+    textItems: initialUserProfile,
+    renderAllItems: (userDataItems) => {
+      for (const [itemKey, itemValue] of Object.entries(userDataItems)) {
+        profileSection.setItemTextContent({
+          sourceElementSelector: `#${itemKey}-profile-load-value`,
+          newTextValue: itemValue
         });
       }
     }
   },
-  containerSelector: `#profile`
-});
+  handleTextItems: (newUserInfo) => {
+    userInfoProfile.setUserInfo(newUserInfo);
+  }
+})
 
 /** creates the section edit-profile form  */
-const profileFormSection = new Section({
+const profileFormSection = new TextContainer({
+  containerSelector: `#edit-profile-form`,
   initialSection: {
-    items: [initialUzerProfile],
-    renderer: (uzerProfileData) => {
-      for (const dataItem in uzerProfileData) {
-        profileFormSection.setContainerValues({
-          sourceElementSelector: `#profile-${dataItem}-input`,
-          newValue: uzerProfileData[dataItem]
+    textItems: initialUserProfile,
+    renderAllItems: (userInputItems) => {
+      for (const [itemKey, itemValue] of Object.entries(userInputItems)) {
+        profileFormSection.setItemValue({
+          sourceElementSelector: `#profile-${itemKey}-input`,
+          newValue: itemValue
         });
       }
     }
   },
-  containerSelector: `#edit-profile-form`
-});
-
+  handleTextItems: () => {
+    const curentUserData = userInfoProfile.getUserInfo();
+    profileFormSection.resetItems(curentUserData);
+  }
+})
 
 /**********   forms   **********/
 
@@ -171,7 +176,7 @@ const activePopupForms = [];
 
 activePopupForms.addCard = new PopupWithForm({
   popupSelector: `#add-card-form-popup`,
-  handleFormSubmit: (newCardData) => {
+  handleFormSubmitData: (newCardData) => {
     validatableForms.addCard.resetForm();
     /** avoid submit after closing form-popup by popup utils (as ESC) */
     if (addCardPopup.classList.contains(popupSettings.openPopupClass)) {
@@ -182,13 +187,12 @@ activePopupForms.addCard = new PopupWithForm({
 
 activePopupForms.editProfile = new PopupWithForm({
   popupSelector: `#edit-profile-form-popup`,
-  handleFormSubmit: (newUzerProfileData) => {
+  handleFormSubmitData: (newUserProfileData) => {
     validatableForms.editProfile.resetForm();
     /** avoid submit after closing form-popup by popup utils (as ESC) */
     if (editProfilePopup.classList.contains(popupSettings.openPopupClass)) {
-      /** set new uzer profile details */
-      uzerInfoProfile.setUserInfo(newUzerProfileData);
-      // profileSection.rerenderItems([newUzerProfileData]);
+      /** set new user profile details */
+      profileSection.handleTextItems(newUserProfileData);
     }
   }
 });
@@ -205,9 +209,9 @@ validatableForms.editProfile.enableValidation();
 validatableForms.addCard.enableValidation();
 
 /** load initial data */
-cardsGallerySection.renderItems();
-profileSection.renderItems();
-profileFormSection.renderItems();
+cardsGallerySection.renderItemsList();
+profileSection.initializeContainerText();
+profileFormSection.initializeContainerText();
 
 /***************************   Event Listeners   ***************************/
 
@@ -215,7 +219,6 @@ addCardButton.addEventListener("click", handleOpenAddCardForm);
 profileEditButton.addEventListener("click", handleOpenEditProfileForm);
 
 /***************************************************************************/
-
 
 
 /************************   Functions declerations   ***********************/
@@ -233,28 +236,24 @@ function getCardWithPopup(cardData, popupWithCard) {
 
 /** presents the closeUpCardPopup when the user trigger its opening */
 function handleCardPopupClick(cardData, popupWithCard) {
-  popupWithCard.resetImageData({
+  popupWithCard.openPopup({
     link: cardData.link,
     caption: cardData.name
-  })
-  popupWithCard.openPopup();
+  });
 }
 
 /**********   forms   **********/
 
 function handleOpenAddCardForm() {
   validatableForms.addCard.resetForm();
-  activePopupForms.addCard.setEventListeners();
   activePopupForms.addCard.openPopup();
 };
 
 function handleOpenEditProfileForm() {
-  // load exist data
-  const curentUzerInfoData = uzerInfoProfile.getUserInfo();
-  profileFormSection.rerenderItems([curentUzerInfoData]);
+  /** load exist data */
+  profileFormSection.handleTextItems();
   validatableForms.editProfile.loadFormData();
 
-  activePopupForms.editProfile.setEventListeners();
   activePopupForms.editProfile.openPopup();
 };
 

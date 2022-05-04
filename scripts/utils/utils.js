@@ -9,8 +9,30 @@
    */
 
 
+  /*************************************************************************/
 
-  // function setContainerTextContent({containerElement, sourceElementSelector, newTextValue}){
-  //   const sourceElement = containerElement.querySelector(sourceElementSelector);
+  // function setContainerTextContent({
+  //   containerElement,
+  //   sourceSelector,
+  //   newTextValue
+  // }) {
+  //   const sourceElement = containerElement.querySelector(sourceSelector);
   //   sourceElement.textContent = newTextValue;
+  // };
+  //
+  //
+  // function setContainerValues({
+  //   containerElement,
+  //   sourceSelector,
+  //   newValue
+  // }) {
+  //   const sourceElement = containerElement.querySelector(sourceSelector);
+  //   sourceElement.value = newValue;
+  // };
+
+  /*************************************************************************/
+
+  // export {
+  //   setContainerTextContent,
+  //   setContainerValues
   // };

@@ -37,6 +37,10 @@ export default class Popup {
   constructor(popupSelector) {
     this._popupElement = document.querySelector(popupSelector);
     this._closePopupButtonElement = this._popupElement.querySelector(popupSettings.closeButtonSelector);
+    /** bind() method used to prevent loosing 'this' when a function is used as a callback */
+    this.closePopup = this.closePopup.bind(this);
+    this._handleEscClose = this._handleEscClose.bind(this);
+    this._handleFocusOutPopup = this._handleFocusOutPopup.bind(this);
   }
 
   /** allows the users to close an open popup by pressing the Esc key */
@@ -58,35 +62,25 @@ export default class Popup {
   /** opens the popup window */
   openPopup() {
     this._popupElement.classList.add(popupSettings.openPopupClass);
-    this.setEventListeners();
+    this._setTempEventListeners();
   };
 
   /** closes the popup window */
   closePopup() {
     this._popupElement.classList.remove(popupSettings.openPopupClass);
-    this._removeTempCloseListeners();
+    this._removeTempEventListeners();
   };
 
-  /** add Listeners for events of popup opening/closing */
-  setEventListeners() {
-    this._closePopupButtonElement.addEventListener("click", () => {
-      this.closePopup();
-    });
-    this._addTempCloseListeners();
-  }
-
-  /** add temporary Listeners */
-  _addTempCloseListeners() {
-    this._popupElement.addEventListener('mousedown', (evt) => {
-      this._handleFocusOutPopup(evt);
-    });
-    document.addEventListener('keydown', (evt) => {
-      this._handleEscClose(evt);
-    });
+  /** add temporary Listeners for events of popup closing */
+  _setTempEventListeners() {
+    this._closePopupButtonElement.addEventListener("click", this.closePopup);
+    this._popupElement.addEventListener('mousedown', this._handleFocusOutPopup);
+    document.addEventListener('keydown', this._handleEscClose);
   };
 
-  /** remove temporary Listeners */
-  _removeTempCloseListeners() {
+  /** remove the temporary Listeners */
+  _removeTempEventListeners() {
+    this._closePopupButtonElement.removeEventListener("click", this.closePopup);
     this._popupElement.removeEventListener('mousedown', this._handleFocusOutPopup);
     document.removeEventListener('keydown', this._handleEscClose);
   };

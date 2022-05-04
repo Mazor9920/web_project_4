@@ -1,12 +1,12 @@
 /***************************************************************************/
 
 /** Section class
- * Contain Section class which rendering a list of elements on a page.
+ * Contain Section class which is responsible for rendering a list of elements (an array of items).
  * It receives the markup through the callback function,
  * and inserts it in the container.
  *
  * It has public methods:
- * renderItems() - which renders all data elements on the page.
+ * renderItemsList() - which renders all data elements on the page.
  * addItemToBeginning() - which takes a DOM element and adds it to the container.
  *
  * @module Section
@@ -17,54 +17,37 @@
 export default class Section {
   /**
    * renders a list of elements on a page
-   * @param {Object} initialSection - object with 2 properties (items and renderer).
-   * @param {Array.<Object>} items - serves as an array of data, which loads on a page when initializing the class.
-   * @callback initialSection.renderer - a function which responsible for render each individual item as element on a page.
+   * @param {Object} initialSection - object with 2 properties (items and renderItem).
+   * @param {Array.<Object>} initialSection.items - serves as an array of data, which loads on a page when initializing the class.
+   * @callback initialSection.renderItem - a function which responsible for render each individual item as element on a page.
    * @param {string} containerSelector - a CSS class selector of the container element which the renderered-items add to.
    */
   constructor({
     initialSection,
     containerSelector
   }) {
-    this._renderedItems = initialSection.items;
-    this._renderer = initialSection.renderer;
+    this._items = initialSection.items;
+    this._renderItem = initialSection.renderItem;
     this._container = document.querySelector(containerSelector);
   };
 
   /** initializing the class */
-  renderItems() {
-    this._renderedItems.forEach((item) => {
-      this._renderer(item);
-    });
-  };
-
-  rerenderItems(renderedItems) {
-    this._renderedItems = renderedItems;
-    this.renderItems();
-  };
-
-  setContainerTextContent({
-    sourceElementSelector,
-    newTextValue
-  }) {
-    const sourceElement = this._container.querySelector(sourceElementSelector);
-    sourceElement.textContent = newTextValue;
-  };
-
-  setContainerValues({
-    sourceElementSelector,
-    newValue
-  }) {
-    const sourceElement = this._container.querySelector(sourceElementSelector);
-    sourceElement.value = newValue;
+  renderItemsList() {
+    this._items.forEach(this._renderItem);
   };
 
   renderNewItem(item) {
-    this._renderer(item);
+    this._items.push(item);
+    this._renderItem(item);
   };
 
-  // addItemToBeginning(element) {
-  //   this._container.prepend(element);
+  addItemToBeginning(element) {
+    this._container.prepend(element);
+  };
+
+  // resetItems(items) {
+  //   this._items = items;
+  //   this.renderItemsList();
   // };
 
 }

@@ -1,13 +1,13 @@
 /***************************************************************************/
 
-/** Contain Data of initial uzer profile values for first loading as defult
+/** Contain Data of initial user profile values for first loading as defult
  *
- * @module uzerProfile
+ * @module userProfile
  */
 
 /***************************************************************************/
 
-const initialUzerProfile = {
+const initialUserProfile = {
   name: 'Jacques Cousteau',
   job: 'Explorer'
 };
@@ -15,5 +15,5 @@ const initialUzerProfile = {
 /***************************************************************************/
 
 export {
-  initialUzerProfile
+  initialUserProfile
 };
