@@ -16,7 +16,7 @@
 /***************************************************************************/
 
 // the main stylesheets file
-import "./styles/index.css";
+import "./index.css";
 
 // local images as strings - using an array of objects to create DOM elements to add to the page.
 import logoSvg from "../images/logo.svg";
@@ -172,9 +172,8 @@ validatableForms.addCard = new FormValidator(formSettings, addCardForm);
 
 
 /** forms activation - creates activators for the forms*/
-const activePopupForms = [];
 
-activePopupForms.addCard = new PopupWithForm({
+const addCardActivePopupForm = new PopupWithForm({
   popupSelector: `#add-card-form-popup`,
   handleFormSubmitData: (newCardData) => {
     validatableForms.addCard.resetForm();
@@ -185,7 +184,7 @@ activePopupForms.addCard = new PopupWithForm({
   }
 });
 
-activePopupForms.editProfile = new PopupWithForm({
+const editProfileActivePopupForm = new PopupWithForm({
   popupSelector: `#edit-profile-form-popup`,
   handleFormSubmitData: (newUserProfileData) => {
     validatableForms.editProfile.resetForm();
@@ -246,7 +245,7 @@ function handleCardPopupClick(cardData, popupWithCard) {
 
 function handleOpenAddCardForm() {
   validatableForms.addCard.resetForm();
-  activePopupForms.addCard.openPopup();
+  addCardActivePopupForm.openPopup();
 };
 
 function handleOpenEditProfileForm() {
@@ -254,7 +253,7 @@ function handleOpenEditProfileForm() {
   profileFormSection.handleTextItems();
   validatableForms.editProfile.loadFormData();
 
-  activePopupForms.editProfile.openPopup();
+  editProfileActivePopupForm.openPopup();
 };
 
 /***************************************************************************/

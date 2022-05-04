@@ -18,7 +18,7 @@ export default class TextContainer {
    * @param {string} containerSelector - a CSS class selector of the container element which contains text fields elements.
    * @param {Object} initialSection - object with 2 properties (textItems and renderAllItems).
    * @param {Object} initialSection.textItems - serves as an object of elements-data, which loads on a page when initializing the class.
-   * @callback initialSection.renderAllItems - a function which calls for each individual item when the page is loading.
+   * @callback initialSection.renderAllItems - a function which calls when the page is loading.
    * @callback handleTextItems - a function which responsible for a certain activation for all of the text components, after the initial loading.
    */
   constructor({
