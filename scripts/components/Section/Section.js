@@ -45,10 +45,10 @@ export default class Section {
     this._container.prepend(element);
   };
 
-  // resetItems(items) {
-  //   this._items = items;
-  //   this.renderItemsList();
-  // };
+  resetItemsList(items) {
+    this._items = items;
+    this.renderItemsList();
+  };
 
 }
 

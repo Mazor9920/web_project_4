@@ -46,7 +46,9 @@ export default class TextContainer {
     newTextValue
   }) {
     const sourceElement = this._container.querySelector(sourceElementSelector);
-    sourceElement.textContent = newTextValue;
+    if (sourceElement){
+      sourceElement.textContent = newTextValue;
+    }
   };
 
   setItemValue({
@@ -54,7 +56,9 @@ export default class TextContainer {
     newValue
   }) {
     const sourceElement = this._container.querySelector(sourceElementSelector);
-    sourceElement.value = newValue;
+    if (sourceElement){
+      sourceElement.value = newValue;
+    }
   };
 
 }

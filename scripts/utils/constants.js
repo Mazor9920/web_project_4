@@ -66,7 +66,7 @@ const popupImageSettings = {
 /** stores selectors for UserInfo Class */
 const userInfoProfileSelectors = {
   name: `#name-profile-load-value`,
-  job: `#job-profile-load-value`
+  about: `#about-profile-load-value`
 };
 
 /***************************************************************************/

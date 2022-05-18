@@ -18,10 +18,10 @@
 
       <section id="profile" class="profile">
         <div id="profile-info" class="profile__info">
-          <img src="<%= require('../images/profile-picture.png')%>" alt="profile-picture" class="profile__picture">
+          <img id="avatar-profile-load-value" src="<%= require('../images/profile-picture.png')%>" alt="profile-picture" class="profile__picture">
           <h1 id="name-profile-load-value" class="profile__name"></h1>
           <button id="btn-open-edit-profile-form" class="profile__edit-button" aria-label="edit-button" type="button"></button>
-          <p id="job-profile-load-value" class="profile__details"></p>
+          <p id="about-profile-load-value" class="profile__details"></p>
         </div>
         <button id="btn-open-add-card-form" class="profile__add-button" aria-label="add-button" type="button"></button>
       </section>
@@ -48,9 +48,9 @@
           </label>
 
           <label class="form__field">
-            <input type="text" id="profile-job-input" class="form__input form__input_value_profile-job" name="job" minlength="2" maxlength="200" required>
-            <span class="form__placeholder profile-job-input-placeholder">About me</span>
-            <span class="form__input-error profile-job-input-error"></span>
+            <input type="text" id="profile-about-input" class="form__input form__input_value_profile-about" name="about" minlength="2" maxlength="200" required>
+            <span class="form__placeholder profile-about-input-placeholder">About me</span>
+            <span class="form__input-error profile-about-input-error"></span>
           </label>
 
           <button type="submit" class="form__submit-button form__submit-button_value_profile-save">Save</button>

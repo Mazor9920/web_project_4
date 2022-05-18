@@ -7,13 +7,19 @@
 
 /***************************************************************************/
 
-const initialUserProfile = {
+const defaultUserProfile = {
   name: 'Jacques Cousteau',
-  job: 'Explorer'
+  about: 'Explorer'
 };
+
+const myUserProfile = {
+  name: `Mazor Leave`,
+  about: `Developer Wannabe`
+}
 
 /***************************************************************************/
 
 export {
-  initialUserProfile
+  defaultUserProfile,
+  myUserProfile
 };

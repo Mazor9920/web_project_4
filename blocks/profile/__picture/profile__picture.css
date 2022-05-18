@@ -2,6 +2,7 @@
   grid-area: profile__picture;
   border-radius: 100%;
   max-width: 120px;
+  align-self: stretch;
 }
 
 @media screen and (max-width: 768px) {

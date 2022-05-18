@@ -24,7 +24,7 @@
       "profile__name profile__edit-button"
       "profile__details  profile__details";
     grid-gap: 9px 10px;
-    grid-template-rows: min-content min-content min-content;
+    grid-template-rows: 141px min-content min-content;
     grid-template-columns: max-content min-content;
     justify-content: center;
   }
