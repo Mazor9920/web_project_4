@@ -2,7 +2,9 @@
   grid-area: profile__picture;
   border-radius: 100%;
   max-width: 120px;
+  max-height: 120px;
   align-self: stretch;
+  background: rgba(0, 0, 0, 0.8);
 }
 
 @media screen and (max-width: 768px) {
@@ -10,4 +12,9 @@
     justify-self: center;
     margin: 0 0 21px 0;
   }
+}
+
+.profile__picture:hover {
+  opacity: 0.2;
+  cursor: url('../../../images/icons/edit-profile-picture-icon.svg'), pointer; 
 }

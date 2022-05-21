@@ -1,5 +1,5 @@
-.profile__details {
-  grid-area: profile__details;
+.profile__about {
+  grid-area: profile__about;
   margin: 0;
   color: white;
   font-family: 'Inter', 'Calibri', sans-serif;
@@ -16,20 +16,20 @@
 }
 
 @media screen and (max-width: 768px) {
-  .profile__details {
+  .profile__about {
     text-align: center;
   }
 }
 
 @media screen and (max-width: 628px) {
-  .profile__details {
+  .profile__about {
     font-size: 16px;
     line-height: 20px;
   }
 }
 
 @media screen and (max-width: 400px) {
-  .profile__details {
+  .profile__about {
     font-size: 14px;
     line-height: 17px;
   }

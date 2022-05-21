@@ -18,10 +18,10 @@
 
       <section id="profile" class="profile">
         <div id="profile-info" class="profile__info">
-          <img id="avatar-profile-load-value" src="<%= require('../images/profile-picture.png')%>" alt="profile-picture" class="profile__picture">
+          <img id="avatar-profile-load-value" alt="profile-picture" class="profile__picture overlay-image__image">
           <h1 id="name-profile-load-value" class="profile__name"></h1>
           <button id="btn-open-edit-profile-form" class="profile__edit-button" aria-label="edit-button" type="button"></button>
-          <p id="about-profile-load-value" class="profile__details"></p>
+          <p id="about-profile-load-value" class="profile__about"></p>
         </div>
         <button id="btn-open-add-card-form" class="profile__add-button" aria-label="add-button" type="button"></button>
       </section>
@@ -86,6 +86,33 @@
         <button class="popup__close-button popup__close-button_placed_card-popup" aria-label="close-button"></button>
         <img alt="landscape-image" class="popup__close-up-picture">
         <p class="popup__picture-details"></p>
+      </div>
+    </section>
+
+    <section id="delete-card-form-popup" class="popup popup_type_delete-card">
+      <div class="popup__container popup__container_value_delete-card-form">
+        <button id="btn-close-delete-card-form" class="popup__close-button popup__close-button_placed_delete-card-form" aria-label="close-button"></button>
+        <form id="delete-card-form" action="/action_page.php" name="delete-card-form" class="form popup__form" novalidate>
+          <h3 class="form__title form__title_placed_delete-card-form">Are you sure?</h3>
+          <button type="submit" class="form__submit-button form__submit-button_value_delete-card">Yes</button>
+        </form>
+      </div>
+    </section>
+
+    <section id="edit-profile-picture-form-popup" class="popup popup_type_edit-profile-picture">
+      <div class="popup__container popup__container_value_edit-profile-picture-form">
+        <button id="btn-close-edit-profile-picture-form" class="popup__close-button popup__close-button_placed_edit-profile-picture-form" aria-label="close-button"></button>
+        <form id="edit-profile-picture-form" action="/action_page.php" name="edit-profile-picture-form" class="form popup__form" novalidate>
+          <h3 class="form__title form__title_placed_edit-profile-picture-form">Change profile picture</h3>
+
+          <label class="form__field">
+            <input type="url" id="profile-picture-link-input" class="form__input form__input_value_profile-picture-link" name="profile-picture-link" required>
+            <span class="form__placeholder profile-picture-link-input-placeholder">Image link</span>
+            <span class="form__input-error profile-picture-link-input-error"></span>
+          </label>
+
+          <button type="submit" class="form__submit-button form__submit-button_value_profile-picture-save">Save</button>
+        </form>
       </div>
     </section>
 

@@ -1,15 +1,24 @@
 .card__like-button {
   grid-area: card__like-button;
+  flex-direction: column;
   max-width: 21px;
-  max-height: 19px;
+  max-height: 35px;
   border: none;
   background-color: transparent;
   background-image: url('../../../images/icons/like-icon.svg');
   background-size: 100%;
   background-repeat: no-repeat;
-  background-position: center;
-  padding: 10.5px 9.5px;
-  margin: 25px 18px 31px 0;
+  background-position: start center;
+  padding: 17.5px 10.5px;
+  margin: 22px 18px 22px 0;
+  font-family: 'Inter', 'Calibri', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: 0em;
+  text-align: center;
+  align-items: center;
+  justify-items: space-between;
 }
 
 .card__like-button:hover {

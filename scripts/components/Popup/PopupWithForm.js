@@ -33,11 +33,13 @@ export default class PopupWithForm extends Popup {
 
   constructor({
     popupSelector,
-    handleFormSubmitData
+    handleFormSubmitData,
+    processSubmit
   }) {
     super(popupSelector);
     this._formElement = this._popupElement.querySelector(popupFormSettings.popupFormSelector);
     this._handleFormSubmitData = handleFormSubmitData;
+    this._processSubmit = processSubmit || this._processInputSubmit;
     /** bind() method used to prevent loosing 'this' when a function is used as a callback */
     this.closePopup = this.closePopup.bind(this);
     this._handleFormSubmit = this._handleFormSubmit.bind(this);
@@ -61,9 +63,15 @@ export default class PopupWithForm extends Popup {
 
   _handleFormSubmit(evt) {
     evt.preventDefault();
-    this._handleFormSubmitData(this._getInputValues());
+    this._processSubmit();
     this.closePopup();
   };
+
+  _processInputSubmit(){
+    this._handleFormSubmitData(this._getInputValues());
+  }
+
+
 
   /** modifies the parent methods in order to add the `submit` event handler to the form: */
 
@@ -80,3 +88,11 @@ export default class PopupWithForm extends Popup {
 }
 
 /***************************************************************************/
+
+
+  // /** remove the temporary Listeners */
+  // _removeTempEventListeners() {
+  //   this._closePopupButtonElement.removeEventListener("click", this.closePopup);
+  //   this._popupElement.removeEventListener('mousedown', this._handleFocusOutPopup);
+  //   document.removeEventListener('keydown', this._handleEscClose);
+  // };

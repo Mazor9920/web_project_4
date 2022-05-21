@@ -94,7 +94,11 @@ export default class Card {
     this._cardLikeButton.classList.toggle(this._cardSettings.cardLikeButtonActiveClass);
   }
 
-  _handleCardDelete() {
+  _handleCardDelete(){
+    this._deletePermanently();
+  }
+
+  _deletePermanently(){
     this._element.remove();
     this._element = null;
   }

@@ -42,10 +42,15 @@ import {
 } from "../scripts/utils/constants.js";
 
 
+// import{
+//   Post,
+//   postPrototype,
+//   createPost
+// } from "../scripts/components/Post/Post.js";
 
 // components
 import Card from "../scripts/components/Card/Card.js";
-import SharedCard from "../scripts/components/Card/SharedCard.js";
+import CardForPost from "../scripts/components/Card/CardForPost.js";
 // import LikeButton from "../scripts/components/LikeButton/LikeButton.js"
 // import Post from "../scripts/components/Post/Post.js"
 import FormValidator from "../scripts/components/FormValidator/FormValidator.js";
@@ -58,11 +63,6 @@ import TextContainer from "../scripts/components/TextContainer/TextContainer.js"
 import Api from "../scripts/components/Api/Api.js";
 import UsersApi from "../scripts/components/Api/UsersApi.js";
 import CardsApi from "../scripts/components/Api/CardsApi.js";
-// import { Post } from "../scripts/components/Post/Post";
-import{
-  Post,
-  createPost
-} from "../scripts/components/Post/Post.js";
 
 
 /***************************************************************************/
@@ -75,38 +75,24 @@ const content = document.querySelector("#content");
 
 /** profile */
 const profile = content.querySelector("#profile");
-const addCardButton = profile.querySelector(".profile__add-button");
 const profileInfo = profile.querySelector(".profile__info");
-const profilePicture= profileInfo.querySelector(`#avatar-profile-load-value`);
 const profileEditButton = profileInfo.querySelector(".profile__edit-button");
+const addCardButton = profile.querySelector(".profile__add-button");
 const profileName = profileInfo.querySelector(".profile__name");
-const profileAbout = profileInfo.querySelector(".profile__about");
+const profileDetails = profileInfo.querySelector(".profile__details");
 
-/** edit-profile details popup */
+/** edit-profile popup */
 const editProfilePopup = document.querySelector("#edit-profile-form-popup");
 const editProfilePopupContainer = editProfilePopup.querySelector(".popup__container");
 const editProfileCloseButton = editProfilePopup.querySelector(".popup__close-button");
 const editProfileForm = editProfilePopup.querySelector("#edit-profile-form");
 
-/** edit-profile details form */
+/** edit-profile form */
 const editProfileFormTitle = editProfileForm.querySelector(".form__title");
 const editProfileSaveButton = editProfileForm.querySelector(".form__submit-button");
 /** user input fields */
 const profileNameInput = editProfileForm.querySelector(".form__input_value_profile-name");
 const profileAboutInput = editProfileForm.querySelector(".form__input_value_profile-about");
-
-
-/** edit-profile-picture popup */
-const editProfilePicturePopup = document.querySelector("#edit-profile-picture-form-popup");
-const editProfilePicturePopupContainer = editProfilePicturePopup.querySelector(".popup__container");
-const editProfilePictureCloseButton = editProfilePicturePopup.querySelector(".popup__close-button");
-const editProfilePictureForm = editProfilePicturePopup.querySelector("#edit-profile-picture-form");
-
-/** edit-profile-picture form */
-const editProfilePictureFormTitle = editProfilePictureForm.querySelector(".form__title");
-const editProfilePictureSaveButton = editProfilePictureForm.querySelector(".form__submit-button");
-/** user link-input field */
-const profilePictureInput = editProfilePictureForm.querySelector(".form__input_value_profile-picture-link");
 
 /** gallery */
 const gallery = content.querySelector(".gallery");
@@ -142,6 +128,31 @@ const deleteCardButton = deleteCardForm.querySelector(".form__submit-button");
 
 
 
+
+CardForPost.prototype.ensureDeleteIsSafe = (thisCardForPostElement) => {
+  deleteCardPopupForm.prototype.aboutToDelete = thisCardForPostElement;
+  deleteCardPopupForm.__proto__ = thisCardForPostElement;
+  deleteCardPopupForm.openPopup(); 
+  // debugger;
+
+  // postCardElement.deleteForSure();
+
+  // deleteForSure
+};
+
+// CardForPost.prototype.deleteForSure = (postCardElement) => {
+//   postCardElement.isSafeToDelete = true;  
+//   postCardElement._handleCardDelete();
+// };
+
+// CardForPost.prototype.deleteForSure = () => {
+//   this.isSafeToDelete = true;  
+//   this._handleCardDelete();
+// };
+
+// CardForPost.prototype.like = () => {
+//     this.isLiked = !this.isLiked;
+// };
 
 
 
@@ -190,13 +201,13 @@ const profileSection = new TextContainer({
 })
 
 /** creates the section edit-profile form  */
-const profileDetailsFormSection = new TextContainer({
+const profileFormSection = new TextContainer({
   containerSelector: `#edit-profile-form`,
   initialSection: {
     textItems: {},
     renderAllItems: (userInputItems) => {
       for (const [itemKey, itemValue] of Object.entries(userInputItems)) {
-        profileDetailsFormSection.setItemValue({
+        profileFormSection.setItemValue({
           sourceElementSelector: `#profile-${itemKey}-input`,
           newValue: itemValue
         });
@@ -205,7 +216,7 @@ const profileDetailsFormSection = new TextContainer({
   },
   handleTextItems: () => {
     const curentUserData = userInfoProfile.getUserInfo();
-    profileDetailsFormSection.resetItems(curentUserData);
+    profileFormSection.resetItems(curentUserData);
   }
 })
 
@@ -214,9 +225,9 @@ const profileDetailsFormSection = new TextContainer({
 /** forms validation - creates validators for the forms */
 const validatableForms = {};
 
-validatableForms.editProfileInfo = new FormValidator(formSettings, editProfileForm);
+validatableForms.editProfile = new FormValidator(formSettings, editProfileForm);
 validatableForms.addCard = new FormValidator(formSettings, addCardForm);
-validatableForms.editProfilePicture = new FormValidator(formSettings, editProfilePictureForm);
+
 
 /** forms activation - creates activators for the forms*/
 
@@ -229,10 +240,10 @@ const addCardActivePopupForm = new PopupWithForm({
 });
 
 
-const editProfileDetailsActivePopupForm = new PopupWithForm({
+const editProfileActivePopupForm = new PopupWithForm({
   popupSelector: `#edit-profile-form-popup`,
   handleFormSubmitData: (newUserProfileData) => {
-    validatableForms.editProfileInfo.resetForm();
+    validatableForms.editProfile.resetForm();
     editExistingProfile({
       newUserProfileData, 
       userTargetExtension: `me`
@@ -240,31 +251,20 @@ const editProfileDetailsActivePopupForm = new PopupWithForm({
   }
 });
 
-SharedCard.prototype.ensureDeleteIsSafe = (postCardPrototype) => {
-  /** presents the deleteCardPopup when the user trigger its opening */
-    deleteCardPopupActiveForm.openPopup(); 
-    deleteCardPopupActiveForm.__proto__ = postCardPrototype;
-};
 
 /** popup which verify that the user want to delete the card, deletion can't be undone. */
-const deleteCardPopupActiveForm = new PopupWithForm({
+const deleteCardPopupForm = new PopupWithForm({
   popupSelector: `#delete-card-form-popup`,
-  processSubmit: () => {
-    // SharedCard.prototype.deleteForSure();
-    deleteCardPopupActiveForm.__proto__.aboutToDelete.deleteForSure();
-  },
+  handleFormSubmitData: ()=>{
+    debugger;
+
+    const postCardToDelete = deleteCardPopupForm.aboutToDelete;
+    postCardToDelete.deleteForSure();
+    
+    debugger;
+
+  }
 });
-
-const editProfilePictureActivePopupForm = new PopupWithForm({
-  popupSelector: `#edit-profile-picture-form-popup`,
-  processSubmit: () => {
-    console.log(`evt`);
-    // .__proto__.
-  },
-});
-
-
-
 
 /****************************   API constants   ****************************/
 
@@ -292,45 +292,53 @@ const cardsApiData = new CardsApi({
 
 /***************************************************************************/
 
-/** I am not sure about what I was doing - I may have mistakenly sabotaged the original API data.
-      I tried to fix it but I couldn't */
-
-// NO Access
-
-// setInitialApiData(defaultCardsList);
-
-/** delete exist data and post its default values */
-// function setInitialApiData(defaultCardsList, defaultUserProfile){
-//   cardsApiData.setCardsApi(defaultCardsList);
-// }
-
 /***************************   Functions calls   ***************************/
 
-// 1. Loading user information from the server
+/** I am not sure about that but I may have mistakenly sabotaged the original API data.
+      I tried to fix it but I found out I don't have access.. */
+// setInitialApiData(defaultCardsList);
+
 handlePageLoading();
 
-// editExistingProfile({
-//   newUserProfileData: myUserProfile, 
-//   userTargetExtension: `me`
-// });
-
+editExistingProfile({
+  newUserProfileData: myUserProfile, 
+  userTargetExtension: `me`
+});
 
 // addNewPostCards(myCardsList);
 
 
+function editExistingProfile({newUserProfileData, userTargetExtension}){
+  /** set new user profile details on the page */
+  profileSection.handleTextItems(newUserProfileData);
+  /** set new user profile details on the API data */
+  usersApiData.updateUserProfile({userExtension: userTargetExtension, newUserProfileData});
+}
 
-/***************************************************************************/
 
 
+function addNewPostCard(newPostCardData){
+  debugger;
+  /** add a new card on the page */
+  cardsGallerySection.renderNewItem(newPostCardData);
+  /** add a new card to the server */
+  cardsApiData.post({
+    urlTargetExtension: `/cards`,
+    bodyItems: newPostCardData
+  });
 
+}
 
-
+function addNewPostCards(cardsList){
+  cardsList.forEach((cardData) => {
+    addNewPostCard(cardData);
+  });
+}
 
 /***************************   Event Listeners   ***************************/
 
 addCardButton.addEventListener("click", handleOpenAddCardForm);
 profileEditButton.addEventListener("click", handleOpenEditProfileForm);
-profilePicture.addEventListener("click", handleOpenEditProfilePictureForm);
 
 /***************************************************************************/
 
@@ -341,7 +349,87 @@ function handlePageLoading() {
   enableAllFormsValidation();
 }
 
+/****************************   data functions   ***************************/
+
+/**********   cards data   **********/
+
+function setInitialCardsList(cardsListData){
+  cardsGallerySection.resetItemsList(cardsListData);
+}
+
+
+
+
+
+/** return card with extra functionality of popup with image, which contains the card data */
+function getCardWithPopup(cardData, popupWithCard) {
+  const newCard = new CardForPost({
+    data: cardData,
+    cardTemplateSelector: cardSettings.cardTemplateSelector,
+    cardSettings,
+    handleCardClick: (cardData) => handleCardPopupClick(cardData, popupWithCard),
+  });
+  return newCard.generateCard();
+};
+
+
+/** presents the closeUpCardPopup when the user trigger its opening */
+function handleCardPopupClick(cardData, popupWithCard) {
+  popupWithCard.openPopup({
+    link: cardData.link,
+    caption: cardData.name
+  });
+}
+
+// /** presents the deleteCardPopup when the user trigger its opening */
+// function handleDeleteCardClick(cardData, popupWithCard) {
+//   deleteCardPopup.openPopup();
+// }
+
+
+/**********   profile data   **********/
+
+function setInitialUserProfile(userProfileApiData) {
+  loadProfileInfo({
+    name: userProfileApiData.name,
+    about: userProfileApiData.about
+  });
+  loadProfilePicture(userProfileApiData.avatar);
+}
+
+function loadProfileInfo(userInfoData) {
+  profileSection.resetItems(userInfoData);
+  profileFormSection.resetItems(userInfoData);
+}
+
+function loadProfilePicture(profileAvatarSrc) {
+  profile.querySelector(`#avatar-profile-load-value`).src = profileAvatarSrc;
+}
+
+/***************************   forms functions   ***************************/
+
+/** enables forms validation on page loading */
+function enableAllFormsValidation() {
+  validatableForms.editProfile.enableValidation();
+  validatableForms.addCard.enableValidation();
+}
+
+function handleOpenAddCardForm() {
+  validatableForms.addCard.resetForm();
+  addCardActivePopupForm.openPopup();
+};
+
+function handleOpenEditProfileForm() {
+  /** load exist data */
+  profileFormSection.handleTextItems();
+  validatableForms.editProfile.loadFormData();
+
+  editProfileActivePopupForm.openPopup();
+};
+
+
 /****************************   API functions   ****************************/
+
 
 
 /** load initial API data on page loading - profile and cards  */
@@ -365,85 +453,14 @@ function loadPageData() {
 /***************************************************************************/
 
 
-/****************************   data functions   ***************************/
-
-/**********   cards data   **********/
-
-function setInitialCardsList(cardsListData){
-  cardsGallerySection.resetItemsList(cardsListData);
-}
-
-/** return card with extra functionality of popup with image, which contains the card data */
-function getCardWithPopup(cardData, popupWithCard) {
-  const newCard = new SharedCard({
-    data: cardData,
-    cardTemplateSelector: cardSettings.cardTemplateSelector,
-    cardSettings,
-    handleCardClick: (cardData) => handleCardPopupClick(cardData, popupWithCard),
-  });
-  return newCard.generateCard();
-};
-
-/** presents the closeUpCardPopup when the user trigger its opening */
-function handleCardPopupClick(cardData, popupWithCard) {
-  popupWithCard.openPopup({
-    link: cardData.link,
-    caption: cardData.name
-  });
-}
-
-
-
-/**********   profile data   **********/
-
-function setInitialUserProfile(userProfileApiData) {
-  loadProfileInfo({
-    name: userProfileApiData.name,
-    about: userProfileApiData.about
-  });
-  loadProfilePicture(userProfileApiData.avatar);
-}
-
-function loadProfileInfo(userInfoData) {
-  profileSection.resetItems(userInfoData);
-  profileDetailsFormSection.resetItems(userInfoData);
-}
-
-function loadProfilePicture(profileAvatarSrc) {
-  profilePicture.src = profileAvatarSrc;
-}
-
-/***************************   forms functions   ***************************/
-
-/** enables forms validation on page loading */
-function enableAllFormsValidation() {
-  validatableForms.editProfileInfo.enableValidation();
-  validatableForms.addCard.enableValidation();
-  validatableForms.editProfilePicture.enableValidation();
-}
-
-function handleOpenAddCardForm() {
-  validatableForms.addCard.resetForm();
-  addCardActivePopupForm.openPopup();
-};
-
-function handleOpenEditProfileForm() {
-  /** load exist data */
-  profileDetailsFormSection.handleTextItems();
-  validatableForms.editProfileInfo.loadFormData();
-
-  editProfileDetailsActivePopupForm.openPopup();
-};
-
-function handleOpenEditProfilePictureForm(){
-   /** load exist data */
-   profileDetailsFormSection.handleTextItems();
-   validatableForms.editProfilePicture.loadFormData();
- 
-   editProfilePictureActivePopupForm.openPopup();
-};
-
 /***************************************************************************/
+
+// NO Access
+/** delete exist data and post its default values */
+// function setInitialApiData(defaultCardsList, defaultUserProfile){
+//   cardsApiData.setCardsApi(defaultCardsList);
+//   // user -> post on `users/me` 
+// }
 
 
 /****************************   API loading functions   ****************************/
@@ -503,33 +520,3 @@ function handleOpenEditProfilePictureForm(){
 
 
 /***************************************************************************/
-
-function editExistingProfile({newUserProfileData, userTargetExtension}){
-  debugger;
-  /** set new user profile details on the page */
-  profileSection.handleTextItems(newUserProfileData);
-  /** set new user profile details on the API data */
-  usersApiData.updateUserProfile({userExtension: userTargetExtension, newUserProfileData});
-}
-
-function addNewPostCard(newPostCardData){
-  debugger;
-  /** add a new card on the page */
-  cardsGallerySection.renderNewItem(newPostCardData);
-  // adding post prototype using class
-  const newPostCard = Post.createPost({
-    postData: newPostCardData
-  })
-  /** add a new card to the server */
-  cardsApiData.post({
-    urlTargetExtension: `/cards`,
-    // bodyItems: newPostCardData
-    bodyItems: newPostCard
-  });
-}
-
-function addNewPostCards(cardsList){
-  cardsList.forEach((cardData) => {
-    addNewPostCard(cardData);
-  });
-}

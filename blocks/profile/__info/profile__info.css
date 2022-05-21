@@ -10,9 +10,9 @@
     "profile__picture . .                .                .                   "
     "profile__picture . profile__name    .                profile__edit-button"
     "profile__picture . .                .                .                   "
-    "profile__picture . profile__details profile__details profile__details    "
+    "profile__picture . profile__about   profile__about    profile__about     "
     "profile__picture . .                .                .                   ";
-  grid-template-columns: min-content 30px max-content 20px min-content;
+  grid-template-columns: 120px 30px max-content 20px min-content;
   grid-template-rows: 22px 39px 16px 22px 21px;
   align-items: flex-end;
 }
@@ -21,8 +21,8 @@
   .profile__info {
     grid-template-areas:
       "profile__picture  profile__picture"
-      "profile__name profile__edit-button"
-      "profile__details  profile__details";
+      "profile__name     profile__edit-button"
+      "profile__about    profile__about";
     grid-gap: 9px 10px;
     grid-template-rows: 141px min-content min-content;
     grid-template-columns: max-content min-content;
@@ -36,7 +36,7 @@ Not precise enough but clearer :
 
 grid-template-areas:
   "profile__picture profile__name profile__edit-button"
-  "profile__picture profile__details  profile__details";
+  "profile__picture profile__about  profile__about";
 grid-template-columns: min-content max-content max-content;
 grid-gap: 16px 18px;
 align-items: center;

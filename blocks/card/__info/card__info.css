@@ -5,7 +5,8 @@
   display: -ms-flexbox;
   display: flex;
   align-items: center;
-  justify-content: space-between;
   background-color: white;
   border-radius: 0px 0px 10px 10px;
+  align-items: space-between;
+  justify-content: space-between;
 }

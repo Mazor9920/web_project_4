@@ -43,6 +43,7 @@ export default class UserInfo {
    * @param newUserInfo.about - selector of the element that contain the profile about.
    */
   setUserInfo(newUserInfo) {
+    debugger;
     this._profileNameElement.textContent = newUserInfo.name;
     this._profileAboutElement.textContent = newUserInfo.about;
   }
