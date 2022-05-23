@@ -15,6 +15,10 @@ const myCardsListCountless = [
   {
     name: `WORK HARD PLAY HARD`,
     link: `https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwRJEw9Knkm-tEUVQrVE85opj0wE7rdQIl24rFXG0wcI4uGXq1YX8NFr5__2xxXZq6etM&usqp=CAU`
+  },
+  {
+    name: `R U SURE?`,
+    link: `https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsdj_eIbIjWsnfxgMRc9PDyb3rkGrZ10XhooSySBn546yO1kXhvXM6DXfVV6Uwjz9arTM&usqp=CAU`
   }
 ];
 
@@ -48,10 +52,10 @@ const initialCardsCountless = [
 
 function addCounterToCardsList(cardsList){
   var cardCounter = 0;
-    cardsList.map( (cardObject) => {
+    return cardsList.map( (cardDataObject) => {
       ++cardCounter;
-      cardObject.name = `${cardCounter} ` + cardObject.name;
-      return cardObject;
+       cardDataObject.name = `${cardCounter} ` +  cardDataObject.name;
+      return  cardDataObject;
     });
 };
 
@@ -64,3 +68,17 @@ export {
   defaultCardsList,
   myCardsList
 };
+
+/***************************************************************************/
+
+/**   I may have mistakenly sabotaged the original API data.
+      My try to fix it didn't work out */
+
+// NO Access
+
+// setInitialApiData(defaultCardsList);
+
+/** delete exist data and post its default values */
+// function setInitialApiData(defaultCardsList, defaultUserProfile){
+//   cardsApiData.setCardsApi(defaultCardsList);
+// }

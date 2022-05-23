@@ -29,6 +29,7 @@ export default class Card {
     this._cardTemplateSelector = cardTemplateSelector;
     this._cardSettings = cardSettings;
     this._handleCardClick = handleCardClick;
+    this._isLiked = false;
   }
 
   /** sets up card markup */
@@ -72,8 +73,8 @@ export default class Card {
 
   _setEventListeners() {
 
-    this._cardLikeButton.addEventListener("click", () => {
-      this._handleCardLikeClick();
+    this._cardLikeButton.addEventListener("click", (evt) => {
+      this._handleCardLikeClick(evt);
     });
 
     this._cardDeleteButton.addEventListener("click", () => {
@@ -87,11 +88,11 @@ export default class Card {
       };
       this._handleCardClick(cardData);
     });
-
   }
 
   _handleCardLikeClick() {
     this._cardLikeButton.classList.toggle(this._cardSettings.cardLikeButtonActiveClass);
+    this._isLiked = !this._isLiked;
   }
 
   _handleCardDelete(){

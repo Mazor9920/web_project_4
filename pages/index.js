@@ -32,6 +32,12 @@ import{
   myUserProfile
 } from "../scripts/data/userProfile.js";
 
+import{
+  myAuthorizationData,
+  defaultUsersExtensions,
+  defaultCardsExtensions
+} from "../scripts/utils/constants.js";
+
 import {
   formSettings,
   cardSettings,
@@ -58,11 +64,15 @@ import TextContainer from "../scripts/components/TextContainer/TextContainer.js"
 import Api from "../scripts/components/Api/Api.js";
 import UsersApi from "../scripts/components/Api/UsersApi.js";
 import CardsApi from "../scripts/components/Api/CardsApi.js";
-// import { Post } from "../scripts/components/Post/Post";
 import{
   Post,
   createPost
 } from "../scripts/components/Post/Post.js";
+import{
+  PostOwner,
+  createPostOwner
+}from "../scripts/components/PostOwner/PostOwner.js";
+
 
 
 /***************************************************************************/
@@ -140,11 +150,30 @@ const deleteCardForm = deleteCardPopup.querySelector("#delete-card-form");;
 const deleteCardButton = deleteCardForm.querySelector(".form__submit-button");
 
 
+/****************************   API constants   ****************************/
+
+const baseUrlByGroup = myAuthorizationData.baseUrl + myAuthorizationData.myGroupID;
+const defaultHeaders = {
+  authorization: myAuthorizationData.myToken,
+  'Content-type': 'application/json',
+};
+
+const usersApiData = new UsersApi({
+  extensions: defaultUsersExtensions,
+  options:{
+    baseUrl: baseUrlByGroup,
+    headers: defaultHeaders
+  }
+});
 
 
-
-
-
+const cardsApiData = new CardsApi({
+  extensions: defaultCardsExtensions,
+  options:{
+    baseUrl: baseUrlByGroup,
+    headers: defaultHeaders
+  }
+});
 
 
 
@@ -159,13 +188,60 @@ const closeUpCardPopup = new PopupWithImage(`#card-popup`);
 const cardsGallerySection = new Section({
   initialSection: {
     items: [],
-    renderItem: (cardDataItem) => {
-      const newCardElement = getCardWithPopup(cardDataItem, closeUpCardPopup);
-      cardsGallerySection.addItemToBeginning(newCardElement);
+    renderItem: (postCardDataItem) => {
+      const newCardPostElement = getCardByPostData(postCardDataItem);
+      cardsGallerySection.addItemToBeginning(newCardPostElement);
     }
   },
   containerSelector: `#gallery`
 });
+
+
+/** for adding Post prototype to the new card element */
+function getCardByPostData(postCardData){
+  debugger;
+  const cardData = {name: postCardData.name, link: postCardData.link};
+  const postCardOwner = createPostOwner(postCardData.owner);
+
+  const postCard = createPost( {
+
+      likes: postCardData.likes,
+       _id: postCardData._id, 
+       createdAt: postCardData.createdAt, 
+      ownerData: postCardOwner,
+      postData: cardData
+    } );
+
+  const newPostCardElement = getCardElementWithPopup({
+    cardData : postCard, 
+    cardPopup: closeUpCardPopup
+  });
+
+  return newPostCardElement;
+}
+
+
+
+
+
+// function getCardOwnerForPost(){
+
+//   const ownerInfo = currentOwnerProfile;
+//   console.log(ownerInfo);
+
+//   const currentUserInfo = userInfoProfile.getUserInfo();
+
+//   const owner = createPostOwner({
+//     ownerID, 
+//     ownerName, 
+//     ownerAbout, 
+//     ownerCohort, 
+//     ownerAvatar
+// });
+ 
+
+//    return owner;
+// }
 
 /** creates the user info which is part of the profile section */
 const userInfoProfile = new UserInfo(userInfoProfileSelectors);
@@ -233,9 +309,9 @@ const editProfileDetailsActivePopupForm = new PopupWithForm({
   popupSelector: `#edit-profile-form-popup`,
   handleFormSubmitData: (newUserProfileData) => {
     validatableForms.editProfileInfo.resetForm();
-    editExistingProfile({
+    editProfile({
       newUserProfileData, 
-      userTargetExtension: `me`
+      userTargetExtension: defaultUsersExtensions.owner
     });
   }
 });
@@ -246,10 +322,12 @@ SharedCard.prototype.ensureDeleteIsSafe = (postCardPrototype) => {
     deleteCardPopupActiveForm.__proto__ = postCardPrototype;
 };
 
+
 /** popup which verify that the user want to delete the card, deletion can't be undone. */
 const deleteCardPopupActiveForm = new PopupWithForm({
   popupSelector: `#delete-card-form-popup`,
   processSubmit: () => {
+    debugger;
     // SharedCard.prototype.deleteForSure();
     deleteCardPopupActiveForm.__proto__.aboutToDelete.deleteForSure();
   },
@@ -258,72 +336,12 @@ const deleteCardPopupActiveForm = new PopupWithForm({
 const editProfilePictureActivePopupForm = new PopupWithForm({
   popupSelector: `#edit-profile-picture-form-popup`,
   processSubmit: () => {
+    debugger;
+
     console.log(`evt`);
     // .__proto__.
   },
 });
-
-
-
-
-/****************************   API constants   ****************************/
-
-/** a ready-made token for user authorization */
-const myToken = 'a536be73-4985-4fb4-8e75-ccb3eebe93a6';
-const myGroupId = 'group-12';
-const baseUrlByGroup = 'https://around.nomoreparties.co/v1/' + myGroupId;
-const defaultHeaders = {
-  authorization: myToken,
-  'Content-type': 'application/json',
-};
-
-const usersApiData = new UsersApi({
-  baseUrl: baseUrlByGroup,
-  headers: defaultHeaders
-});
-
-
-const cardsApiData = new CardsApi({
-  baseUrl: baseUrlByGroup,
-  headers: defaultHeaders
-});
-
-
-
-/***************************************************************************/
-
-/** I am not sure about what I was doing - I may have mistakenly sabotaged the original API data.
-      I tried to fix it but I couldn't */
-
-// NO Access
-
-// setInitialApiData(defaultCardsList);
-
-/** delete exist data and post its default values */
-// function setInitialApiData(defaultCardsList, defaultUserProfile){
-//   cardsApiData.setCardsApi(defaultCardsList);
-// }
-
-/***************************   Functions calls   ***************************/
-
-// 1. Loading user information from the server
-handlePageLoading();
-
-// editExistingProfile({
-//   newUserProfileData: myUserProfile, 
-//   userTargetExtension: `me`
-// });
-
-
-// addNewPostCards(myCardsList);
-
-
-
-/***************************************************************************/
-
-
-
-
 
 
 /***************************   Event Listeners   ***************************/
@@ -334,12 +352,42 @@ profilePicture.addEventListener("click", handleOpenEditProfilePictureForm);
 
 /***************************************************************************/
 
+/***************************   Functions calls   ***************************/
+
+// Loading users & cards information from the server
+loadPageData();
+
+enableAllFormsValidation();
+
+// handleProject();
+
+function handleProject(){
+
+  debugger;
+   
+  console.log(`initial owner profile: ${usersApiData.getOwnerProfile}`);
+  
+  //  example of save profile data on the page and on the server once edited 
+  const editedProfile = editProfile({
+    newUserProfileData: myUserProfile, 
+    userTargetExtension: defaultUsersExtensions.owner
+  });
+  
+  console.log(`editedProfile: ${editedProfile}`);
+  console.log(`currentOwnerProfile after edit: ${usersApiData.getOwnerProfile}`);
+  
+  //  example of save 2 new cards data on the page and on the server once added
+  addNewPostCardsList(myCardsList);
+  
+  //  
+}
+
+
+/***************************************************************************/
+
+
 /************************   Functions declerations   ***********************/
 
-function handlePageLoading() {
-  loadPageData();
-  enableAllFormsValidation();
-}
 
 /****************************   API functions   ****************************/
 
@@ -347,7 +395,7 @@ function handlePageLoading() {
 /** load initial API data on page loading - profile and cards  */
 function loadPageData() {
   /** get initial data from the server */
-  const initialUserProfile = usersApiData.getUserProfile(`me`);
+  const initialUserProfile = usersApiData.getUserProfile(defaultUsersExtensions.owner);
   const initialCardsList = cardsApiData.getCardsApi();
 
   /** create an array of promises */
@@ -355,34 +403,35 @@ function loadPageData() {
   /** getting the promises results of the initial user information and the initial list of cards */
   const allDataPromisesObj = Promise.all(initialDataPromisesArray)
     .then((results) => {
-      setInitialUserProfile(results[0]);
-      setInitialCardsList(results[1]);
+      setInitialOwnerProfile(results[0]);
+      setInitialPostCardsList(results[1]);
     });
 }
 
 
-
 /***************************************************************************/
-
 
 /****************************   data functions   ***************************/
 
 /**********   cards data   **********/
 
-function setInitialCardsList(cardsListData){
-  cardsGallerySection.resetItemsList(cardsListData);
+function setInitialPostCardsList(postCardsListData){
+  cardsGallerySection.resetItemsList(postCardsListData);
 }
 
 /** return card with extra functionality of popup with image, which contains the card data */
-function getCardWithPopup(cardData, popupWithCard) {
+function getCardElementWithPopup({cardData, cardPopup}) {
   const newCard = new SharedCard({
     data: cardData,
     cardTemplateSelector: cardSettings.cardTemplateSelector,
     cardSettings,
-    handleCardClick: (cardData) => handleCardPopupClick(cardData, popupWithCard),
+    handleCardClick: (cardData) => handleCardPopupClick(cardData, cardPopup)
   });
   return newCard.generateCard();
 };
+
+
+
 
 /** presents the closeUpCardPopup when the user trigger its opening */
 function handleCardPopupClick(cardData, popupWithCard) {
@@ -396,7 +445,8 @@ function handleCardPopupClick(cardData, popupWithCard) {
 
 /**********   profile data   **********/
 
-function setInitialUserProfile(userProfileApiData) {
+
+function setInitialOwnerProfile(userProfileApiData) {
   loadProfileInfo({
     name: userProfileApiData.name,
     about: userProfileApiData.about
@@ -447,56 +497,34 @@ function handleOpenEditProfilePictureForm(){
 
 
 /****************************   API loading functions   ****************************/
-//
-// const handleDefaultLoading = (isLoading) => {
-//   if (isLoad) {
-//     console.log(`loading is on`);
-//   } else {
-//     console.log(`loading is off`);
-//   }
-// }
-//
-// function loadWhileGetApiData({
-//     ApiObject,
-//     urlTargetExtension,
-//     options = {},
-//     handleGetLoading,
-//     handleGetResult
-//   }) {
-//     loadWhileApiProcess({
-//       handleProcess: ApiObject.get(urlTargetExtension, options),
-//       handleLoading: handleGetLoading,
-//       handleResult: handleGetResult,
-//       handleError: () => {
-//         console.log(`ERROR! occurred while getting API data from the server, loading Error: ${err}`);
-//       }
-//     });
-//   };
-//
-//   // while the API data is updating
-//   loadWhileUpdateApiData({
-//     ApiObject,
-//     urlTargetExtension,
-//     options = {},
-//     bodyItems,
-//     handleUpdateLoading,
-//     handleUpdateResult
-//   }) {
-//     loadWhileApiProcess({
-//       handleProcess: ApiObject.patch({
-//         urlTargetExtension,
-//         options,
-//         bodyItems
-//       }),
-//       handleLoading: handleUpdateLoading,
-//       handleResult: handleUpdateResult,
-//       handleError: () => {
-//         console.log(`ERROR! occurred while API is updating, loading Error: ${err}`);
-//       }
-//     });
-//   };
+
+const handleDefaultLoading = (isLoading) => {
+  if (isLoad) {
+    console.log(`loading is on`);
+  } else {
+    console.log(`loading is off`);
+  }
+}
+
+function loadWhileGetApiData({
+    ApiObject,
+    urlTargetExtension,
+    options = {},
+    handleGetLoading,
+    handleGetResult
+  }) {
+    loadWhileApiProcess({
+      handleProcess: ApiObject.get(urlTargetExtension, options),
+      handleLoading: handleGetLoading,
+      handleResult: handleGetResult,
+      handleError: () => {
+        console.log(`ERROR! occurred while getting API data from the server, loading Error: ${err}`);
+      }
+    });
+  };
 
 
+   
 
 
 
@@ -504,32 +532,71 @@ function handleOpenEditProfilePictureForm(){
 
 /***************************************************************************/
 
-function editExistingProfile({newUserProfileData, userTargetExtension}){
-  debugger;
+function editProfile({newUserProfileData, userTargetExtension}){
   /** set new user profile details on the page */
   profileSection.handleTextItems(newUserProfileData);
   /** set new user profile details on the API data */
   usersApiData.updateUserProfile({userExtension: userTargetExtension, newUserProfileData});
 }
 
-function addNewPostCard(newPostCardData){
-  debugger;
-  /** add a new card on the page */
-  cardsGallerySection.renderNewItem(newPostCardData);
-  // adding post prototype using class
-  const newPostCard = Post.createPost({
-    postData: newPostCardData
-  })
-  /** add a new card to the server */
-  cardsApiData.post({
-    urlTargetExtension: `/cards`,
-    // bodyItems: newPostCardData
-    bodyItems: newPostCard
+
+function addNewPostCardsList(cardsList){
+  cardsList.forEach((newCardData) => {
+    addNewPostCard(newCardData);
   });
 }
 
-function addNewPostCards(cardsList){
-  cardsList.forEach((cardData) => {
-    addNewPostCard(cardData);
-  });
+function addNewPostCard(newCardData){
+   /** add a new card to the server */
+
+   const newPostCardData = cardsApiData.loadWhileApiProcess({
+      handleProcess: loadWhileUpdateApiData({
+        ApiObj: cardsApiData, 
+        extention: defaultCardsExtensions.cards, 
+        newData: newCardData
+      }),
+      handleLoading: () => {
+        console.log(`loading is fun`)
+      },
+      handleResult: (res) => {
+        console.log(`watch me:`)
+        console.log(res)
+        return res;
+      },
+      handleError: () => {
+        console.log(`show me the money`)
+        console.log(`ERROR! occurred while API is updating, loading Error: ${err}`);
+      }
+    });
+   
+
+    console.log(newPostCardData);
+    // const currentOwnerData = userInfoProfile.getUserInfo();
+  
+    /** add a new card on the page */
+    cardsGallerySection.renderNewItem(newPostCardData);
+  
 }
+
+
+
+  /**  loading process while data is updating in the API and on the page */
+  function loadWhileUpdateApiData({ApiObj, extention, newData}){
+    debugger;
+  
+    return ApiObj.post({
+      urlTargetExtension: extention,
+      bodyItems: newData
+    })
+    .then((res) => {
+      console.log(res);
+      debugger;
+      ApiObj.patch({
+        urlTargetExtension: extention,
+        bodyItems: res
+      })
+    });
+  
+    debugger;
+  
+  }  
