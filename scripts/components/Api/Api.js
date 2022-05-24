@@ -17,6 +17,7 @@
 
 
 export default class Api {
+
   constructor(options) {
     this._baseUrl = options.baseUrl;
     this._headers = options.headers;
@@ -43,7 +44,7 @@ export default class Api {
       .catch((err) => {
         console.log(`ERROR! API Access Error: ${err}`);
       });
-  }
+  };
 
 
   get({
@@ -66,7 +67,7 @@ export default class Api {
       body: JSON.stringify(bodyItems),
       method: "POST"
     });
-  }
+  };
 
   //  //body problem?
   // put({urlTargetExtension, options = {}, bodyItems}) {
@@ -87,7 +88,7 @@ export default class Api {
       body: JSON.stringify(bodyItems),
       method: "PATCH"
     });
-  }
+  };
 
   delete({
     urlTargetExtension,
@@ -97,37 +98,37 @@ export default class Api {
       ...options,
       method: "DELETE"
     });
-  }
+  };
 
   /**
-   * @callback handleProcess - handler function which responsible for API functionality that may take some time (as patch process for update api, or get process for loading data)
-   * @callback handleLoading - handler function which responsible for the page functionality while the API data is loading
+   * @callback handleProcess - handler function which responsible for API functionality that may take some time (as API data is updating/loading) 
+   * @callback handleWhileProcess - handler function which responsible for handle extra process (the page functionality) while handleProcess is running
    * @callback handleResult - a function which receive the response object as an input and handle its data
    * @callback handleError - a function which receive the response error as an input and handle this information
    */
   loadWhileApiProcess({
+    requestedProcessData,
+    handleWhileProcess, 
     handleProcess,
-    handleLoading,
     handleResult,
     handleError
   }) {
-    handleLoading(true);
-    handleProcess.then((res) => {
+    // when process starts
+    handleWhileProcess();
+    // (requestedProcessData ? handleProcess(requestedProcessData) : handleProcess)
+    handleProcess(requestedProcessData || undefined)
+    .then((res) => {
         handleResult(res);
       })
       .catch((err) => {
+        console.log(`ERROR! occurred while loading API data, loading Error: ${err}`);
         handleError(err);
       })
-      .finally(handleLoading(false));
+    // when process ends
+      .finally(handleWhileProcess(false));
   };
 
 
-
-
-
 }
-
-
-
 
 /***************************************************************************/

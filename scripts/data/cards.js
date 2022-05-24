@@ -17,8 +17,12 @@ const myCardsListCountless = [
     link: `https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwRJEw9Knkm-tEUVQrVE85opj0wE7rdQIl24rFXG0wcI4uGXq1YX8NFr5__2xxXZq6etM&usqp=CAU`
   },
   {
-    name: `R U SURE?`,
+    name: `HOLD ON`,
     link: `https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRsdj_eIbIjWsnfxgMRc9PDyb3rkGrZ10XhooSySBn546yO1kXhvXM6DXfVV6Uwjz9arTM&usqp=CAU`
+  },
+  {
+    name: `COME ON`,
+    link: `https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREdaeHC8BavJDCzkrFhtfWxQzsXVWlv-kqpw&usqp=CAU`
   }
 ];
 
@@ -51,16 +55,18 @@ const initialCardsCountless = [
 
 
 function addCounterToCardsList(cardsList){
-  var cardCounter = 0;
-    return cardsList.map( (cardDataObject) => {
-      ++cardCounter;
-       cardDataObject.name = `${cardCounter} ` +  cardDataObject.name;
+    return cardsList.map( (cardDataObject, index) => {
+       cardDataObject.name =`${index+1} ${cardDataObject.name}`;
       return  cardDataObject;
     });
 };
 
+const defaultCardsList = addCounterToCardsList([...initialCardsCountless,...initialCardsCountless,...initialCardsCountless]);
 const myCardsList = addCounterToCardsList(myCardsListCountless);
-const defaultCardsList = addCounterToCardsList([...initialCardsCountless, ...initialCardsCountless, ...initialCardsCountless]);
+
+/***************************************************************************/
+
+
 
 /***************************************************************************/
 
@@ -68,17 +74,3 @@ export {
   defaultCardsList,
   myCardsList
 };
-
-/***************************************************************************/
-
-/**   I may have mistakenly sabotaged the original API data.
-      My try to fix it didn't work out */
-
-// NO Access
-
-// setInitialApiData(defaultCardsList);
-
-/** delete exist data and post its default values */
-// function setInitialApiData(defaultCardsList, defaultUserProfile){
-//   cardsApiData.setCardsApi(defaultCardsList);
-// }

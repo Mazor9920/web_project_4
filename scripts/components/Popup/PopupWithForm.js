@@ -27,31 +27,32 @@ export default class PopupWithForm extends Popup {
   /**
    * Create a Popup with a form
    * @param {string} popupSelector - a CSS class selector of the popup element.
-   * @callback handleFormSubmitData - a function which calls when the form’s submit event fires.
+   * @callback processFormSubmit(handleFormSubmitData) - handler which get called by submit event fires to add extra functionality to the form submission(unrelated to inputs)
+   * @callback handleFormSubmitData(Object) - special handler function for forms with input fields - get inputs as object of pairs [ `name` : `value`]
    */
-  //   @param {string} openButtonSelector - a CSS class selector of the popup element.
 
   constructor({
     popupSelector,
     handleFormSubmitData,
-    processSubmit
+    processFormSubmit
   }) {
     super(popupSelector);
     this._formElement = this._popupElement.querySelector(popupFormSettings.popupFormSelector);
+
     this._handleFormSubmitData = handleFormSubmitData;
-    this._processSubmit = processSubmit || this._processInputSubmit;
+    this._processFormSubmit = processFormSubmit;
+
+    
     /** bind() method used to prevent loosing 'this' when a function is used as a callback */
     this.closePopup = this.closePopup.bind(this);
     this._handleFormSubmit = this._handleFormSubmit.bind(this);
   }
 
   /** collects data from all the input fields and returns that data as an object */
-  _getInputValues() {
+   _getInputValues() {
     this._inputList = this._formElement.querySelectorAll(popupFormSettings.popupFormInputSelector);
     this._formValues = {};
-
     this._inputList.forEach(input => this._formValues[input.name] = input.value);
-
     return this._formValues;
   }
 
@@ -62,14 +63,18 @@ export default class PopupWithForm extends Popup {
   };
 
   _handleFormSubmit(evt) {
-    evt.preventDefault();
-    this._processSubmit();
+    debugger;
+
+    evt.preventDefault(); 
+    this._handleFormSubmitData(this._getInputValues()) || undefined;
+    this._processFormSubmit || undefined;
     this.closePopup();
   };
 
-  _processInputSubmit(){
-    this._handleFormSubmitData(this._getInputValues());
-  }
+  // _processInputFormSubmit(){
+  //   debugger;
+  //   ;
+  // }
 
 
 
@@ -88,11 +93,3 @@ export default class PopupWithForm extends Popup {
 }
 
 /***************************************************************************/
-
-
-  // /** remove the temporary Listeners */
-  // _removeTempEventListeners() {
-  //   this._closePopupButtonElement.removeEventListener("click", this.closePopup);
-  //   this._popupElement.removeEventListener('mousedown', this._handleFocusOutPopup);
-  //   document.removeEventListener('keydown', this._handleEscClose);
-  // };

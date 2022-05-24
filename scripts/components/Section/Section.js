@@ -26,7 +26,7 @@ export default class Section {
     initialSection,
     containerSelector
   }) {
-    this._items = initialSection.items;
+    this._items = initialSection.items || [];
     this._renderItem = initialSection.renderItem;
     this._container = document.querySelector(containerSelector);
   };
