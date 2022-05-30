@@ -25,14 +25,12 @@ import {
   myCardsList
 } from "../scripts/data/cards.js";
 
-
-
-import{
+import {
   defaultUserProfile,
   myUserProfile
 } from "../scripts/data/userProfile.js";
 
-import{
+import {
   myAuthorizationData,
   defaultUsersExtensions,
   defaultCardsExtensions
@@ -52,8 +50,6 @@ import {
 // components
 import Card from "../scripts/components/Card/Card.js";
 import SharedCard from "../scripts/components/Card/SharedCard.js";
-// import LikeButton from "../scripts/components/LikeButton/LikeButton.js"
-// import Post from "../scripts/components/Post/Post.js"
 import FormValidator from "../scripts/components/FormValidator/FormValidator.js";
 import Popup from "../scripts/components/Popup/Popup.js";
 import PopupWithImage from "../scripts/components/Popup/PopupWithImage.js";
@@ -64,16 +60,21 @@ import TextContainer from "../scripts/components/TextContainer/TextContainer.js"
 import Api from "../scripts/components/Api/Api.js";
 import UsersApi from "../scripts/components/Api/UsersApi.js";
 import CardsApi from "../scripts/components/Api/CardsApi.js";
-import{
+import {
   Post,
   createPost
 } from "../scripts/components/Post/Post.js";
-import{
+import {
   PostOwner,
   createPostOwner
-}from "../scripts/components/PostOwner/PostOwner.js";
+} from "../scripts/components/PostOwner/PostOwner.js";
+import {
+  LikesTracker,
+  createLikesTracker
+} from "../scripts/components/LikesTracker/LikesTracker.js";
 
-import testProjectTasks from "./test";
+
+// import testProjectTasks from "./test";
 
 /***************************************************************************/
 
@@ -87,7 +88,7 @@ const content = document.querySelector("#content");
 const profile = content.querySelector("#profile");
 const addCardButton = profile.querySelector(".profile__add-button");
 const profileInfo = profile.querySelector(".profile__info");
-const profilePicture= profileInfo.querySelector(`#avatar-profile-load-value`);
+const profilePicture = profileInfo.querySelector(`#avatar-profile-load-value`);
 const profileEditButton = profileInfo.querySelector(".profile__edit-button");
 const profileName = profileInfo.querySelector(".profile__name");
 const profileAbout = profileInfo.querySelector(".profile__about");
@@ -100,7 +101,7 @@ const editProfileForm = editProfilePopup.querySelector("#edit-profile-form");
 
 /** edit-profile details form */
 const editProfileFormTitle = editProfileForm.querySelector(".form__title");
-const editProfileSaveButton = editProfileForm.querySelector(".form__submit-button");
+const editProfileDetailsSaveButton = editProfileForm.querySelector(".form__submit-button");
 /** user input fields */
 const profileNameInput = editProfileForm.querySelector(".form__input_value_profile-name");
 const profileAboutInput = editProfileForm.querySelector(".form__input_value_profile-about");
@@ -143,7 +144,7 @@ const cardCloseUpPicture = cardPopup.querySelector(".popup__close-up-picture");
 const cardPictureDetails = cardPopup.querySelector(".popup__picture-details");
 
 /** delete card popup */
-const deleteCardPopup = document.querySelector("#delete-card-form-popup"); 
+const deleteCardPopup = document.querySelector("#delete-card-form-popup");
 const deleteCardPopupCloseButton = deleteCardPopup.querySelector(".popup__close-button_placed_delete-card-popup");
 /** delete card form */
 const deleteCardForm = deleteCardPopup.querySelector("#delete-card-form");;
@@ -152,7 +153,7 @@ const deleteCardButton = deleteCardForm.querySelector(".form__submit-button");
 
 /****************************   API constants   ****************************/
 
-const baseUrlByGroup = myAuthorizationData.baseUrl + myAuthorizationData.myGroupID;
+const baseUrlByGroup = `${myAuthorizationData.baseUrl}/${myAuthorizationData.myGroupID}`;
 const defaultHeaders = {
   authorization: myAuthorizationData.myToken,
   'Content-type': 'application/json',
@@ -186,8 +187,13 @@ const cardsGallerySection = new Section({
   initialSection: {
     items: [],
     renderItem: (postCardDataItem) => {
-      const newCardPostElement = getCardByPostData(postCardDataItem);
+
+      const newCardPostElement = getPostCardByPostData(postCardDataItem);
+        
+
       cardsGallerySection.addItemToBeginning(newCardPostElement);
+        
+
     }
   },
   containerSelector: `#gallery`
@@ -195,49 +201,33 @@ const cardsGallerySection = new Section({
 
 
 /** for adding Post prototype to the new card element */
-function getCardByPostData(postCardData){
-  const cardData = {name: postCardData.name, link: postCardData.link};
-  const postCardOwner = createPostOwner(postCardData.owner);
+function getPostCardByPostData(postCardData) {
+  
+  const cardData = {
+    name: postCardData.name,
+    link: postCardData.link
+  };
 
-  const postCard = createPost( {
 
-      likes: postCardData.likes,
-       _id: postCardData._id, 
-       createdAt: postCardData.createdAt, 
-      ownerData: postCardOwner,
-      postData: cardData
-    } );
+  const postCard = createPost({
 
-  const newPostCardElement = getCardElementWithPopup({
-    cardData : postCard, 
+    likes: createLikesTracker(postCardData.likes),
+    _id: postCardData._id,
+    createdAt: postCardData.createdAt,
+    ownerData: createPostOwner(postCardData.owner),
+    postData: cardData
+  });
+
+  const newPostCardElement = getSharedCardWithPopup({
+    cardData: postCard,
     cardPopup: closeUpCardPopup
   });
 
+    
   return newPostCardElement;
 }
 
 
-
-
-
-// function getCardOwnerForPost(){
-
-//   const ownerInfo = currentOwnerProfile;
-//   console.log(ownerInfo);
-
-//   const currentUserInfo = userInfoProfile.getUserInfo();
-
-//   const owner = createPostOwner({
-//     ownerID, 
-//     ownerName, 
-//     ownerAbout, 
-//     ownerCohort, 
-//     ownerAvatar
-// });
- 
-
-//    return owner;
-// }
 
 /** creates the user info which is part of the profile section */
 const userInfoProfile = new UserInfo(userInfoProfileSelectors);
@@ -257,6 +247,7 @@ const profileSection = new TextContainer({
     }
   },
   handleTextItems: (newUserInfo) => {
+     
     userInfoProfile.setUserInfo(newUserInfo);
   }
 })
@@ -294,29 +285,28 @@ validatableForms.editProfilePicture = new FormValidator(formSettings, editProfil
 
 const addCardActivePopupForm = new PopupWithForm({
   popupSelector: `#add-card-form-popup`,
-  handleFormSubmitData: (newCardData) => {
+  isInputForm: true,
+  processSubmit: (newCardData) => {
      
-    addNewPostCard(newCardData);
+    addNewPostCardByUserInput(newCardData);
     validatableForms.addCard.resetForm();
-  }
+  },
 });
 
 
 const editProfileDetailsActivePopupForm = new PopupWithForm({
   popupSelector: `#edit-profile-form-popup`,
-  handleFormSubmitData: (newUserProfileData) => {
-    editProfile({
-      newUserProfileData, 
-      userTargetExtension: defaultUsersExtensions.owner
-    });
+  processSubmit: (newProfileData) => {
+     
+    editProfileDetailsByUserInput(newProfileData);
     validatableForms.editProfileInfo.resetForm();
   }
 });
 
 SharedCard.prototype.ensureDeleteIsSafe = (postCardPrototype) => {
   /** presents the deleteCardPopup when the user trigger its opening */
-    deleteCardPopupActiveForm.openPopup(); 
-    deleteCardPopupActiveForm.__proto__ = postCardPrototype;
+  deleteCardPopupActiveForm.openPopup();
+  deleteCardPopupActiveForm.__proto__ = postCardPrototype;
 };
 
 
@@ -331,10 +321,13 @@ const deleteCardPopupActiveForm = new PopupWithForm({
 
 const editProfilePictureActivePopupForm = new PopupWithForm({
   popupSelector: `#edit-profile-picture-form-popup`,
-  processSubmit: () => {
-     
-
+  processSubmit: (newUserAvatarData) => {
     console.log(`evt`);
+    debugger;
+
+    // {userExtension, newAvatar}
+    editProfilePictureByUserInput(newUserAvatarData) 
+
     // .__proto__.
   },
 });
@@ -350,11 +343,14 @@ profilePicture.addEventListener("click", handleOpenEditProfilePictureForm);
 
 /***************************   Functions calls   ***************************/
 
-enableAllFormsValidation();
-
-handleOwnerPageLoading();
 
  
+enableAllFormsValidation();
+
+handleOwnerPageLoading(defaultUsersExtensions.owner);
+
+debugger; 
+
 // testProjectTasks();
 
 /***************************************************************************/
@@ -383,12 +379,12 @@ function handleOpenEditProfileForm() {
   editProfileDetailsActivePopupForm.openPopup();
 };
 
-function handleOpenEditProfilePictureForm(){
-   /** load exist data */
-   profileDetailsFormSection.handleTextItems();
-   validatableForms.editProfilePicture.loadFormData();
- 
-   editProfilePictureActivePopupForm.openPopup();
+function handleOpenEditProfilePictureForm() {
+  /** load exist data */
+  profileDetailsFormSection.handleTextItems();
+  validatableForms.editProfilePicture.loadFormData();
+
+  editProfilePictureActivePopupForm.openPopup();
 };
 
 /***************************************************************************/
@@ -397,20 +393,41 @@ function handleOpenEditProfilePictureForm(){
 
 /**********   cards data   **********/
 
-function setInitialPostCardsList(postCardsListData){
+function setInitialPostCardsList(postCardsListData) {
   cardsGallerySection.resetItemsList(postCardsListData);
 }
 
 /** return card with extra functionality of popup with image, which contains the card data */
-function getCardElementWithPopup({cardData, cardPopup}) {
-  const newCard = new SharedCard({
+function getSharedCardWithPopup({
+  cardData,
+  cardPopup
+}) {
+
+  // debugger;
+// isOwnerCard problem - delete btn
+
+  const newSharedCard = new SharedCard({
     data: cardData,
     cardTemplateSelector: cardSettings.cardTemplateSelector,
     cardSettings,
-    handleCardClick: (cardData) => handleCardPopupClick(cardData, cardPopup)
+    handleCardClick: (cardData) => handleCardPopupClick(cardData, cardPopup),
+    likesCounter: cardData.likes.likes.length,
+    isOwnerCard: cardData.isOwnerCard,
+    ownerID: cardData.owner._id,
+    cardID: cardData._id,
+    // likes: createLikesTracker(cardData.likes),
+    // userID: cardData._id,
   });
-  return newCard.generateCard();
+
+    
+
+
+  return newSharedCard.generateCard();
 };
+
+SharedCard.prototype.requestLikeAction = ({isLikedByUser, cardID}) => {
+  isLikedByUser ? cardsApiData.likeCard(cardID) : cardsApiData.dislikeCard(cardID);
+}
 
 
 /** presents the closeUpCardPopup when the user trigger its opening */
@@ -424,7 +441,8 @@ function handleCardPopupClick(cardData, popupWithCard) {
 /**********   profile data   **********/
 
 function setInitialOwnerProfile(userProfileApiData) {
-  loadProfileInfo({
+  loadProfileInfo
+  ({
     name: userProfileApiData.name,
     about: userProfileApiData.about
   });
@@ -443,101 +461,158 @@ function loadProfilePicture(profileAvatarSrc) {
 /****************************   API functions   ****************************/
 
 /** load initial API data on page loading - profile and cards  */
-function loadInitialDataPage() {
+function loadInitialDataPage(userExtension) {
+   
   /** get initial data from the server */
-  const initialUserProfile = usersApiData.getUserProfile(defaultUsersExtensions.owner);
+  const initialUserProfile = usersApiData.getUserProfile(userExtension);
   const initialCardsList = cardsApiData.getCardsApi();
+  
+
+  debugger;
 
   /** create an array of promises */
   const initialPromisesDataArray = [initialUserProfile, initialCardsList];
   /** getting the promises results of the initial user information and the initial list of cards */
-    const  allPromisedPagaData = Promise.all(initialPromisesDataArray);
-    return  allPromisedPagaData;
+  const allPromisedPagaData = Promise.all(initialPromisesDataArray);
+  return allPromisedPagaData;
 }
 
-function handleOwnerPageLoading(){
-  debugger;
-   
+function handleOwnerPageLoading(ownerExtension) {
+   debugger;
   content.style.backgroundColor = 'none';
-  
+
   // Loading users & cards information from the server
   allPageApiData.loadWhileApiProcess({
-    handleWhileProcess: (isLoading) =>
-      {
-        if (isLoading) {
-          // document opacity - to add class content_hidden 
-          content.style.backgroundColor = 'red';
-        } else{
-          content.style.backgroundColor = '';
-        }
-      }, 
-      handleProcess: loadInitialDataPage,
-      handleResult: (allInitialPageData) => {
-        setInitialOwnerProfile(allInitialPageData[0]);
-        setInitialPostCardsList(allInitialPageData[1]);
-      },
-      handleError: (err) => {
-        console.log(`ERROR! occurred while loading page: ${err.message}`);
+    handleWhileProcess: (isLoading) => {
+      if (isLoading) {
+        // document opacity - to add class content_hidden
+        content.style.backgroundColor = 'red';
+      } else {
+        content.style.backgroundColor = '';
       }
-    });
-   
-  }
-  
+    },
+    handleProcess: 
+      loadInitialDataPage(ownerExtension)
+    ,
+    handleResult: (allInitialPageData) => {
+      setInitialOwnerProfile(allInitialPageData[0]);
+      setInitialPostCardsList(allInitialPageData[1]);
+    },
+    handleError: (err) => {
+      console.log(`ERROR! occurred while loading page: ${err.message}`);
+    }
+  });
+
+}
+
 
 /***************************************************************************/
 
-function editProfile({newUserProfileData, userTargetExtension}){
-  /** set new user profile details on the page */
-  profileSection.handleTextItems(newUserProfileData);
-  /** set new user profile details on the API data */
-  usersApiData.updateUserProfile({userExtension: userTargetExtension, newUserProfileData});
+/** edit existing owner-profile on the server */
+function editProfileDetailsByUserInput(newUserProfileData) {
+  usersApiData.loadWhileApiProcess({
+    handleWhileProcess: (isProfileUpdating) => {
+      /** inform the user while updating profile details */
+      informUserWhileProcessByNoteElement({
+        isLoading: isProfileUpdating, 
+        defaultNote: `Save`, 
+        tempNote: `Saving...`, 
+        noteElement: editProfileDetailsSaveButton
+      })
+    }, 
+    handleProcess: 
+    /** set new user profile details on the API data */
+    usersApiData.updateUserProfile({
+      userExtension: defaultUsersExtensions.owner,
+      newUserProfileData
+     })
+    ,
+    handleResult: (newUserProfileData) => {
+       
+      /** set new user profile details on the page */
+      profileSection.handleTextItems(newUserProfileData);
+    },
+    handleError: (err) => {
+      console.log(`ERROR! occurred while updating user profile: ${err.message}`);
+    }
+  });
+
+
 }
 
 
-function addNewPostCardsList(cardsList){
-  cardsList.forEach((newCardData) => {
-    addNewPostCard(newCardData);
+// function addNewPostCardsList(cardsList) {
+//   cardsList.forEach((newCardData) => {
+//     addNewPostCard(newCardData);
+//   });
+// }
+
+/** add a new user card to the server */
+function addNewPostCardByUserInput(newCardData) {
+   
+   
+  cardsApiData.loadWhileApiProcess({
+    // newCardData,
+    handleWhileProcess: (isPostLoading) => {
+      /** inform the user while loading a new post card */
+      informUserWhileProcessByNoteElement({
+        isLoading: isPostLoading, 
+        defaultNote: `Create`, 
+        tempNote: `Saving...`, 
+        noteElement: addCardCreateButton
+      })
+    },
+    handleProcess: 
+    cardsApiData.postNewCardOnServer(newCardData),
+    handleResult: (newPostCardData) => {
+
+      debugger;
+      newPostCardData.isOwnerCard = true;
+      console.log(newPostCardData);
+
+      /** add a new post card on the page */
+      cardsGallerySection.renderNewItem(newPostCardData);
+    },
+    handleError: (err) => {
+      console.log(`ERROR! occurred while Cards API is loading, Error: ${err}`);
+    }
+  });
+
+}
+
+/** notifies the user of a process that may take time, using a temporary text of an element */
+function informUserWhileProcessByNoteElement({isLoading, defaultNote, tempNote, noteElement}) {
+  const note = (isLoading) ? tempNote : defaultNote;
+  noteElement.textContent = note;
+}
+
+
+function editProfilePictureByUserInput(newUserAvatarData) {
+
+  debugger;
+  // {userExtension, newAvatar}
+
+  usersApiData.loadWhileApiProcess({
+    handleWhileProcess : (isPictureUpdating) => {
+      /** inform the user while updating profile picture */
+      informUserWhileProcessByNoteElement({
+        isLoading: isPictureUpdating, 
+        defaultNote: `Save`, 
+        tempNote: `Saving...`, 
+        noteElement: editProfilePictureSaveButton
+      })
+    }, 
+    handleProcess: 
+      /** set new user profile picture on the API data */
+      usersApiData.updateUserPicture({userExtension, newAvatar}),
+    handleResult: (newAvatar) => {
+      /** set new user profile picture on the page */
+      loadProfilePicture(getUserSrcPicture(userExtension));
+    },
+    handleError: (err) => {
+      console.log(`ERROR! occurred while updating user profile picture: ${err.message}`);
+    }
   });
 }
 
-/** add a new user card to the server */
-function addNewPostCard(newCardData){
-  cardsApiData.loadWhileApiProcess({
-    requestedProcessData: newCardData,
-      handleWhileProcess: (isPostLoading) => {
-        informUserWhileAddPostCardInProgress(isPostLoading);
-        //  
-      },
-      handleProcess: (newCardData) => {
-        cardsApiData.post({
-          urlTargetExtension: defaultCardsExtensions.cards,
-          bodyItems: newCardData
-        })
-        .then((newPostCardData) => {
-          console.log(newPostCardData);
-          return newPostCardData;
-        })
-      },
-      handleResult: (newPostCardData) => {
-        console.log(newPostCardData);
-        /** add a new post card on the page */
-        cardsGallerySection.renderNewItem(newPostCardData);
-      },
-      handleError: (err) => {
-        console.log(`ERROR! occurred while Cards API is loading, Error: ${err}`);
-      }
-    });
-  
-}
 
-
-/** update text elementes */
-function noteByElement(note, noteElemente){
-  noteElemente.textContent = note;
-}
-
-/** inform the user while loading a new post card */
-function informUserWhileAddPostCardInProgress(isPostLoading){
-  const note = (isPostLoading) ? `Saving...` : `Create`;
-  noteByElement(note, addCardCreateButton);
-}

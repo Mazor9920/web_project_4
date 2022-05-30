@@ -25,80 +25,87 @@ export default class Api {
 
   /**
    * search for Api data to implement specific request
-   * @param {{Object.<string, string>} options - An object with a variable number of propertie:value pairs, it's default value is empty (destructuring assignment syntax)
+   * @param {Object.<string, string>} options - An object with a variable number of propertie:value pairs, it's default value is empty (destructuring assignment syntax)
    */
-  _enableApiDataAccess(urlTargetExtension, options = {}) {
+  _enableApiDataAccess(urlTargetExtension, options) {
+   debugger;
+
     return fetch(this._baseUrl + urlTargetExtension, {
         ...options,
         headers: this._headers
       })
       .then((res) => {
         if (res.ok) {
-          return res.json();
+          return res.json()
+          
         }
         /* if the server returns an error,
         reject the promise with the response's status code as reason,
         and move to the catch block */
         return Promise.reject(res.status);
       })
+
       .catch((err) => {
         console.log(`ERROR! API Access Error: ${err}`);
-      });
-  };
-
+      }) 
+  }
 
   get({
-    urlTargetExtension,
-    options = {}
+    urlTargetExtension =``,
+    exstraOptions = {}
   }) {
-    return this._enableApiDataAccess(urlTargetExtension, {
-      ...options,
+    return this._enableApiDataAccess(urlTargetExtension , {
+      ...exstraOptions,
       method: "GET"
     });
   }
 
   post({
-    urlTargetExtension,
-    options = {},
+    urlTargetExtension = ``,
+    exstraOptions = {},
     bodyItems
   }) {
     return this._enableApiDataAccess(urlTargetExtension, {
-      ...options,
-      body: JSON.stringify(bodyItems),
+      ...exstraOptions,
+      body: bodyItems ? JSON.stringify(bodyItems) : undefined,
       method: "POST"
-    });
-  };
-
-  //  //body problem?
-  // put({urlTargetExtension, options = {}, bodyItems}) {
-  //   return this._enableApiDataAccess(urlTargetExtension, {
-  //     ...options,
-  //     body: JSON.stringify(bodyItems),
-  //     method: "PUT"
-  //   });
-  // }
+    })
+  }
 
   patch({
-    urlTargetExtension,
-    options = {},
+    urlTargetExtension = ``,
+    exstraOptions = {},
     bodyItems
   }) {
     return this._enableApiDataAccess(urlTargetExtension, {
-      ...options,
-      body: JSON.stringify(bodyItems),
+      ...exstraOptions,
+      body: bodyItems ? JSON.stringify(bodyItems) : undefined,
       method: "PATCH"
     });
-  };
+  }
 
   delete({
     urlTargetExtension,
-    options = {}
+    exstraOptions = {}
   }) {
     return this._enableApiDataAccess(urlTargetExtension, {
-      ...options,
+      ...exstraOptions,
       method: "DELETE"
     });
-  };
+  }
+
+   put({
+      urlTargetExtension = ``,
+      exstraOptions = {},
+      bodyItems
+    }) {
+    return this._enableApiDataAccess(urlTargetExtension, {
+      ...exstraOptions,
+      body: JSON.stringify(bodyItems),
+      method: "PUT"
+    });
+  }
+
 
   /**
    * @callback handleProcess - handler function which responsible for API functionality that may take some time (as API data is updating/loading) 
@@ -107,16 +114,16 @@ export default class Api {
    * @callback handleError - a function which receive the response error as an input and handle this information
    */
   loadWhileApiProcess({
-    requestedProcessData,
+    // requestedProcessData,
     handleWhileProcess, 
     handleProcess,
     handleResult,
     handleError
   }) {
     // when process starts
-    handleWhileProcess();
-    // (requestedProcessData ? handleProcess(requestedProcessData) : handleProcess)
-    handleProcess(requestedProcessData || undefined)
+    handleWhileProcess(true);
+    // handleProcess(requestedProcessData)
+    handleProcess
     .then((res) => {
         handleResult(res);
       })
@@ -126,8 +133,8 @@ export default class Api {
       })
     // when process ends
       .finally(handleWhileProcess(false));
-  };
-
+  }
+   
 
 }
 

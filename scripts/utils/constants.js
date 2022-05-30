@@ -12,8 +12,8 @@
 const myAuthorizationData = {
   /** a ready-made token for user authorization */
    myToken : `a536be73-4985-4fb4-8e75-ccb3eebe93a6`,
-   myGroupID : `group-12/`,
-   baseUrl: `https://around.nomoreparties.co/v1/`
+   myGroupID : `group-12`,
+   baseUrl: `https://around.nomoreparties.co/v1`
 }
 
 

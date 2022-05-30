@@ -1,6 +1,8 @@
 /***************************************************************************/
 
 /** Card class
+ * Designed for personal use
+ *
  * Contain Card class which creates a card with text and an image link
  * It has private methods for working with markup, adding event listeners,
  * and preparing the card for display.
@@ -12,7 +14,6 @@
 
 /***************************************************************************/
 
-
 export default class Card {
   /**
    * Create a Card object
@@ -22,14 +23,15 @@ export default class Card {
     data,
     cardTemplateSelector,
     cardSettings,
-    handleCardClick
+    handleCardClick,
+    isOwnerCard
   }) {
     this._name = data.name;
     this._link = data.link;
     this._cardTemplateSelector = cardTemplateSelector;
     this._cardSettings = cardSettings;
     this._handleCardClick = handleCardClick;
-    this._isLiked = false;
+    this._isAllowedToDelete = isOwnerCard;
   }
 
   /** sets up card markup */
@@ -48,7 +50,6 @@ export default class Card {
    * @returns {HTMLElement} - returns a functional card element
    */
   generateCard() {
-
     this._element = this._getTemplate();
 
     this._addTemplateElements();
@@ -63,6 +64,9 @@ export default class Card {
     this._cardPicture = this._element.querySelector(this._cardSettings.cardPictureSelector);
     this._cardLikeButton = this._element.querySelector(this._cardSettings.cardLikeButtonSelector);
     this._cardDeleteButton = this._element.querySelector(this._cardSettings.cardDeleteButtonSelector);
+    if (!this._isAllowedToDelete){
+      this._removeDeleteCardOption();
+    }
   }
 
   _setCardContent() {
@@ -77,9 +81,11 @@ export default class Card {
       this._handleCardLikeClick(evt);
     });
 
-    this._cardDeleteButton.addEventListener("click", () => {
-      this._handleCardDelete();
-    });
+    if (this._isAllowedToDelete){
+      this._cardDeleteButton.addEventListener("click", () => {
+        this._handleCardDelete();
+      });
+    }
 
     this._cardPicture.addEventListener("click", () => {
       const cardData = {
@@ -91,18 +97,31 @@ export default class Card {
   }
 
   _handleCardLikeClick() {
+    this._toggleLikeAction();
+  }
+
+  _toggleLikeAction() {
     this._cardLikeButton.classList.toggle(this._cardSettings.cardLikeButtonActiveClass);
-    this._isLiked = !this._isLiked;
   }
 
-  _handleCardDelete(){
-    this._deletePermanently();
+  _removeDeleteCardOption() {
+    if (this._cardDeleteButton) {
+      this._cardDeleteButton.remove();
+      this._cardDeleteButton = null;
+    }
   }
 
-  _deletePermanently(){
+  _handleCardDelete() {
+    // if (this._isSafeToDelete ){
+      this._deletePermanently();
+    // }
+  }
+
+  _deletePermanently() {
     this._element.remove();
     this._element = null;
   }
+
 
 }
 

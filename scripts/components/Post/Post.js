@@ -9,81 +9,86 @@
 
 
 class Post {
-    /**
-     * Create a Post object
-     */
-    constructor( {
-        likes, _id, createdAt, ownerData, postData
-    }) 
-    {
-      this.likes = likes;
-      this._likesCounter = this.likes.length;
-      this._isLiked = (this._likesCounter > 0) ;
+  /**
+   * Create a Post object
+   */
+  constructor({
+    likes,
+    _id,
+    createdAt,
+    ownerData,
+    postData
+  }) {
+    this.likes = Object.assign({}, (likes || []));
+   
+    this._id = _id;
+    this.createdAt = createdAt;
 
-      this._id = _id;
-      this.createdAt = createdAt;
-    
-      this.owner = Object.assign({}, ownerData);
+    this.owner = Object.assign({}, ownerData);
 
-      for (const dataItem in postData) {
-        debugger;
-        this[dataItem] = `${postData[dataItem]}`;
-      }
+    for (const dataItem in postData) {
+      debugger;
+      this[dataItem] = `${postData[dataItem]}`;
     }
-
-
-    _toggleUserAction(evt){
-      // const userID = 
-      // const action = delete trigger, like/dislike
-      // switch (action)
-      // allows delete if this._postID === 
-    }
-
-
-    _isPostLikedByUser(userID){
-      return this._likes.includes(userID);
-    }
-    
-
   }
+
+  // this._likesCounter = this.likes.length;
+    // this._isLiked = (this._likesCounter > 0);
+
+  _toggleUserAction(evt) {
+    // const userID =
+    // const action = delete trigger, like/dislike
+    // switch (action)
+    // allows delete if this._postID ===
+  }
+
+
+  _isPostLikedByUser(userID) {
+    return this._likes.includes(userID);
+  }
+
+
+}
 
 
 // add Post-prototype Access to diffrent object
 // I used it to add Post-prototype Access to each New Shared Card
-// ownerData = {about,avatar,cohort,name,_id} 
+// ownerData = {about,avatar,cohort,name,_id}
 
-function createPost( {
-  likes, _id, createdAt, ownerData, postData,
+function createPost({
+  likes,
+  _id,
+  createdAt,
+  ownerData,
+  postData,
 }) {
 
-    // Create an empty object with the prototype
-    const newPost = Object.create(Post.prototype);
+  // Create an empty object with the prototype
+  const newPost = Object.create(Post.prototype);
 
-    // Add all the necessary properties to the object
-    newPost.likes = likes;
-    newPost._likesCounter = likes.length;
-    newPost._isLiked = (likes.length > 0) ;
+  // Add all the necessary properties to the object
+  newPost.likes = Object.assign({}, likes);
 
-    newPost._id = _id;
-    newPost.createdAt = createdAt;
-  
-    newPost.owner = Object.assign({}, ownerData);
+  newPost._id = _id;
+  newPost.createdAt = createdAt;
 
-    for (const dataItem in postData) {
-      newPost[dataItem] = `${postData[dataItem]}`;
-    }
+  newPost.owner = Object.assign({}, ownerData);
 
-    
-    // Return the post-card object
-    return newPost;
+  for (const dataItem in postData) {
+    newPost[dataItem] = `${postData[dataItem]}`;
   }
-  
 
 
-  
-  /***************************************************************************/
-  
- export{
-    Post,
-    createPost
- };
+  // Return the post-card object
+  return newPost;
+}
+
+
+
+
+/***************************************************************************/
+
+export {
+  Post,
+  createPost
+};

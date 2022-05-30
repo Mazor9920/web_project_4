@@ -2,11 +2,7 @@
   background-image: url('../../../../images/icons/active-like-icon.svg');
 }
 
-
-
-
 /*   have some fun :)   */
-
 .card__like-button_active:hover {
   opacity: 0.5;
   cursor: pointer;

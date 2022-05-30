@@ -16,43 +16,57 @@ import Api from "./Api.js";
 export default class CardsApi extends Api {
   constructor({options, extensions}) {
     super(options);
-    this._cardsApi = extensions.cards;
-
+    this._baseUrl = `${options.baseUrl}/${extensions.cards}`;
   }
 
   getCardsApi() {
-    return this.get({
-      urlTargetExtension: `/${this._cardsApi}`
-    });
+    return this.get({});
   }
 
   getCard(cardExtension) {
     return this.get({
-      urlTargetExtension: `/${this._cardsApi}/${cardExtension}`
+      urlTargetExtension: `/${cardExtension}`
     });
   }
 
-  // NO Access
-  setCardsApi(defaultCardsList){
-    /** delete all exist data */
-    this.delete({
-      urlTargetExtension: `/${this._cardsApi}`
-    });
-    /** add new default cards to the server */
-    defaultCardsList.forEach((cardData) =>{
-        this.post({ urlTargetExtension: `/${this._cardsApi}`,
-        bodyItems: cardData
-      });
-    });
+  postNewCardOnServer(newCardData){
+    debugger;
+    return this.post({
+      bodyItems: {
+        name: `${newCardData.name}` ,
+        link: `${newCardData.link}`
+      }
+    }) 
   }
 
-  
+  likeCard(cardID){
+    return this.put({
+      urlTargetExtension: `/likes/${cardID}`
+    })
+  }
+
+  dislikeCard(cardID){
+    return this.delete({
+      urlTargetExtension: `/likes/${cardID}`
+    }) 
+  }
 
 
-  
 
 
 
 }
 
 /***************************************************************************/
+
+
+  // // NO Access
+  // setCardsApi(defaultCardsList){
+  //   /** delete all exist data */
+  //   this.delete();
+  //   /** add new default cards to the server */
+  //   defaultCardsList.forEach((cardData) =>{
+  //       this.post({ bodyItems: cardData
+  //     });
+  //   });
+  // }

@@ -1,10 +1,13 @@
 /***************************************************************************/
 
 /** SharedCard class - extention of Card class
+ *
  * Designed for use on a platform that allows access to multiple users.
- * Responsible for ensuring safe deletion and documentation of likes.
+ * This card represents a card as it is displayed to a specific user.
+ *
+ * Responsible for ensuring safe deletion only by the owner and documentation of users likes.
  * SharedCard.prototype has ensureDeleteIsSafe Aceess
- * 
+ *
  * @module SharedCard
  */
 
@@ -14,7 +17,8 @@ import Card from './Card.js';
 
 /***************************************************************************/
 
-export default class SharedCard extends Card{
+
+export default class SharedCard extends Card {
   /**
    * Create a SharedCard object
    */
@@ -23,105 +27,71 @@ export default class SharedCard extends Card{
     cardTemplateSelector,
     cardSettings,
     handleCardClick,
-    // getCurrentUserID
+    likesCounter,
+    isOwnerCard,
+    ownerID,
+    cardID
   }) {
-    super({data, cardTemplateSelector, cardSettings, handleCardClick});
+    super({
+      data,
+      cardTemplateSelector,
+      cardSettings,
+      handleCardClick,
+      isOwnerCard,
+    });
     this._isSafeToDelete = false;
-    this._likes = [];
-    this._likesCounter = this._likes.length
-    this._isLiked = this._likesCounter > 0 ;
-    // this._getCurrentUserID = getCurrentUserID;
-    // this._currentUserID = getCurrentUserID;
+    this._likesCounter = likesCounter || 0;
+    this._ownerID = ownerID;
+    this._cardID = cardID;
   }
 
-/** delete methods */
+  /** delete methods */
 
-  _handleCardDelete(){
+  _handleCardDelete() {
+    debugger;
+
     SharedCard.prototype.aboutToDelete = this;
     // this.aboutToDelete = this;
-    if(this._isSafeToDelete){
-      this._deletePermanently();
-    }else{
-      // using function throught SharedCard.prototype
+    if (!this._isSafeToDelete) {
+      // using popup-function throught SharedCard.prototype
       this.ensureDeleteIsSafe(this);
     }
+    super._handleCardDelete();
   }
 
-  deleteForSure(){
-    this._isSafeToDelete = true;
-    this.aboutToDelete._handleCardDelete();
+  deleteForSure() {
+    debugger;
+
+    // this._isSafeToDelete = true;
+    // this.aboutToDelete._handleCardDelete();
+    this.aboutToDelete._deletePermanently();
   }
 
-  resetLikeCounter(){
-    this._cardLikeButton.textContent = this._likesCounter;
+
+  /** like methods */
+
+
+  _setCardContent() {
+    super._setCardContent();
+    this._cardLikeButton.textContent = (this._likesCounter == 0) ? `be #1` : `${this._likesCounter}`;
   }
 
-
-/** like methods */
-
-
-  _showLikesCounterElement(){
-    if (this._isLiked){
-      this._cardLikeButton.textContent = this._likesCounter;
-    }
+  _resetLikeButtonContent() {
+    this._cardLikeButton.textContent = `${this._likesCounter}`;
   }
 
   _handleCardLikeClick(evt) {
-
     debugger;
-
-    console.log(evt);
-    //try to get user id - to write getCurrentUserID outside 
-    // this._currentUserID = getCurrentUserID;
-    const userID = this._getCurrentUserID(evt);
-
-
-    debugger;
-
-    
-    this._toggleUserLikeAction(userID);
-
-    if (this._likesCounter > 0)
-    {
-      this._showLikesCounterElement();
-    }
-  }
-  
-
-    /** The variable isLikedByUser has a boolean value that represents whether or not the user currently likes the card */
-    _toggleLikeActionByUser(userID){
-      debugger;
-      console.log(this._likesCounter);
-
-      // gets true if user like it, false if user dislike it
-      const isLikedByUser = !this._likes.includes(userID);
-
-      // render the Like Action of the curent user
-      isLikedByUser ? this._likeByUser(userID) : this._disLikeByUser(userID);
-
-      debugger;
-      console.log(this._likesCounter);
-    }
-
-
-  _likeByUser(userID){
-    this._likes.push(userID);
-    // if length isn't auto update
-    // this._likesCounter = this._likes.push(userID);
-    this._cardLikeButton.classList.add(this._cardSettings.cardLikeButtonActiveClass);
+    // manageLikesTracking();
+    this._toggleLikeAction();
+    this._resetLikeButtonContent();
   }
 
-  _disLikeByUser(userID){
-    // if length isn't auto update
-    // this._likesCounter = new array of this._likes 
-
-    // here - need to use reduce to remove userID from this._likes
-    // this._likes.filter(function(item) { return item !== userID });
-
-    console.log(`this._likesafter I liked card looks like:`);
-    console.log(this._likes);
-    
-    this._cardLikeButton.classList.remove(this._cardSettings.cardLikeButtonActiveClass);
+  _toggleLikeAction() {
+    const isLikedByUser = this._cardLikeButton.classList.toggle(this._cardSettings.cardLikeButtonActiveClass);
+    isLikedByUser ? ++this._likesCounter : --this._likesCounter;
+    // using popup-function throught SharedCard.prototype
+    this.requestLikeAction({isLikedByUser, cardID});
   }
 
 
@@ -129,4 +99,3 @@ export default class SharedCard extends Card{
 }
 
 /***************************************************************************/
-
