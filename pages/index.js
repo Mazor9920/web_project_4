@@ -188,7 +188,7 @@ const cardsGallerySection = new Section({
     items: [],
     renderItem: (postCardDataItem) => {
 
-      const newCardPostElement = getPostCardByPostData(postCardDataItem);
+      const newCardPostElement = getPostCardByData(postCardDataItem);
         
 
       cardsGallerySection.addItemToBeginning(newCardPostElement);
@@ -201,13 +201,15 @@ const cardsGallerySection = new Section({
 
 
 /** for adding Post prototype to the new card element */
-function getPostCardByPostData(postCardData) {
+function getPostCardByData(postCardData) {
   
+  console.log(postCardData);
+  debugger;
+
   const cardData = {
     name: postCardData.name,
     link: postCardData.link
   };
-
 
   const postCard = createPost({
 
@@ -478,7 +480,7 @@ function loadInitialDataPage(userExtension) {
 }
 
 function handleOwnerPageLoading(ownerExtension) {
-   debugger;
+  debugger;
   content.style.backgroundColor = 'none';
 
   // Loading users & cards information from the server
@@ -497,6 +499,9 @@ function handleOwnerPageLoading(ownerExtension) {
     handleResult: (allInitialPageData) => {
       setInitialOwnerProfile(allInitialPageData[0]);
       setInitialPostCardsList(allInitialPageData[1]);
+      console.log(`all Initial Page Data: `);
+      console.log(allInitialPageData[0]);
+      console.log(allInitialPageData[1]);
     },
     handleError: (err) => {
       console.log(`ERROR! occurred while loading page: ${err.message}`);
